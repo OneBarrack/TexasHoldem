@@ -1,0 +1,5 @@
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\TexasHoldemBlock.h
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\TexasHoldemBlock.generated.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\TexasHoldemBlockGrid.h
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\TexasHoldemBlockGrid.generated.h

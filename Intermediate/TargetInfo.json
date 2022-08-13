@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "TexasHoldem",
+			"Path": "D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldem.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "TexasHoldemEditor",
+			"Path": "D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldemEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

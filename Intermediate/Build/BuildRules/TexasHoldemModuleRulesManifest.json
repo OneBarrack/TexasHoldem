@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldem\\TexasHoldem.Build.cs",
+		"D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldem.Target.cs",
+		"D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldemEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.2"
+}

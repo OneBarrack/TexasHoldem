@@ -1,0 +1,5 @@
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h
+C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem/TexasHoldemPlayerController.h
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\TexasHoldemPlayerController.generated.h

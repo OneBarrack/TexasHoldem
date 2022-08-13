@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\TexasHoldem.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{DE5DAC16-2179-4BDE-B480-34D1F6576FCB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TexasHoldem.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\TexasHoldemEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{5BC7C903-3DB7-4085-A1AB-112D3DED4B4B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\TexasHoldem">
+      <UniqueIdentifier>{019F7D73-A1CB-4FD5-BE49-60AEB32B42B0}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TexasHoldem\TexasHoldem.Build.cs">
+      <Filter>Source\TexasHoldem</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\TexasHoldem\TexasHoldem.cpp">
+      <Filter>Source\TexasHoldem</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldem.h">
+      <Filter>Source\TexasHoldem</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source\TexasHoldem\GameMode">
+      <UniqueIdentifier>{7573c8af-6a1e-4897-96eb-c4cc6c102b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TexasHoldem\GameState">
+      <UniqueIdentifier>{71d219be-bdfb-4ff7-84e7-f51119e02501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TexasHoldem\ObjectActor">
+      <UniqueIdentifier>{fc247bc1-7714-43ac-9534-da34b0a86372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TexasHoldem\PlayerController">
+      <UniqueIdentifier>{407fef0c-c177-43a1-b6bf-d98667d0b444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TexasHoldem\Pawn">
+      <UniqueIdentifier>{07cdf1c7-d002-4df1-b2be-bc6b264fe1a1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\TexasHoldem\THGameMode.cpp">
+      <Filter>Source\TexasHoldem\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TexasHoldem\THPlayerController.cpp">
+      <Filter>Source\TexasHoldem\PlayerController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TexasHoldem\TexasHoldemBlock.cpp">
+      <Filter>Source\TexasHoldem\ObjectActor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TexasHoldem\TexasHoldemBlockGrid.cpp">
+      <Filter>Source\TexasHoldem\ObjectActor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TexasHoldem\THPawn.cpp">
+      <Filter>Source\TexasHoldem\Pawn</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\TexasHoldem\THGameMode.h">
+      <Filter>Source\TexasHoldem\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TexasHoldem\THPlayerController.h">
+      <Filter>Source\TexasHoldem\PlayerController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldemBlockGrid.h">
+      <Filter>Source\TexasHoldem\ObjectActor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldemBlock.h">
+      <Filter>Source\TexasHoldem\ObjectActor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TexasHoldem\THPawn.h">
+      <Filter>Source\TexasHoldem\Pawn</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

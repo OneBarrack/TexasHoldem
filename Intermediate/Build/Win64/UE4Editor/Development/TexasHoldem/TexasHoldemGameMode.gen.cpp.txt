@@ -1,0 +1,9 @@
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h
+C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem/TexasHoldemGameMode.h
+C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
+C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
+C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
+C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
+D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\TexasHoldemGameMode.generated.h

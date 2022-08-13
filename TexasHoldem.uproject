@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{DAE41E7C-485D-9C2D-3DF3-C8A6D1FEB719}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "TexasHoldem",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
