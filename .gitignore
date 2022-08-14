@@ -4,12 +4,11 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Personal settings
-Binaries
-DerivedDataCache
-Intermediate
-Saved
-.vscode
-.vs
+Build/*
+Binaries/*
+DerivedDataCache/*
+Intermediate/*
+Saved/*
 
 # User-specific files
 *.rsuser
