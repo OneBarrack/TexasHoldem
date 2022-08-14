@@ -91,7 +91,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6DE0DE40-C973-4886-9908-BD44BB909130}</ProjectGuid>
+    <ProjectGuid>{695D9D65-B302-4DB6-A50E-39592099E744}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
     <RootNamespace>TestPAL</RootNamespace>
     <PlatformToolset>v143</PlatformToolset>

@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "TexasHoldem/THPlayerController.h"
+#include "TexasHoldem/Controller/THPlayerController.h"
 #ifdef _MSC_VER
 #pragma warning (push)
 #pragma warning (disable : 4883)
@@ -42,8 +42,8 @@ void EmptyLinkFunctionForGeneratedCodeTHPlayerController() {}
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATHPlayerController_Statics::Class_MetaDataParams[] = {
 		{ "Comment", "/** PlayerController class used to enable cursor */" },
 		{ "HideCategories", "Collision Rendering Utilities|Transformation" },
-		{ "IncludePath", "THPlayerController.h" },
-		{ "ModuleRelativePath", "THPlayerController.h" },
+		{ "IncludePath", "Controller/THPlayerController.h" },
+		{ "ModuleRelativePath", "Controller/THPlayerController.h" },
 		{ "ToolTip", "PlayerController class used to enable cursor" },
 	};
 #endif
@@ -74,7 +74,7 @@ void EmptyLinkFunctionForGeneratedCodeTHPlayerController() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ATHPlayerController, 1068817124);
+	IMPLEMENT_CLASS(ATHPlayerController, 495027997);
 	template<> TEXASHOLDEM_API UClass* StaticClass<ATHPlayerController>()
 	{
 		return ATHPlayerController::StaticClass();

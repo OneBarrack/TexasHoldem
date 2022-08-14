@@ -4,7 +4,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BenchmarkTool\BenchmarkTool.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BenchmarkTool\BenchmarkTool.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{64446BED-DBCC-46DB-8834-05FF19EF4A54}</UniqueIdentifier>
+      <UniqueIdentifier>{7E7C7647-5F37-4CE3-A04F-8E9F221A0E84}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BenchmarkTool\Private\BenchmarkTool.cpp">
       <Filter>Private</Filter>
@@ -13,10 +13,10 @@
       <Filter>Private</Filter>
     </ClInclude>
     <Filter Include="Resources">
-      <UniqueIdentifier>{B5A08956-0EE8-4452-A105-85F445C8172A}</UniqueIdentifier>
+      <UniqueIdentifier>{ACC77B21-CF93-4E19-B7CD-0B265EDFF09E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Windows">
-      <UniqueIdentifier>{EAB86953-AB61-4E53-9747-6715C47DECC9}</UniqueIdentifier>
+      <UniqueIdentifier>{C358ADD2-B057-43CF-853C-9D526C9C7130}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BenchmarkTool\Resources\Windows\BenchmarkTool.ico">
       <Filter>Resources\Windows</Filter>

@@ -21,8 +21,8 @@ void EmptyLinkFunctionForGeneratedCodeTexasHoldem_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x645DC13B,
-				0x6324CB5D,
+				0x97859D42,
+				0xEE60F696,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

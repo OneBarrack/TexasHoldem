@@ -1,11 +1,11 @@
 D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h
-D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THGameMode.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\GameMode\THGameMode.h
 C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
 C:\DevProject\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
 C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
 C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
 D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\THGameMode.generated.h
-D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THPlayerController.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\GameMode\../Controller/THPlayerController.h
 D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\THPlayerController.generated.h
-D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THPawn.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\GameMode\../THPawn.h
 D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem\THPawn.generated.h

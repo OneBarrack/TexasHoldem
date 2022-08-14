@@ -13,10 +13,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define TEXASHOLDEM_THPlayerController_generated_h
 
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_SPARSE_DATA
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_RPC_WRAPPERS
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_RPC_WRAPPERS_NO_PURE_DECLS
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_INCLASS_NO_PURE_DECLS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_SPARSE_DATA
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS_NO_PURE_DECLS
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesATHPlayerController(); \
 	friend struct Z_Construct_UClass_ATHPlayerController_Statics; \
@@ -25,7 +25,7 @@ public: \
 	DECLARE_SERIALIZER(ATHPlayerController)
 
 
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_INCLASS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS \
 private: \
 	static void StaticRegisterNativesATHPlayerController(); \
 	friend struct Z_Construct_UClass_ATHPlayerController_Statics; \
@@ -34,7 +34,7 @@ public: \
 	DECLARE_SERIALIZER(ATHPlayerController)
 
 
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_STANDARD_CONSTRUCTORS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ATHPlayerController(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ATHPlayerController) \
@@ -47,7 +47,7 @@ private: \
 public:
 
 
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_ENHANCED_CONSTRUCTORS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ATHPlayerController(ATHPlayerController&&); \
@@ -58,28 +58,28 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ATHPlayerController)
 
 
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_10_PROLOG
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_GENERATED_BODY_LEGACY \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_10_PROLOG
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_SPARSE_DATA \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_RPC_WRAPPERS \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_INCLASS \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_STANDARD_CONSTRUCTORS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_SPARSE_DATA \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_GENERATED_BODY \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_SPARSE_DATA \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_INCLASS_NO_PURE_DECLS \
-	TexasHoldem_Source_TexasHoldem_THPlayerController_h_13_ENHANCED_CONSTRUCTORS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_SPARSE_DATA \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS_NO_PURE_DECLS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -87,7 +87,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> TEXASHOLDEM_API UClass* StaticClass<class ATHPlayerController>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID TexasHoldem_Source_TexasHoldem_THPlayerController_h
+#define CURRENT_FILE_ID TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

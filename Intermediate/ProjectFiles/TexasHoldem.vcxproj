@@ -207,7 +207,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{991265BB-85BD-428D-85DD-BF381B11D2E6}</ProjectGuid>
+    <ProjectGuid>{0309E43F-0FC3-4279-A822-FB7B1099E86C}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
     <RootNamespace>TexasHoldem</RootNamespace>
     <PlatformToolset>v143</PlatformToolset>
@@ -220,132 +220,132 @@
     <PropertyPageSchema Include="$(LOCALAPPDATA)\Microsoft\VisualStudio\MagicLeap\debugger.xaml" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Editor|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Debug|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Debug_Editor|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_DebugGame|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_DebugGame_Editor|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Development|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Development_Editor|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Shipping|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Test|arm64'" Label="Configuration">
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsAppContainer>true</WindowsAppContainer>
-    <AppxPackage>true</AppxPackage>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsAppContainer>true</WindowsAppContainer>
+		<AppxPackage>true</AppxPackage>
+		<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Invalid|Win32'" Label="Configuration">
@@ -643,21 +643,21 @@
     <NMakeReBuildCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Rebuild.bat TexasHoldem HoloLens Debug -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Clean.bat TexasHoldem HoloLens Debug -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
     <NMakeOutput>..\..\Binaries\HoloLens\TexasHoldem-HoloLens-Debug.exe</NMakeOutput>
-    <AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
-    <NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
-    <NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
+		<AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
+		<NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
+		<NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
+		<NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
-    <RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
-    <LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
-    <AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
+		<RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
+		<LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
+		<AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
+	</PropertyGroup>
+    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
+    </ItemGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -759,21 +759,21 @@
     <NMakeReBuildCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Rebuild.bat TexasHoldem HoloLens DebugGame -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Clean.bat TexasHoldem HoloLens DebugGame -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
     <NMakeOutput>..\..\Binaries\HoloLens\TexasHoldem-HoloLens-DebugGame.exe</NMakeOutput>
-    <AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
-    <NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
-    <NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
+		<AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
+		<NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
+		<NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
+		<NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|arm64'">
-    <RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
-    <LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
-    <AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|arm64'">
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|arm64'">
+		<RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
+		<LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
+		<AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
+	</PropertyGroup>
+    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|arm64'">
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
+    </ItemGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mac_DebugGame|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -875,21 +875,21 @@
     <NMakeReBuildCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Rebuild.bat TexasHoldem HoloLens Development -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Clean.bat TexasHoldem HoloLens Development -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
     <NMakeOutput>..\..\Binaries\HoloLens\TexasHoldem.exe</NMakeOutput>
-    <AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
-    <NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
-    <NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
+		<AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
+		<NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
+		<NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
+		<NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|arm64'">
-    <RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
-    <LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
-    <AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Development|arm64'">
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|arm64'">
+		<RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
+		<LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
+		<AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
+	</PropertyGroup>
+    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Development|arm64'">
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
+    </ItemGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Development|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -974,21 +974,21 @@
     <NMakeReBuildCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Rebuild.bat TexasHoldem HoloLens Shipping -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Clean.bat TexasHoldem HoloLens Shipping -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
     <NMakeOutput>..\..\Binaries\HoloLens\TexasHoldem-HoloLens-Shipping.exe</NMakeOutput>
-    <AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
-    <NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
-    <NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
+		<AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
+		<NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
+		<NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
+		<NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|arm64'">
-    <RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
-    <LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
-    <AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|arm64'">
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|arm64'">
+		<RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
+		<LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
+		<AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
+	</PropertyGroup>
+    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|arm64'">
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
+    </ItemGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Shipping|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -1056,21 +1056,21 @@
     <NMakeReBuildCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Rebuild.bat TexasHoldem HoloLens Test -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>C:\DevProject\UnrealEngine-4.27\Engine\Build\BatchFiles\Clean.bat TexasHoldem HoloLens Test -Project="$(SolutionDir)TexasHoldem.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
     <NMakeOutput>..\..\Binaries\HoloLens\TexasHoldem-HoloLens-Test.exe</NMakeOutput>
-    <AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
-    <NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
-    <NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
+		<AdditionalOptions>/ZW /ZW:nostdlib</AdditionalOptions>
+		<NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);PLATFORM_HOLOLENS=1;HOLOLENS=1;</NMakePreprocessorDefinitions>
+		<NMakeAssemblySearchPath>$(NMakeAssemblySearchPath);C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\lib\x86\Store\references</NMakeAssemblySearchPath>
+		<NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies);C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd;C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd;platform.winmd</NMakeForcedUsingAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|arm64'">
-    <RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
-    <LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
-    <AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Test|arm64'">
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
-    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|arm64'">
+		<RemoveExtraDeployFiles>false</RemoveExtraDeployFiles>
+		<LayoutDir>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\AppX</LayoutDir>
+		<AppxPackageRecipe>D:\TexasHoldemProject\TexasHoldem\Binaries\HoloLens\TexasHoldem.build.appxrecipe</AppxPackageRecipe>
+	</PropertyGroup>
+    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Test|arm64'">
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Local.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Simulator.xml" />
+		<PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\AppHostDebugger_Remote.xml" />
+    </ItemGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mac_Test|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -1096,59 +1096,72 @@
     <AdditionalOptions>/std:c++14</AdditionalOptions>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\TexasHoldem.uproject" />
-    <None Include="..\..\Source\TexasHoldem.Target.cs" />
-    <None Include="..\..\Source\TexasHoldemEditor.Target.cs" />
-    <None Include="..\..\Config\DefaultEditor.ini" />
-    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini" />
-    <None Include="..\..\Config\DefaultEngine.ini" />
-    <None Include="..\..\Config\DefaultGame.ini" />
-    <None Include="..\..\Config\DefaultInput.ini" />
-    <None Include="..\..\Source\TexasHoldem\TexasHoldem.Build.cs" />
+    <None Include="..\..\TexasHoldem.uproject"/>
+    <None Include="..\..\Source\TexasHoldem.Target.cs"/>
+    <None Include="..\..\Source\TexasHoldemEditor.Target.cs"/>
+    <None Include="..\..\.gitattributes"/>
+    <None Include="..\..\.gitignore"/>
+    <None Include="..\..\Config\DefaultEditor.ini"/>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini"/>
+    <None Include="..\..\Config\DefaultEngine.ini"/>
+    <None Include="..\..\Config\DefaultGame.ini"/>
+    <None Include="..\..\Config\DefaultInput.ini"/>
+    <None Include="..\..\Source\TexasHoldem\TexasHoldem.Build.cs"/>
     <ClCompile Include="..\..\Source\TexasHoldem\TexasHoldem.cpp">
       <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
       <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
     </ClCompile>
-    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldem.h" />
+    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldem.h"/>
     <ClCompile Include="..\..\Source\TexasHoldem\TexasHoldemBlock.cpp">
       <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
       <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
     </ClCompile>
-    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldemBlock.h" />
+    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldemBlock.h"/>
     <ClCompile Include="..\..\Source\TexasHoldem\TexasHoldemBlockGrid.cpp">
       <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
       <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
     </ClCompile>
-    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldemBlockGrid.h" />
-    <ClCompile Include="..\..\Source\TexasHoldem\THGameMode.cpp">
-      <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
-      <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TexasHoldem\THGameMode.h" />
+    <ClInclude Include="..\..\Source\TexasHoldem\TexasHoldemBlockGrid.h"/>
     <ClCompile Include="..\..\Source\TexasHoldem\THPawn.cpp">
       <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
       <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
     </ClCompile>
-    <ClInclude Include="..\..\Source\TexasHoldem\THPawn.h" />
-    <ClCompile Include="..\..\Source\TexasHoldem\THPlayerController.cpp">
+    <ClInclude Include="..\..\Source\TexasHoldem\THPawn.h"/>
+    <ClCompile Include="..\..\Source\TexasHoldem\Common\THEnum.cpp">
       <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
       <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
     </ClCompile>
-    <ClInclude Include="..\..\Source\TexasHoldem\THPlayerController.h" />
+    <ClInclude Include="..\..\Source\TexasHoldem\Common\THEnum.h"/>
+    <ClCompile Include="..\..\Source\TexasHoldem\Common\THStruct.cpp">
+      <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
+      <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TexasHoldem\Common\THStruct.h"/>
+    <ClCompile Include="..\..\Source\TexasHoldem\Controller\THPlayerController.cpp">
+      <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
+      <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TexasHoldem\Controller\THPlayerController.h"/>
+    <ClCompile Include="..\..\Source\TexasHoldem\GameMode\THGameMode.cpp">
+      <AdditionalIncludeDirectories>$(NMakeIncludeSearchPath);C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\cudamanager;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\filebuf;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\foundation;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\pvd;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PxShared\include\task;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\cooking;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\common;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\extensions;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\PhysX_3.4\Include\geometry;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\clothing;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\nvparameterized;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\legacy;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\include\PhysX3;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\common\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\framework\include\autogen;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include;C:\DevProject\UnrealEngine-4.27\Engine\Source\ThirdParty\PhysX3\APEX_1.4\shared\internal\include;</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h;$(SolutionDir)Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h</ForcedIncludeFiles>
+      <AdditionalOptions>/Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"</AdditionalOptions>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TexasHoldem\GameMode\THGameMode.h"/>
   </ItemGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup>
     <CleanDependsOn> $(CleanDependsOn); </CleanDependsOn>
-    <CppCleanDependsOn>
-    </CppCleanDependsOn>
+    <CppCleanDependsOn></CppCleanDependsOn>
   </PropertyGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

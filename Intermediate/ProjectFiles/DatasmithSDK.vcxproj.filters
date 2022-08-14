@@ -4,7 +4,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithSDK\DatasmithSDK.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithSDK\DatasmithSDK.Build.cs" />
     <Filter Include="Documentation">
-      <UniqueIdentifier>{1D6FE4D7-98CA-4E35-9712-0472561A38F0}</UniqueIdentifier>
+      <UniqueIdentifier>{99865FAC-6796-404E-8DA6-71A6E70EFB88}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithSDK\Documentation\1.Welcome.md">
       <Filter>Documentation</Filter>
@@ -19,7 +19,7 @@
       <Filter>Documentation</Filter>
     </None>
     <Filter Include="Documentation\build">
-      <UniqueIdentifier>{2B50ADD7-49E4-4FF6-88AA-8E29CF6F0075}</UniqueIdentifier>
+      <UniqueIdentifier>{56A4CE5B-270B-4676-B878-4BBDB8311EC0}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithSDK\Documentation\build\DatasmithSDK_config.txt">
       <Filter>Documentation\build</Filter>
@@ -40,7 +40,7 @@
       <Filter>Documentation\build</Filter>
     </None>
     <Filter Include="Documentation\build\output">
-      <UniqueIdentifier>{FD89B01D-4F6B-45E3-8F18-46900190A352}</UniqueIdentifier>
+      <UniqueIdentifier>{02B38CE7-E63D-458C-A85D-F0866A513DFD}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithSDK\Documentation\build\output\Datasmith SDK Documentation.html">
       <Filter>Documentation\build\output</Filter>
@@ -49,7 +49,7 @@
       <Filter>Documentation\build\output</Filter>
     </None>
     <Filter Include="Private">
-      <UniqueIdentifier>{7DE2BAFA-49A2-4905-BFF0-EAF312855F91}</UniqueIdentifier>
+      <UniqueIdentifier>{E4D15577-FCA9-49FC-9A54-05B0F53FAC3D}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithSDK\Private\DatasmithSDK.cpp">
       <Filter>Private</Filter>

@@ -3,14 +3,14 @@
   <ItemGroup>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\UnrealFrontend.Target.cs" />
     <Filter Include="Config">
-      <UniqueIdentifier>{35DA060C-FC4A-46A0-86F2-092AF6D28665}</UniqueIdentifier>
+      <UniqueIdentifier>{ECAA9DA0-5CA7-4B5C-8645-B9A915255594}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Programs\UnrealFrontend\Config\DefaultEngine.ini">
       <Filter>Config</Filter>
     </None>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\UnrealFrontend.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{7109AF10-287E-40B4-A68A-EF0AC0DA3886}</UniqueIdentifier>
+      <UniqueIdentifier>{D1B00C53-5F92-4114-92C7-A423ADA0D69B}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\Private\UnrealFrontendMain.cpp">
       <Filter>Private</Filter>
@@ -19,7 +19,7 @@
       <Filter>Private</Filter>
     </ClInclude>
     <Filter Include="Private\Commands">
-      <UniqueIdentifier>{FF72A510-24B1-43CA-A052-A21B4485D11D}</UniqueIdentifier>
+      <UniqueIdentifier>{50C2223A-5A8E-44B8-9489-B6D900CC9BBB}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\Private\Commands\DeployCommand.cpp">
       <Filter>Private\Commands</Filter>
@@ -64,28 +64,28 @@
       <Filter>Private\Commands</Filter>
     </ClInclude>
     <Filter Include="Private\Linux">
-      <UniqueIdentifier>{4829732C-B120-423F-B10D-97C4A25D1641}</UniqueIdentifier>
+      <UniqueIdentifier>{05E30BF4-744F-41B4-805B-E0DAF18F9D76}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\Private\Linux\LinuxUnrealFrontendMain.cpp">
       <Filter>Private\Linux</Filter>
     </ClCompile>
     <Filter Include="Private\Mac">
-      <UniqueIdentifier>{911AE2C7-F340-4875-9EDC-5CEE07011FA2}</UniqueIdentifier>
+      <UniqueIdentifier>{DC4299B1-1D94-499A-875F-051E156051AB}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\Private\Mac\MacUnrealFrontendMain.cpp">
       <Filter>Private\Mac</Filter>
     </ClCompile>
     <Filter Include="Private\Windows">
-      <UniqueIdentifier>{525BE7C1-6CBA-4FAE-B34F-588708C0B50A}</UniqueIdentifier>
+      <UniqueIdentifier>{32EB98A2-CC7D-47E4-8285-D6305083496E}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\Private\Windows\WindowsUnrealFrontendMain.cpp">
       <Filter>Private\Windows</Filter>
     </ClCompile>
     <Filter Include="Resources">
-      <UniqueIdentifier>{903CFB49-8B8B-41F9-A62C-820FC1C74B32}</UniqueIdentifier>
+      <UniqueIdentifier>{2370DC1D-C965-4048-93A1-0CA9D0FC6D2B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Mac">
-      <UniqueIdentifier>{201823B1-AD65-4929-A4D2-74CF7547588F}</UniqueIdentifier>
+      <UniqueIdentifier>{CD19E628-4174-493B-BE75-166392D1FA5D}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\UnrealFrontend\Resources\Mac\Info.plist">
       <Filter>Resources\Mac</Filter>

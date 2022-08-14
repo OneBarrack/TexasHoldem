@@ -269,7 +269,7 @@
 /FI"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
 /Yu"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
 /Fp"C:\DevProject\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-"D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THGameMode.cpp"
+"D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\GameMode\THGameMode.cpp"
 /FI"D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\Definitions.TexasHoldem.h"
 /Fo"D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Development\TexasHoldem\THGameMode.cpp.obj"
 /TP

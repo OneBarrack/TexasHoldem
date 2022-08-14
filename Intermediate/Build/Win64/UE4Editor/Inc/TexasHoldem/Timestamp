@@ -1,5 +1,7 @@
-D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\TexasHoldemBlock.h
 D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\TexasHoldemBlockGrid.h
-D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THPlayerController.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\TexasHoldemBlock.h
 D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THPawn.h
-D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\THGameMode.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\Controller\THPlayerController.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\GameMode\THGameMode.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\Common\THStruct.h
+D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem\Common\THEnum.h

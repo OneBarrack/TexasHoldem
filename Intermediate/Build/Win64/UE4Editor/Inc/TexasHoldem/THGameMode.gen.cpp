@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "TexasHoldem/THGameMode.h"
+#include "TexasHoldem/GameMode/THGameMode.h"
 #ifdef _MSC_VER
 #pragma warning (push)
 #pragma warning (disable : 4883)
@@ -42,8 +42,8 @@ void EmptyLinkFunctionForGeneratedCodeTHGameMode() {}
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATHGameMode_Statics::Class_MetaDataParams[] = {
 		{ "Comment", "/** GameMode class to specify pawn and playercontroller */" },
 		{ "HideCategories", "Info Rendering MovementReplication Replication Actor Input Movement Collision Rendering Utilities|Transformation" },
-		{ "IncludePath", "THGameMode.h" },
-		{ "ModuleRelativePath", "THGameMode.h" },
+		{ "IncludePath", "GameMode/THGameMode.h" },
+		{ "ModuleRelativePath", "GameMode/THGameMode.h" },
 		{ "ShowCategories", "Input|MouseInput Input|TouchInput" },
 		{ "ToolTip", "GameMode class to specify pawn and playercontroller" },
 	};
@@ -75,7 +75,7 @@ void EmptyLinkFunctionForGeneratedCodeTHGameMode() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ATHGameMode, 2413504809);
+	IMPLEMENT_CLASS(ATHGameMode, 1056730083);
 	template<> TEXASHOLDEM_API UClass* StaticClass<ATHGameMode>()
 	{
 		return ATHGameMode::StaticClass();

@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{FB95698E-7979-4F71-9BB2-F4D5028841B9}</ProjectGuid>
+    <ProjectGuid>{BE054319-EFCF-4C1D-B37D-63641388ADCF}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
     <RootNamespace>DatasmithRevit2020</RootNamespace>
     <PlatformToolset>v143</PlatformToolset>

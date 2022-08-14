@@ -4,19 +4,19 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UnrealAtoS\UnrealAtoS.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UnrealAtoS\UnrealAtoS.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{A355C13C-DE90-4A86-914C-D33FAF771480}</UniqueIdentifier>
+      <UniqueIdentifier>{BDF78D4B-4960-41DA-9D0D-E5C8749A0ACE}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UnrealAtoS\Private\UnrealAtoSApp.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <Filter Include="Private\Mac">
-      <UniqueIdentifier>{260CA4A7-F048-4EBE-8ECD-3A5CD977D296}</UniqueIdentifier>
+      <UniqueIdentifier>{370F404F-E3A6-4900-AEAD-FB171DD93564}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UnrealAtoS\Private\Mac\UnrealAtoSMainMac.cpp">
       <Filter>Private\Mac</Filter>
     </ClCompile>
     <Filter Include="Public">
-      <UniqueIdentifier>{D6DCACCE-D3A0-423C-81B8-4FC9D09AC1E6}</UniqueIdentifier>
+      <UniqueIdentifier>{690299AE-5881-4934-9465-D653C2427C4A}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UnrealAtoS\Public\UnrealAtoSApp.h">
       <Filter>Public</Filter>
