@@ -3,7 +3,7 @@
 #include "THPlayerController.h"
 
 ATHPlayerController::ATHPlayerController()
-{ 
+{
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	bEnableTouchEvents = true;
