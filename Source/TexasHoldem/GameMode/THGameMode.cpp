@@ -1,8 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "THGameMode.h"
-#include "THPlayerController.h"
-#include "THPawn.h"
+#include "../Controller/THPlayerController.h"
+#include "../THPawn.h"
 
 ATHGameMode::ATHGameMode()
 {
