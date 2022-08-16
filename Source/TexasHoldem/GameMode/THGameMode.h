@@ -13,6 +13,9 @@ class ATHGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 public:
+
+
+public:
 	ATHGameMode();
 
 public:

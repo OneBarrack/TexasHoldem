@@ -1,6 +1,10 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "THPlayerController.h"
+#include "Player/THPlayer.h"
+
+const FName ATHPlayerController::InputActionMouseLeft = FName(TEXT("MouseLeft"));
+const FName ATHPlayerController::InputActionSpaceBar = FName(TEXT("SpaceBar"));
 
 ATHPlayerController::ATHPlayerController()
 {
@@ -27,4 +31,32 @@ void ATHPlayerController::PostInitializeComponents()
 void ATHPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
+	PossessedPlayer = Cast<ATHPlayer>(aPawn);
 }
+
+void ATHPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	// Key Binding
+	//InputComponent->BindAction(InputActionSpaceBar, IE_Pressed, this, &ATHPlayerController::ActionSpaceBar);
+}
+
+//void ATHPlayerController::ActionSpaceBar_Implementation()
+//{
+//	if (HasAuthority())
+//	{
+//		UE_LOG(LogTemp, Log, TEXT("Server Hello~~"));
+//	}
+//	else
+//	{
+//		UE_LOG(LogTemp, Log, TEXT("Client Hello~~"));
+//	}
+//	
+//	MultiActionSpaceBar();
+//}
+//
+//void ATHPlayerController::MultiActionSpaceBar_Implementation()
+//{
+//	UE_LOG(LogTemp, Log, TEXT("MultiCast Hello~~"));
+//}
