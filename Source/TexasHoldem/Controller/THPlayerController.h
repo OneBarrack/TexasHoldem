@@ -14,6 +14,8 @@ class ATHPlayerController : public APlayerController
 
 public:
 	ATHPlayerController();
+
+public:
+	virtual void PostInitializeComponents() override;
+	virtual void OnPossess(APawn* aPawn) override;
 };
-
-

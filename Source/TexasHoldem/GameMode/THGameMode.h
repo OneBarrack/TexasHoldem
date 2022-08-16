@@ -14,6 +14,9 @@ class ATHGameMode : public AGameModeBase
 
 public:
 	ATHGameMode();
+
+public:
+	virtual void PostLogin(APlayerController* NewPlayer) override;
 };
 
 

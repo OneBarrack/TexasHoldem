@@ -30,6 +30,10 @@ void ATexasHoldemBlockGrid::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (HasAuthority())
+		UE_LOG(LogTemp, Log, TEXT("%d Hi"), GetWorld()->GetNumPlayerControllers());
+
+	UE_LOG(LogTemp, Log, TEXT("Hi"));
 	// Number of blocks
 	const int32 NumBlocks = Size * Size;
 
