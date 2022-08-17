@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Chaos/Pair.h"
+#include "Common/THStruct.h"
 #include "THPlayer.generated.h"
 
 UCLASS()
@@ -28,4 +30,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	Chaos::Pair<FPlayingCard, FPlayingCard> HandCards;
 };

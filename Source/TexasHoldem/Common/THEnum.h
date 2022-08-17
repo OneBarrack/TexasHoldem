@@ -6,15 +6,36 @@
 #include "UObject/NoExportTypes.h"
 #include "THEnum.generated.h"
 
-/**
- * 
- */
 UENUM(BlueprintType)
 enum class EPlayingCardShape : uint8
 {
-	Spade,
-	Diamond,
-	Heart,
-	Clover
+    None,
+    Spade,
+    Diamond,
+    Heart,
+    Clover,
 };
 
+UENUM(BlueprintType)
+enum class EBettingRound : uint8
+{    
+    PreFlop,
+    Flop,
+    Turn,
+    River
+};
+
+UENUM(BlueprintType)
+enum class EHandRanking : uint8
+{
+    RoyalFlush,
+    StraightFlush,
+    FourOfAKind,
+    FullHouse,
+    Flush,
+    Straight,
+    ThreeOfAKind,
+    TwoPair,
+    OnePair,
+    HighCard
+};

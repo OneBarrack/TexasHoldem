@@ -1,7 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "THPlayerController.h"
 #include "Player/THPlayer.h"
+#include "THPlayerController.h"
+#include "Common/THStruct.h"
+#include "Chaos/Pair.h"
 
 const FName ATHPlayerController::InputActionMouseLeft = FName(TEXT("MouseLeft"));
 const FName ATHPlayerController::InputActionSpaceBar = FName(TEXT("SpaceBar"));

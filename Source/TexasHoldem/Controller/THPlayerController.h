@@ -18,9 +18,6 @@ protected:
 	static const FName InputActionMouseLeft;
 	static const FName InputActionSpaceBar;
 
-private:
-	ATHPlayer* PossessedPlayer;
-
 public:
 	ATHPlayerController();
 
@@ -37,4 +34,7 @@ public:
 	//UFUNCTION(NetMulticast, Reliable)
 	//void MultiActionSpaceBar();
 	//bool MultiActionSpaceBar_Validate() { return true; }
+
+private:
+    ATHPlayer* PossessedPlayer;
 };

@@ -2,16 +2,20 @@
 
 #pragma once
 
+#include "THEnum.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "THStruct.generated.h"
 
-/**
- * 
- */
-UCLASS()
-class TEXASHOLDEM_API UTHStruct : public UObject
+USTRUCT(BlueprintType)
+struct FPlayingCard
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
+public:
+    UPROPERTY()
+    EPlayingCardShape Shape = EPlayingCardShape::None;
+
+    UPROPERTY()
+    int Number = 0;
 };
