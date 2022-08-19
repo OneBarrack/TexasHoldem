@@ -17,5 +17,5 @@ public:
     EPlayingCardShape Shape = EPlayingCardShape::None;
 
     UPROPERTY()
-    int Number = 0;
+    EPlayingCardName Name = EPlayingCardName::None;
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "Chaos/Pair.h"
 #include "Common/THStruct.h"
 #include "THPlayer.generated.h"
 
@@ -31,5 +30,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	Chaos::Pair<FPlayingCard, FPlayingCard> HandCards;
+	UPROPERTY()
+	TArray<FPlayingCard> HandCards;
 };

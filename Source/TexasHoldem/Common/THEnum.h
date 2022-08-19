@@ -9,25 +9,50 @@
 UENUM(BlueprintType)
 enum class EPlayingCardShape : uint8
 {
-    None,
+    None = 0,
     Spade,
     Diamond,
     Heart,
     Clover,
+    Max
+};
+
+UENUM(BlueprintType)
+enum class EPlayingCardName : uint8
+{
+    None = 0,
+    Ace,
+    One,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
+    Jack,
+    Queen,
+    King,
+    MaxAce
 };
 
 UENUM(BlueprintType)
 enum class EBettingRound : uint8
-{    
+{
+    None = 0,
     PreFlop,
     Flop,
     Turn,
-    River
+    River,
+    Max
 };
 
 UENUM(BlueprintType)
 enum class EHandRanking : uint8
 {
+    None = 0,
     RoyalFlush,
     StraightFlush,
     FourOfAKind,
@@ -37,5 +62,6 @@ enum class EHandRanking : uint8
     ThreeOfAKind,
     TwoPair,
     OnePair,
-    HighCard
+    HighCard,
+    Max
 };

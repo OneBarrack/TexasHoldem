@@ -5,4 +5,8 @@
 // TexasHold`em's Rules
 const int NumOfAllCards = 52;
 const int NumOfCardsForShape = 13;
+const int NumOfCardsForPlayer = 2;
 const int MaxNumOfCommunityCards = 5;
+
+const int MinAceNumber = 1;
+const int MaxAceNumber = 14;
