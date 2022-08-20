@@ -18,7 +18,7 @@ enum class EPlayingCardShape : uint8
 };
 
 UENUM(BlueprintType)
-enum class EPlayingCardName : uint8
+enum class EPlayingCardValue : uint8
 {
     None = 0,
     Ace,
@@ -35,7 +35,7 @@ enum class EPlayingCardName : uint8
     Jack,
     Queen,
     King,
-    MaxAce
+    HighAce
 };
 
 UENUM(BlueprintType)
@@ -64,4 +64,24 @@ enum class EHandRanking : uint8
     OnePair,
     HighCard,
     Max
+};
+
+UENUM(BlueprintType)
+enum class EPlayerPosition : uint8
+{
+    None = 0,
+    Button,
+    SmallBlind,
+    BigBlind
+};
+
+UENUM(BlueprintType)
+enum class EPlayerAction : uint8
+{
+    None = 0,
+    Check,
+    Bet,
+    Call,
+    Raise,
+    Fold
 };

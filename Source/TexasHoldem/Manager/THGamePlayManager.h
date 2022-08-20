@@ -2,10 +2,9 @@
 
 #pragma once
 
-#include "Common/THEnum.h"
-#include "Common/THStruct.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "TexasHoldem.h"
 #include "THGamePlayManager.generated.h"
 
 /**
@@ -21,21 +20,21 @@ public:
 
 public:
 	void Init();
-	//void StartRound();
+	void SetNextBettingRound();
 
-	const EBettingRound GetBettingRound() const { return BettingRound; }
-	void SetBettingRoundNext();
-	
-	// 덱으로부터 카드 한 장을 가져온다
-	const FPlayingCard GetCardFromCardDeck();
+    // 카드더미에서 카드 한 장을 받는다
+    const FPlayingCard GetCardFromCardDeck();
+
+	// 현재 베팅라운드 반환
+	const EBettingRound GetBettingRound() const;
 	
     // 공유카드 반환
-    TArray<FPlayingCard> GetCommunityCards() const { return CommunityCards; }
+	TArray<FPlayingCard> GetCommunityCards() const;
 
 	// 덱의 남은 카드 수 반환
-	const int GetCurrentCardDeckCount() const { return CardDeck.Num(); }
+	const int GetCurrentCardDeckCount() const;
 
-	// 최종 카드 족보 반환
+	// 최종카드 족보 반환
 	const EHandRanking GetHandRanking(const TArray<FPlayingCard> HandCards);
 	const EHandRanking DebugGetHandRanking(const TArray<FPlayingCard> HandCards, EHandRanking HandRanking = EHandRanking::None);
 
@@ -43,8 +42,7 @@ private:
 	// 베팅라운드에 따른 공유카드 설정
 	void AddCardToCommunityCards();
 
-private:
-	// 최종 카드 족보(랭크) 체크
+	// 최종카드 족보(랭크) 체크
 	bool IsRoyalFlush(const TArray<FPlayingCard> FinalHandCards);
 	bool IsStraightFlush(const TArray<FPlayingCard> FinalHandCards);
 	bool IsFourOfAKind(const TArray<FPlayingCard> FinalHandCards);

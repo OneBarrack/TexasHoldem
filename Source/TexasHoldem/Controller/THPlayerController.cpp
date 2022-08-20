@@ -1,10 +1,13 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "Player/THPlayer.h"
 #include "THPlayerController.h"
-#include "Common/THStruct.h"
-#include "Chaos/Pair.h"
+#include "Player/THPlayer.h"
+#include "GameMode/THGameMode.h"
+#include "GameState/THGameState.h"
+#include "PlayerState/THPlayerState.h"
+#include "GameFramework/PlayerState.h"
 #include "Manager/THGameDebugManager.h"
+
 
 const FName ATHPlayerController::InputActionMouseLeft = FName(TEXT("MouseLeft"));
 const FName ATHPlayerController::InputActionSpaceBar  = FName(TEXT("SpaceBar"));
@@ -14,6 +17,7 @@ const FName ATHPlayerController::InputActionKeyBoard3 = FName(TEXT("KeyBoard3"))
 const FName ATHPlayerController::InputActionKeyBoard4 = FName(TEXT("KeyBoard4"));
 const FName ATHPlayerController::InputActionKeyBoard5 = FName(TEXT("KeyBoard5"));
 const FName ATHPlayerController::InputActionKeyBoard6 = FName(TEXT("KeyBoard6"));
+const FName ATHPlayerController::InputActionKeyReady  = FName(TEXT("Ready"));
 
 ATHPlayerController::ATHPlayerController()
 {
@@ -25,6 +29,8 @@ ATHPlayerController::ATHPlayerController()
 
 void ATHPlayerController::BeginPlay()
 {
+	Super::BeginPlay();
+
 	GamePlayMgr = NewObject<UTHGamePlayManager>(this);
 }
 
@@ -60,29 +66,31 @@ void ATHPlayerController::SetupInputComponent()
 	InputComponent->BindAction(InputActionKeyBoard4, IE_Pressed, this, &ATHPlayerController::ActionKeyBoard4);
 	InputComponent->BindAction(InputActionKeyBoard5, IE_Pressed, this, &ATHPlayerController::ActionKeyBoard5);
 	InputComponent->BindAction(InputActionKeyBoard6, IE_Pressed, this, &ATHPlayerController::ActionKeyBoard6);
+	InputComponent->BindAction(InputActionKeyReady, IE_Pressed, this, &ATHPlayerController::ActionKeyReady);
 }
 
 void ATHPlayerController::Tick(float DeltaSeconds)
 {
+	Super::Tick(DeltaSeconds);
 }
 
 void ATHPlayerController::ActionSpaceBar()
 {
 	FPlayingCard Card = GamePlayMgr->GetCardFromCardDeck();
-	UE_LOG(LogTemp, Log, TEXT("Get Card! Shape:%s Name:%s, Current card deck count : %d"),
-		*UTHGameDebugManager::GetEnumAsString(Card.Shape), *UTHGameDebugManager::GetEnumAsString(Card.Name), GamePlayMgr->GetCurrentCardDeckCount());
+	UE_LOG(LogTemp, Log, TEXT("Get Card! Shape:%s Value:%s, Current card deck count : %d"),
+		*UTHGameDebugManager::GetEnumAsString(Card.Shape), *UTHGameDebugManager::GetEnumAsString(Card.Value), GamePlayMgr->GetCurrentCardDeckCount());
 }
 
 void ATHPlayerController::ActionKeyBoard1()
 {
-	GamePlayMgr->SetBettingRoundNext();
+	GamePlayMgr->SetNextBettingRound();
 	UE_LOG(LogTemp, Log, TEXT("Current Betting Round : %s"), *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->GetBettingRound()));
 	
 	UE_LOG(LogTemp, Log, TEXT("Current Community Card :"));
 	TArray<FPlayingCard> CommunityCard = GamePlayMgr->GetCommunityCards();
 	for (auto& Card : CommunityCard)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Shape:%s, Name:%s"), *UTHGameDebugManager::GetEnumAsString(Card.Shape), *UTHGameDebugManager::GetEnumAsString(Card.Name));
+		UE_LOG(LogTemp, Log, TEXT("Shape:%s, Value:%s"), *UTHGameDebugManager::GetEnumAsString(Card.Shape), *UTHGameDebugManager::GetEnumAsString(Card.Value));
 	}
 }
 
@@ -91,15 +99,19 @@ void ATHPlayerController::ActionKeyBoard2()
 	// Debug
 
 	TArray<FPlayingCard> TempCards;
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Heart,  EPlayingCardName::King});
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Clover, EPlayingCardName::Ace});
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardName::Ace});
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardName::King});
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardName::Ten});
-	//TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardName::Queen});
-	//TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardName::Jack});
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Diamond,  EPlayingCardName::Ace });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Heart,  EPlayingCardName::Jack });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Diamond,  EPlayingCardValue::Five });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Clover, EPlayingCardValue::Five });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Six });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::King });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Seven });
+	//TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Queen });
+	//TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Jack });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Diamond,  EPlayingCardValue::Four });
+	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Jack });
+
+	// All
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
+    //	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::None)));
 
 	// RoyalFlush
 	//UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
@@ -114,12 +126,39 @@ void ATHPlayerController::ActionKeyBoard2()
     //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::FourOfAKind)));
 
     // FullHouse
-    UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-        *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::FullHouse)));
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::FullHouse)));
+
+    // Flush
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::Flush)));
+
+    // Straight
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::Straight)));
+
+	// ThreeOfAKind (Triple)
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::ThreeOfAKind)));
+
+    // TwoPair
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::TwoPair)));
+
+    // OnePair
+    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::OnePair)));
 }
 
 void ATHPlayerController::ActionKeyBoard3()
 {
+	auto THPlayerState = Cast<ATHPlayerState>(PlayerState);
+	THPlayerState->Server_ToggleReady();
+	UE_LOG(LogTemp, Log, TEXT("Player Ready :%d "), THPlayerState->GetReadyState());
+
+    auto THGameState = Cast<ATHGameState>(GetWorld()->GetGameState());
+    TArray<FPlayingCard> CommunityCards = THGameState->GetCommunityCards();
+    UE_LOG(LogTemp, Log, TEXT("Community Card Count:%d"), CommunityCards.Num());
 }
 
 void ATHPlayerController::ActionKeyBoard4()
@@ -132,6 +171,20 @@ void ATHPlayerController::ActionKeyBoard5()
 
 void ATHPlayerController::ActionKeyBoard6()
 {
+}
+
+void ATHPlayerController::ActionKeyReady()
+{
+	UE_LOG(LogTemp, Log, TEXT("Ready"));
+	Server_SetNextBettingRound();
+}
+
+void ATHPlayerController::Server_SetNextBettingRound_Implementation()
+{
+    if (ATHGameMode* THGameMode = Cast<ATHGameMode>(GetWorld()->GetAuthGameMode()))
+    {
+		THGameMode->StartNextBettingRound();
+    }
 }
 
 //void ATHPlayerController::ActionSpaceBar_Implementation()

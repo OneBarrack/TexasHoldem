@@ -3,6 +3,8 @@
 #pragma once
 
 // TexasHold`em's Rules
+const int MaxPlayerCount = 10;
+
 const int NumOfAllCards = 52;
 const int NumOfCardsForShape = 13;
 const int NumOfCardsForPlayer = 2;

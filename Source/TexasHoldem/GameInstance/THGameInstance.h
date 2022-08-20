@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Manager/THGameDebugManager.h"
 #include "CoreMinimal.h"
+#include "TexasHoldem.h"
 #include "Engine/GameInstance.h"
 #include "THGameInstance.generated.h"
 

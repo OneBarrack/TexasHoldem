@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "Common/THStruct.h"
-#include "Manager/THGamePlayManager.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "TexasHoldem.h"
+#include "Manager/THGamePlayManager.h"
 #include "THPlayerController.generated.h"
 
 class ATHPlayer;
@@ -25,6 +25,7 @@ protected:
 	static const FName InputActionKeyBoard4;
 	static const FName InputActionKeyBoard5;
 	static const FName InputActionKeyBoard6;
+	static const FName InputActionKeyReady;
 
 public:
 	ATHPlayerController();
@@ -36,7 +37,7 @@ public:
 	virtual void SetupInputComponent() override;
 
 public:
-	virtual void Tick(float DeltaSeconds);
+	virtual void Tick(float DeltaSeconds) override;
 
 public:
 	//UFUNCTION(Server, Reliable)
@@ -48,10 +49,15 @@ public:
 	void ActionKeyBoard4();
 	void ActionKeyBoard5();
 	void ActionKeyBoard6();
+	void ActionKeyReady();
 
 	//UFUNCTION(NetMulticast, Reliable)
 	//void MultiActionSpaceBar();
 	//bool MultiActionSpaceBar_Validate() { return true; }
+    // Server
+    UFUNCTION(Server, Reliable)
+    void Server_SetNextBettingRound();
+    void Server_SetNextBettingRound_Implementation();
 
 private:
 	UPROPERTY()

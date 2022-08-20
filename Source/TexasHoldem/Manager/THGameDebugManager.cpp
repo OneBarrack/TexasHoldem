@@ -13,14 +13,14 @@ const FString UTHGameDebugManager::GetEnumAsString(EPlayingCardShape PlayingCard
     return EnumPtr->GetNameStringByIndex((int32)PlayingCardShape);
 }
 
-const FString UTHGameDebugManager::GetEnumAsString(EPlayingCardName PlayingCardShape)
+const FString UTHGameDebugManager::GetEnumAsString(EPlayingCardValue PlayingCardValue)
 {
-    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EPlayingCardName"), true);
+    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EPlayingCardValue"), true);
     if (!EnumPtr)
     {
-        return FString("GetEnumAsString()::EPlayingCardName Invalid");
+        return FString("GetEnumAsString()::EPlayingCardValue Invalid");
     }
-    return EnumPtr->GetNameStringByIndex((int32)PlayingCardShape);
+    return EnumPtr->GetNameStringByIndex((int32)PlayingCardValue);
 }
 
 const FString UTHGameDebugManager::GetEnumAsString(EBettingRound BettingRound)

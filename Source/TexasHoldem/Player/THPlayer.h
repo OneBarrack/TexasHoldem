@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "Common/THStruct.h"
+#include "TexasHoldem.h"
 #include "THPlayer.generated.h"
 
 UCLASS()
@@ -28,8 +28,4 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-private:
-	UPROPERTY()
-	TArray<FPlayingCard> HandCards;
 };
