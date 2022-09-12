@@ -4,7 +4,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BlankProgram\BlankProgram.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BlankProgram\BlankProgram.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{914B9194-8D24-4B68-AF53-7838B7F8F796}</UniqueIdentifier>
+      <UniqueIdentifier>{F9B95E39-A59E-48D4-B791-A364AFC04DBF}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BlankProgram\Private\BlankProgram.cpp">
       <Filter>Private</Filter>
@@ -13,10 +13,10 @@
       <Filter>Private</Filter>
     </ClInclude>
     <Filter Include="Resources">
-      <UniqueIdentifier>{5186F0C1-10BF-47C1-9E09-A723D3F4D5AD}</UniqueIdentifier>
+      <UniqueIdentifier>{D50B19D4-8810-423B-A4E1-291795D1B56B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Windows">
-      <UniqueIdentifier>{6DDA639F-A5C4-471A-A7D8-0F9748E1E3D3}</UniqueIdentifier>
+      <UniqueIdentifier>{882F7476-C723-4DD6-94AC-64CCD00253DB}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BlankProgram\Resources\Windows\BlankProgram.ico">
       <Filter>Resources\Windows</Filter>

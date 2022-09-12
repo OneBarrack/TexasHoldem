@@ -4,13 +4,13 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\HeadlessChaos.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\HeadlessChaos.Build.cs" />
     <Filter Include="Merge">
-      <UniqueIdentifier>{B2FC0260-FAD3-4688-84E2-0133BBDEF9AF}</UniqueIdentifier>
+      <UniqueIdentifier>{99D0AEAB-EC12-424E-BAFE-8EA4731FA8E3}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\Merge\merge.py">
       <Filter>Merge</Filter>
     </None>
     <Filter Include="Private">
-      <UniqueIdentifier>{32740125-D280-482D-B392-E3BB8B3A9E7B}</UniqueIdentifier>
+      <UniqueIdentifier>{6FECF3AD-E741-4801-9CAF-9E68E613EBA6}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\Private\HeadlessChaosApp.cpp">
       <Filter>Private</Filter>
@@ -175,7 +175,7 @@
       <Filter>Private</Filter>
     </ClCompile>
     <Filter Include="Private\GeometryCollection">
-      <UniqueIdentifier>{2FB86940-A2CD-45CF-B54B-61035582AAF5}</UniqueIdentifier>
+      <UniqueIdentifier>{0D43A2A3-07F8-4689-B146-E2F108BCE4D8}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\Private\GeometryCollection\GeometryCollectionTestBoneHierarchy.cpp">
       <Filter>Private\GeometryCollection</Filter>
@@ -259,7 +259,7 @@
       <Filter>Private\GeometryCollection</Filter>
     </ClCompile>
     <Filter Include="Public">
-      <UniqueIdentifier>{3E9EBDC0-1054-4CDB-B14B-24435BF72766}</UniqueIdentifier>
+      <UniqueIdentifier>{7FBCA711-8954-4AF7-987E-C8863C1D825B}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\Public\HeadlessChaos.h">
       <Filter>Public</Filter>
@@ -331,7 +331,7 @@
       <Filter>Public</Filter>
     </ClInclude>
     <Filter Include="Public\GeometryCollection">
-      <UniqueIdentifier>{42E057C0-2268-4CA5-A0A8-0CBDB4B1CB9A}</UniqueIdentifier>
+      <UniqueIdentifier>{9654EA43-1A1A-40BC-A6D0-98077822C3D5}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\Public\GeometryCollection\GeometryCollectionTest.h">
       <Filter>Public\GeometryCollection</Filter>
@@ -418,7 +418,7 @@
       <Filter>Public\GeometryCollection</Filter>
     </ClInclude>
     <Filter Include="Resource">
-      <UniqueIdentifier>{720667EE-7519-4344-8401-014450BE08BD}</UniqueIdentifier>
+      <UniqueIdentifier>{6DCFEDE7-20A3-4704-B556-31840F215401}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\HeadlessChaos\Resource\BoxGeometry.cpp">
       <Filter>Resource</Filter>

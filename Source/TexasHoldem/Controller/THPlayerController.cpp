@@ -24,14 +24,21 @@ ATHPlayerController::ATHPlayerController()
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	bEnableTouchEvents = true;
-	DefaultMouseCursor = EMouseCursor::Crosshairs;
+	DefaultMouseCursor = EMouseCursor::Default;
 }
 
 void ATHPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GamePlayMgr = NewObject<UTHGamePlayManager>(this);
+	GamePlayMgr = NewObject<UTHHoldemPlayManager>(this);
+
+	if (ATHPlayerState* THPlayerState = GetPlayerState())
+	{
+		THPlayerState->SetPlayerController(this);
+	}
+
+	SetInputMode(FInputModeGameAndUI());
 }
 
 void ATHPlayerController::PostInitializeComponents()
@@ -40,12 +47,17 @@ void ATHPlayerController::PostInitializeComponents()
 
 	if (HasAuthority())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Server - %s::PostInitializeComponents"), *GetName());
+		UE_LOG(LogTemp, Log, TEXT("[%s][%s] Server"), ANSI_TO_TCHAR(__FUNCTION__), *GetName());
 	}
 	else
 	{
-		UE_LOG(LogTemp, Log, TEXT("Client - %s::PostInitializeComponents"), *GetName());
+		UE_LOG(LogTemp, Log, TEXT("[%s][%s] Client"), ANSI_TO_TCHAR(__FUNCTION__), *GetName());
 	}
+}
+
+void ATHPlayerController::Init()
+{
+	PlayerActionActivateInfo = FPlayerActionActivateInfo();
 }
 
 void ATHPlayerController::OnPossess(APawn* aPawn)
@@ -74,72 +86,331 @@ void ATHPlayerController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
+void ATHPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	
+	DOREPLIFETIME(ATHPlayerController, PlayerActionActivateInfo);
+}
+
+ATHGameMode* ATHPlayerController::GetGameMode() const
+{
+	return GetWorld() ? Cast<ATHGameMode>(GetWorld()->GetAuthGameMode()) : nullptr;
+}
+
+ATHGameState* ATHPlayerController::GetGameState() const
+{
+	return GetWorld() ? Cast<ATHGameState>(GetWorld()->GetGameState()) : nullptr;
+}
+
+ATHPlayerState* ATHPlayerController::GetPlayerState() const
+{
+	return Cast<ATHPlayerState>(PlayerState);
+}
+
+ATHPlayer* ATHPlayerController::GetPlayerPawn() const
+{
+	return Cast<ATHPlayer>(GetPawn());
+}
+
+const FPlayerActionActivateInfo ATHPlayerController::GetPlayerActionActivateInfo()
+{
+	return PlayerActionActivateInfo;
+}
+
+void ATHPlayerController::ToggleReadyState()
+{
+    Server_ToggleReadyState();
+}
+
+void ATHPlayerController::ActionQuarter()
+{
+	Server_SendNotifyPlayerAction(
+		EPlayerAction::Quarter, 
+		PlayerActionActivateInfo.RequiredMoneyForCall,
+		PlayerActionActivateInfo.RequiredMoneyForQuarter);
+}
+
+void ATHPlayerController::ActionHalf()
+{
+	Server_SendNotifyPlayerAction(
+		EPlayerAction::Half, 
+		PlayerActionActivateInfo.RequiredMoneyForCall,
+		PlayerActionActivateInfo.RequiredMoneyForHalf);
+}
+
+void ATHPlayerController::ActionFull()
+{
+	Server_SendNotifyPlayerAction(
+		EPlayerAction::Full, 
+		PlayerActionActivateInfo.RequiredMoneyForCall,
+		PlayerActionActivateInfo.RequiredMoneyForFull);
+}
+
+void ATHPlayerController::ActionRaise(const int32 RaiseMoney)
+{
+	Server_SendNotifyPlayerAction(
+		EPlayerAction::Raise,
+		PlayerActionActivateInfo.RequiredMoneyForCall,
+		RaiseMoney);
+}
+
+void ATHPlayerController::ActionAllin()
+{
+	int32 CallMoney = 0;
+	int32 RaiseMoney = 0;
+
+    ATHPlayerState* THPlayerState = GetPlayerState();
+    ATHGameState* THGameState = GetGameState();
+	if (IsValid(THGameState) && IsValid(THPlayerState))
+	{
+		int32 PlayerMoney = THPlayerState->GetMoney(); // 플레이어 머니
+		int32 MinRaiseMoney = THGameState->GetMinRaiseMoney();
+		int32 RequiredMoneyForCall = PlayerActionActivateInfo.RequiredMoneyForCall;
+
+		// 콜 + 최소 레이즈 금액을 넘는 금액의 올인이라면 레이즈 로직 진행
+		if (MinRaiseMoney + RequiredMoneyForCall < PlayerMoney)
+		{
+			CallMoney = RequiredMoneyForCall;
+			RaiseMoney = PlayerMoney - CallMoney;
+		}
+		// 콜 + 최소 레이즈 금액을 넘지 못하는 올인이라면 콜 로직 진행
+		else
+		{
+			CallMoney = PlayerMoney;
+		}
+	}
+
+    Server_SendNotifyPlayerAction(EPlayerAction::Allin, CallMoney, RaiseMoney);
+}
+
+void ATHPlayerController::ActionCheck()
+{
+    Server_SendNotifyPlayerAction(EPlayerAction::Check);
+}
+
+void ATHPlayerController::ActionCall()
+{
+    Server_SendNotifyPlayerAction(EPlayerAction::Call, PlayerActionActivateInfo.RequiredMoneyForCall);
+}
+
+void ATHPlayerController::ActionFold()
+{
+	Server_SendNotifyPlayerAction(EPlayerAction::Fold);
+}
+
+void ATHPlayerController::CheckForActionActivate()
+{
+    ATHPlayerState* THPlayerState = GetPlayerState();
+    ATHGameState* THGameState = GetGameState();
+    if (IsValid(THGameState) && IsValid(THPlayerState))
+    {
+        int32 TotalPotMoney = THGameState->GetTotalPotMoney(); // 전체 팟 머니
+		int32 MinRaiseMoney = THGameState->GetMinRaiseMoney();
+        int32 HighRoundBettingMoney = THGameState->GetHighRoundBettingMoney(); // 현재 라운드 내 가장 높은 베팅 머니
+        int32 PlayerRoundBettingMoney = THPlayerState->GetRoundBettingMoney(); // 현재 플레이어의 베팅 머니        
+        int32 PlayerMoney = THPlayerState->GetMoney(); // 플레이어 머니
+
+        // Call
+		int32 CallMoney = HighRoundBettingMoney - PlayerRoundBettingMoney; // 콜을 하기위한 필요 머니
+        if (PlayerMoney < CallMoney)
+        {
+            PlayerActionActivateInfo.bEnabledCall = false;
+        }
+        else
+        {
+            PlayerActionActivateInfo.bEnabledCall = true;
+        }
+        PlayerActionActivateInfo.RequiredMoneyForCall = CallMoney;
+        // 화면 중앙에 보여질 콜에 필요한 머니는 공유되어야 하므로 PlayerState로 전달하여 GameState에서 읽을 수 있도록 한다.
+        THPlayerState->SetRequiredMoneyForCall(CallMoney);
+
+        // Full
+        int32 FullMoney = TotalPotMoney + CallMoney;
+        if (PlayerMoney < CallMoney + FullMoney || FullMoney < MinRaiseMoney)
+        {
+			// 플레이어 보유금액이 콜 + 풀을 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 액션을 취할 수 없다.
+            PlayerActionActivateInfo.bEnabledFull = false;
+        }
+        else
+        {
+            PlayerActionActivateInfo.bEnabledFull = true;
+        }
+        PlayerActionActivateInfo.RequiredMoneyForFull = FullMoney;
+
+        // Half
+        int32 HalfMoney = (TotalPotMoney + CallMoney) / 2;
+        if (PlayerMoney < CallMoney + HalfMoney || HalfMoney < MinRaiseMoney)
+        {
+			// 플레이어 보유금액이 콜 + 하프를 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 액션을 취할 수 없다.
+            PlayerActionActivateInfo.bEnabledHalf = false;
+        }
+        else
+        {
+            PlayerActionActivateInfo.bEnabledHalf = true;
+        }
+        PlayerActionActivateInfo.RequiredMoneyForHalf = HalfMoney;
+
+        // Quarter
+        int32 QuarterMoney = (TotalPotMoney + CallMoney) / 4;
+        if (PlayerMoney < CallMoney + QuarterMoney || QuarterMoney < MinRaiseMoney)
+        {
+			// 플레이어 보유금액이 콜 + 쿼터를 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 액션을 취할 수 없다.
+            PlayerActionActivateInfo.bEnabledQuarter = false;
+        }
+        else
+        {
+            PlayerActionActivateInfo.bEnabledQuarter = true;
+        }
+        PlayerActionActivateInfo.RequiredMoneyForQuarter = QuarterMoney;
+
+        UE_LOG(LogTemp, Log, TEXT("[%s] TotalPotMoney(%d) MinRaiseMoney(%d) HighRoundBettingMoney(%d) PlayerRoundBettingMoney(%d) PlayerMoney(%d) Call(%d) Quarter(%d) Half(%d) Full(%d) Player:%s"), 
+			ANSI_TO_TCHAR(__FUNCTION__), 
+			TotalPotMoney, MinRaiseMoney, HighRoundBettingMoney, PlayerRoundBettingMoney, PlayerMoney, CallMoney, QuarterMoney, HalfMoney, FullMoney, *THPlayerState->GetPlayerNickName());
+    }
+}
+
+void ATHPlayerController::ActionKeyReady()
+{
+    ToggleReadyState();
+    UE_LOG(LogTemp, Log, TEXT("Ready"));
+}
+
+void ATHPlayerController::Server_ToggleReadyState_Implementation()
+{
+    if (!HasAuthority())
+        return;
+
+    if (ATHPlayerState* THPlayerState = GetPlayerState())
+    {
+        THPlayerState->SetReadyState(THPlayerState->IsReady() ^ true);
+    }
+}
+
+void ATHPlayerController::Server_SendNotifyPlayerAction_Implementation(const EPlayerAction& InPlayerAction, int32 CallMoney, int32 RaiseMoney)
+{
+    if (!HasAuthority())
+        return;
+
+	ATHGameMode* THGameMode = GetGameMode();
+	ATHPlayerState* THPlayerState = GetPlayerState();
+    if (IsValid(THGameMode) && IsValid(THPlayerState))
+    {
+		THPlayerState->SetPlayerAction(InPlayerAction);
+        THGameMode->ReceiveNotifyPlayerAction(THPlayerState, CallMoney, RaiseMoney);
+    }
+}
 void ATHPlayerController::ActionSpaceBar()
 {
 	FPlayingCard Card = GamePlayMgr->GetCardFromCardDeck();
-	UE_LOG(LogTemp, Log, TEXT("Get Card! Shape:%s Value:%s, Current card deck count : %d"),
-		*UTHGameDebugManager::GetEnumAsString(Card.Shape), *UTHGameDebugManager::GetEnumAsString(Card.Value), GamePlayMgr->GetCurrentCardDeckCount());
+	UE_LOG(LogTemp, Log, TEXT("[%s] Get Card! Suit:%s Value:%s, Current card deck count : %d"),
+		*UTHGameDebugManager::GetEnumAsString(Card.Suit), *UTHGameDebugManager::GetEnumAsString(Card.Value), GamePlayMgr->GetCurrentCardDeckCount());
 }
 
 void ATHPlayerController::ActionKeyBoard1()
 {
-	GamePlayMgr->SetNextBettingRound();
-	UE_LOG(LogTemp, Log, TEXT("Current Betting Round : %s"), *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->GetBettingRound()));
+	TArray<int32> ggg;
+	ggg.Add(1);
+	ggg.Add(2);
+	ggg.Add(3);
+	ggg.Add(4);
+	ggg.Add(5);
+
+	for (int32 Idx = 0; Idx < ggg.Num(); ++Idx)
+	{
+		if (ggg[Idx] == 2)
+        {
+			ggg.RemoveAt(Idx--);
+			continue;
+		}
+		UE_LOG(LogTemp, Log, TEXT("Count:%d Val:%d"), ggg.Num(), ggg[Idx]);
+	}
+
+    //GamePlayMgr->Init();
+	//GamePlayMgr->SetBettingRound();
+	/*UE_LOG(LogTemp, Log, TEXT("Current Betting Round : %s"), *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->GetBettingRound()));
 	
 	UE_LOG(LogTemp, Log, TEXT("Current Community Card :"));
 	TArray<FPlayingCard> CommunityCard = GamePlayMgr->GetCommunityCards();
 	for (auto& Card : CommunityCard)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Shape:%s, Value:%s"), *UTHGameDebugManager::GetEnumAsString(Card.Shape), *UTHGameDebugManager::GetEnumAsString(Card.Value));
-	}
+		UE_LOG(LogTemp, Log, TEXT("Suit:%s, Value:%s"), *UTHGameDebugManager::GetEnumAsString(Card.Suit), *UTHGameDebugManager::GetEnumAsString(Card.Value));
+	}*/
 }
 
 void ATHPlayerController::ActionKeyBoard2()
 {
 	// Debug
 
-	TArray<FPlayingCard> TempCards;
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Diamond,  EPlayingCardValue::Five });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Clover, EPlayingCardValue::Five });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Six });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::King });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Seven });
-	//TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Queen });
-	//TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Jack });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Diamond,  EPlayingCardValue::Four });
-	TempCards.Add(FPlayingCard{ EPlayingCardShape::Spade,  EPlayingCardValue::Jack });
+	TArray<FPlayingCard> HandCards;
+	TArray<FPlayingCard>& CommunityCards = GamePlayMgr->DebugGetCommunityCards();
+	CommunityCards.Empty();
+
+	HandCards.Add(FPlayingCard{ EPlayingCardSuit::Spades,  EPlayingCardValue::Ace });
+	HandCards.Add(FPlayingCard{ EPlayingCardSuit::Clubs, EPlayingCardValue::Nine });
+	CommunityCards.Add(FPlayingCard{ EPlayingCardSuit::Spades,  EPlayingCardValue::Two });
+	CommunityCards.Add(FPlayingCard{ EPlayingCardSuit::Hearts,  EPlayingCardValue::Seven });
+	CommunityCards.Add(FPlayingCard{ EPlayingCardSuit::Spades,  EPlayingCardValue::Three });
+	CommunityCards.Add(FPlayingCard{ EPlayingCardSuit::Diamonds,  EPlayingCardValue::Jack });
+	CommunityCards.Add(FPlayingCard{ EPlayingCardSuit::Spades,  EPlayingCardValue::Queen });
+
+	FPlayerHandRankInfo PlayerHandRankInfo = GamePlayMgr->GetHandRankInfo(HandCards);
+
+	
+	UE_LOG(LogTemp, Log, TEXT("HandRank:%s"), *UTHGameDebugManager::GetEnumAsString(PlayerHandRankInfo.HandRank));
+	if (PlayerHandRankInfo.HighValuesOfHandRank.Num() > 0)
+	{
+		FString TempStr("");
+		for (EPlayingCardValue& HighValueOfHandRank : PlayerHandRankInfo.HighValuesOfHandRank)
+		{
+			TempStr += *UTHGameDebugManager::GetEnumAsString(HighValueOfHandRank) + FString(", ");
+		}
+
+		UE_LOG(LogTemp, Log, TEXT("HighValuesOfHandRank:%s"), *TempStr);
+	}
+	if (PlayerHandRankInfo.Kickers.Num() > 0)
+	{
+        FString TempStr("");
+        for (FPlayingCard& Kicker : PlayerHandRankInfo.Kickers)
+        {
+			TempStr += FString("[") +
+				*UTHGameDebugManager::GetEnumAsString(Kicker.Suit) + FString("_") +
+				*UTHGameDebugManager::GetEnumAsString(Kicker.Value) + FString("], ");
+        }
+		UE_LOG(LogTemp, Log, TEXT("KickerList:%s"), *TempStr);
+	}
 
 	// All
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
-    //	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::None)));
+    //	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::None)));
 
 	// RoyalFlush
 	//UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
-	//	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::RoyalFlush)));
+	//	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::RoyalFlush)));
 
     // StraightFlush
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
-	//	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::StraightFlush)));
+	//	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::StraightFlush)));
 
 	// FourOfAKind
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::FourOfAKind)));
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::FourOfAKind)));
 
     // FullHouse
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::FullHouse)));
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::FullHouse)));
 
     // Flush
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::Flush)));
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::Flush)));
 
     // Straight
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::Straight)));
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::Straight)));
 
 	// ThreeOfAKind (Triple)
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::ThreeOfAKind)));
+    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::ThreeOfAKind)));
 
     // TwoPair
     //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
@@ -152,9 +423,8 @@ void ATHPlayerController::ActionKeyBoard2()
 
 void ATHPlayerController::ActionKeyBoard3()
 {
-	auto THPlayerState = Cast<ATHPlayerState>(PlayerState);
-	THPlayerState->Server_ToggleReady();
-	UE_LOG(LogTemp, Log, TEXT("Player Ready :%d "), THPlayerState->GetReadyState());
+	//THPlayerState->Server_ToggleReady();
+	UE_LOG(LogTemp, Log, TEXT("Player Ready :%d "), GetPlayerState()->IsReady());
 
     auto THGameState = Cast<ATHGameState>(GetWorld()->GetGameState());
     TArray<FPlayingCard> CommunityCards = THGameState->GetCommunityCards();
@@ -167,41 +437,9 @@ void ATHPlayerController::ActionKeyBoard4()
 
 void ATHPlayerController::ActionKeyBoard5()
 {
+    
 }
 
 void ATHPlayerController::ActionKeyBoard6()
 {
 }
-
-void ATHPlayerController::ActionKeyReady()
-{
-	UE_LOG(LogTemp, Log, TEXT("Ready"));
-	Server_SetNextBettingRound();
-}
-
-void ATHPlayerController::Server_SetNextBettingRound_Implementation()
-{
-    if (ATHGameMode* THGameMode = Cast<ATHGameMode>(GetWorld()->GetAuthGameMode()))
-    {
-		THGameMode->StartNextBettingRound();
-    }
-}
-
-//void ATHPlayerController::ActionSpaceBar_Implementation()
-//{
-//	if (HasAuthority())
-//	{
-//		UE_LOG(LogTemp, Log, TEXT("Server Hello~~"));
-//	}
-//	else
-//	{
-//		UE_LOG(LogTemp, Log, TEXT("Client Hello~~"));
-//	}
-//	
-//	MultiActionSpaceBar();
-//}
-//
-//void ATHPlayerController::MultiActionSpaceBar_Implementation()
-//{
-//	UE_LOG(LogTemp, Log, TEXT("MultiCast Hello~~"));
-//}

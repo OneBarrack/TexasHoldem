@@ -4,16 +4,16 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UE4EditorServices\UE4EditorServices.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UE4EditorServices\UE4EditorServices.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{6186FD84-FF18-442F-8F18-CEB074278442}</UniqueIdentifier>
+      <UniqueIdentifier>{34FD1C8A-24B7-4A25-8969-AB12E5573E4E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Linux">
-      <UniqueIdentifier>{1081491E-7D0B-4E6C-A673-FA793E546E32}</UniqueIdentifier>
+      <UniqueIdentifier>{A07C1D00-3EFF-4EF1-A1DA-A1272CE0B8BA}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UE4EditorServices\Private\Linux\UE4EditorServicesMain.cpp">
       <Filter>Private\Linux</Filter>
     </ClCompile>
     <Filter Include="Private\Mac">
-      <UniqueIdentifier>{2FE2023E-2F1C-4B40-AA5A-7472CFAEC71E}</UniqueIdentifier>
+      <UniqueIdentifier>{051E33B3-BC6D-431E-90A0-8B17EDDADB93}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UE4EditorServices\Private\Mac\UE4EditorServicesAppDelegate.cpp">
       <Filter>Private\Mac</Filter>
@@ -25,16 +25,16 @@
       <Filter>Private\Mac</Filter>
     </ClCompile>
     <Filter Include="Private\Windows">
-      <UniqueIdentifier>{82339030-78A9-46B3-A829-29457296ADF2}</UniqueIdentifier>
+      <UniqueIdentifier>{E4A7A1C0-4FC6-4243-8FBD-F164BA444C4F}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UE4EditorServices\Private\Windows\UE4EditorServicesMain.cpp">
       <Filter>Private\Windows</Filter>
     </ClCompile>
     <Filter Include="Resources">
-      <UniqueIdentifier>{6BF624D1-3D9C-4472-ACE9-CC52A439094D}</UniqueIdentifier>
+      <UniqueIdentifier>{96EC02ED-E843-4FC9-9EE8-9F086EABF4E5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Mac">
-      <UniqueIdentifier>{D1BEE4DB-A1B9-4607-8779-5CE5751B61B8}</UniqueIdentifier>
+      <UniqueIdentifier>{FF6B3FD6-9B10-4D50-B998-5E3845D74614}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Mac\UE4EditorServices\Resources\Mac\Info.plist">
       <Filter>Resources\Mac</Filter>

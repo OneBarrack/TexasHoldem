@@ -60,10 +60,7 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ATHPawn)
 
 
-#define TexasHoldem_Source_TexasHoldem_THPawn_h_12_PRIVATE_PROPERTY_OFFSET \
-	FORCEINLINE static uint32 __PPO__CurrentBlockFocus() { return STRUCT_OFFSET(ATHPawn, CurrentBlockFocus); }
-
-
+#define TexasHoldem_Source_TexasHoldem_THPawn_h_12_PRIVATE_PROPERTY_OFFSET
 #define TexasHoldem_Source_TexasHoldem_THPawn_h_9_PROLOG
 #define TexasHoldem_Source_TexasHoldem_THPawn_h_12_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \

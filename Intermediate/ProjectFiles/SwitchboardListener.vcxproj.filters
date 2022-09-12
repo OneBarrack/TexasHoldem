@@ -5,7 +5,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\SwitchboardListener\ReadMe.md" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\SwitchboardListener\SwitchboardListener.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{5D3CC89C-11A1-4294-8DCA-9F81DE22AC41}</UniqueIdentifier>
+      <UniqueIdentifier>{F0AB6A99-8AAE-44A5-953D-E5A015ABC847}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\SwitchboardListener\Private\CpuUtilizationMonitor.cpp">
       <Filter>Private</Filter>
@@ -47,7 +47,7 @@
       <Filter>Private</Filter>
     </ClInclude>
     <Filter Include="Private\Windows">
-      <UniqueIdentifier>{CFB1E394-44D1-4A3E-B3BF-1F4059C280A3}</UniqueIdentifier>
+      <UniqueIdentifier>{E1E5F94F-0752-4B6F-8EF0-FCC0D6D09B99}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\SwitchboardListener\Private\Windows\WindowsCpuUtilizationMonitor.cpp">
       <Filter>Private\Windows</Filter>
@@ -56,7 +56,7 @@
       <Filter>Private\Windows</Filter>
     </ClInclude>
     <Filter Include="Private\Windows\Resources">
-      <UniqueIdentifier>{FA040DFD-5D21-47DD-BEE7-B20184DE768A}</UniqueIdentifier>
+      <UniqueIdentifier>{DB04B364-AC4F-4BB9-B18E-182852D8097B}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\SwitchboardListener\Private\Windows\Resources\Icon.ico">
       <Filter>Private\Windows\Resources</Filter>
@@ -71,7 +71,7 @@
       <Filter>Private\Windows\Resources</Filter>
     </None>
     <Filter Include="Tests">
-      <UniqueIdentifier>{0A8D0342-01FF-4107-8B8D-5996305945DA}</UniqueIdentifier>
+      <UniqueIdentifier>{301A0EAF-2B05-42A6-9434-C51F4874D390}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\SwitchboardListener\Tests\listener_tests.py">
       <Filter>Tests</Filter>

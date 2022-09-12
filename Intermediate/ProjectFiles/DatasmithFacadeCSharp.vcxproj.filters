@@ -7,7 +7,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithFacadeCSharp\FacadeHeaderHelper.py" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithFacadeCSharp\ReadMe.txt" />
     <Filter Include="Private">
-      <UniqueIdentifier>{4A28A666-689B-45D6-B7B3-AB85A3907974}</UniqueIdentifier>
+      <UniqueIdentifier>{6AA180C3-EBE6-4560-AE4A-0FA31773BB9A}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithFacadeCSharp\Private\DatasmithFacadeCSharp.cpp">
       <Filter>Private</Filter>
@@ -19,7 +19,7 @@
       <Filter>Private</Filter>
     </ClCompile>
     <Filter Include="Public">
-      <UniqueIdentifier>{584B4FD6-B605-4D12-929A-A8D14C01F9DD}</UniqueIdentifier>
+      <UniqueIdentifier>{AD540A02-AA54-4FFA-917A-1722EE2FB4B6}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\Enterprise\Datasmith\DatasmithFacadeCSharp\Public\DatasmithFacadeCSharp.cs">
       <Filter>Public</Filter>

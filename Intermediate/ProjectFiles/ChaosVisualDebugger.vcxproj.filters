@@ -4,7 +4,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\ChaosVisualDebugger.Target.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\ChaosVisualDebugger.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{B25019D4-B9DB-40B6-B816-25FD146440D5}</UniqueIdentifier>
+      <UniqueIdentifier>{29D5C1B5-AC64-41D4-ADAA-AF5D2DC4BF43}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\Private\ChaosVisualDebuggerMain.cpp">
       <Filter>Private</Filter>
@@ -19,19 +19,19 @@
       <Filter>Private</Filter>
     </ClInclude>
     <Filter Include="Private\Linux">
-      <UniqueIdentifier>{C0D28172-F671-4499-B91A-7ED5BC0C91DF}</UniqueIdentifier>
+      <UniqueIdentifier>{03B7A1B3-2183-495C-969B-8452209F3053}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\Private\Linux\ChaosVisualDebuggerLinux.cpp">
       <Filter>Private\Linux</Filter>
     </ClCompile>
     <Filter Include="Private\Mac">
-      <UniqueIdentifier>{60A7AE42-B605-4800-B7D6-A7F42AC78950}</UniqueIdentifier>
+      <UniqueIdentifier>{73F910EB-390E-4812-813B-3DB10C0156FC}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\Private\Mac\ChaosVisualDebuggerMac.cpp">
       <Filter>Private\Mac</Filter>
     </ClCompile>
     <Filter Include="Private\Windows">
-      <UniqueIdentifier>{F8410FD9-88E6-47F0-98EC-20EE867D0919}</UniqueIdentifier>
+      <UniqueIdentifier>{85293FBF-4258-4880-9425-F6C2B7AB1974}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\Private\Windows\ChaosVisualDebuggerWindows.cpp">
       <Filter>Private\Windows</Filter>
@@ -40,10 +40,10 @@
       <Filter>Private\Windows</Filter>
     </ClInclude>
     <Filter Include="Resources">
-      <UniqueIdentifier>{2E136170-5769-4BAA-A982-A73863879812}</UniqueIdentifier>
+      <UniqueIdentifier>{4ED60937-9A2B-4103-8B43-2130AD7D2AFC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Windows">
-      <UniqueIdentifier>{ECEA1072-7A77-4E29-887A-7F8164D084F8}</UniqueIdentifier>
+      <UniqueIdentifier>{5B809EA8-3BD7-4BD5-82DF-A6ECA6B1D547}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ChaosVisualDebugger\Resources\Windows\ChaosVisualDebugger.ico">
       <Filter>Resources\Windows</Filter>

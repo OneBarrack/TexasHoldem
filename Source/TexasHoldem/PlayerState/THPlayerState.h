@@ -7,6 +7,9 @@
 #include "TexasHoldem.h"
 #include "THPlayerState.generated.h"
 
+class ATHGameState;
+class ATHPlayerController;
+
 UCLASS()
 class TEXASHOLDEM_API ATHPlayerState : public APlayerState
 {
@@ -15,43 +18,168 @@ class TEXASHOLDEM_API ATHPlayerState : public APlayerState
 public:
     ATHPlayerState();
 
+public:
+    void Init();
+
 protected:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+    virtual void BeginPlay() override;
 
 public:
-    UFUNCTION()
-    void OnRep_Ready();
+    UFUNCTION(BlueprintPure)
+    ATHGameState* GetGameState() const;
+
+    UFUNCTION(BlueprintPure)
+    ATHPlayerController* GetPlayerController() const;
 
     UFUNCTION()
-    bool GetReadyState(); 
+    void SetPlayerController(ATHPlayerController* InTHPlayerController);
+
+public:
+    UFUNCTION(BlueprintPure)
+    const bool IsReady() const;
+
+    UFUNCTION(BlueprintPure)
+    const int32 GetTableSeattingPos() const;
+
+    UFUNCTION(BlueprintPure)
+    const EPlayerTurnState GetPlayerTurnState() const;
+
+    UFUNCTION(BlueprintPure)
+    const FString GetPlayerNickName() const;
+
+    UFUNCTION(BlueprintPure)
+    const EPlayerRole GetPlayerRole() const;
+
+    UFUNCTION(BlueprintPure)
+    const int32 GetMoney() const;
+
+    UFUNCTION(BlueprintPure)
+    const int32 GetRequiredMoneyForCall() const;
     
-    // Server
-    UFUNCTION(Reliable, Server)
-    void Server_ToggleReady(); 
-    void Server_ToggleReady_Implementation();
+    UFUNCTION(BlueprintPure)
+    const int32 GetBettingMoney() const;
 
-private:
-    // 레디 상태 변경
-    void ToggleReady();
+    UFUNCTION(BlueprintPure)
+    const int32 GetRoundBettingMoney() const;
+
+    UFUNCTION(BlueprintPure)
+    const int32 GetRewardMoney() const;
+
+    UFUNCTION(BlueprintPure)
+    const EPlayerAction GetPlayerAction() const;
+
+    UFUNCTION(BlueprintPure)
+    const FPlayerHandRankInfo GetPlayerHandRankInfo() const;
+
+    UFUNCTION(BlueprintPure)
+    TArray<FPlayingCard> GetHandCards() const;
+
+    UFUNCTION(BlueprintCallable)
+    void SetReadyState(const bool& bInReady);
+
+    UFUNCTION(BlueprintCallable)
+    void SetTableSeattingPos(const int32& InTableSeattingPos);
+
+    UFUNCTION(BlueprintCallable)
+    void SetPlayerTurnState(const EPlayerTurnState& InPlayerTurnState);
+
+    UFUNCTION(BlueprintCallable)
+    void SetPlayerNickName(const FString& InPlayerNickName);
+
+    UFUNCTION(BlueprintCallable)
+    void SetPlayerRole(const EPlayerRole& InPlayerRole);
+
+    UFUNCTION(BlueprintCallable)
+    void SetMoney(const int32& InMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void AddMoney(const int32& InMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void SetRequiredMoneyForCall(const int32& InRequiredMoneyForCall);
+
+    UFUNCTION(BlueprintCallable)
+    void SetBettingMoney(const int32& InBettingMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void AddBettingMoney(const int32& InBettingMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void SetRoundBettingMoney(const int32& InRoundBettingMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void AddRoundBettingMoney(const int32& InRoundBettingMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void SetRewardMoney(const int32& InRewardMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void AddRewardMoney(const int32& InRewardMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void SetPlayerAction(const EPlayerAction& InPlayerAction);
+
+    UFUNCTION(BlueprintCallable)
+    void SetPlayerHandRankInfo(const FPlayerHandRankInfo InHandRankInfo);
+
+    UFUNCTION(BlueprintCallable)
+    void SetHandCards(const TArray<FPlayingCard>& InHandCards);
 
 private:
     // 레디 상태
-    UPROPERTY(ReplicatedUsing = OnRep_Ready)
+    UPROPERTY(Replicated)
     bool bReady = false;
 
-    // 플레이어 이름
-    UPROPERTY()
-    FString PlayerName = FString(TEXT("Anonymous"));
+    // 테이블 내 앉은 자리
+    UPROPERTY(Replicated)
+    int32 TableSeattingPos = 0;
 
-    // 플레이어 포지션
-    UPROPERTY()
-    EPlayerPosition PlayerPosition = EPlayerPosition::None;
+    // 플레이어 턴 상태
+    UPROPERTY(Replicated)
+    EPlayerTurnState PlayerTurnState;
 
-    // 플레이어 액션
-    UPROPERTY()
+    // 이름
+    UPROPERTY(Replicated)
+    FString PlayerNickName = FString(TEXT("Anonymous"));
+
+    // 포지션
+    UPROPERTY(Replicated)
+    EPlayerRole PlayerRole = EPlayerRole::None;
+
+    // 보유 금액
+    UPROPERTY(Replicated)
+    int32 Money = StartPlayerMoney;
+
+    // 현재 턴에서 콜 하기 위해 필요한 금액
+    UPROPERTY(Replicated)
+    int32 RequiredMoneyForCall = 0;
+
+    // 총 베팅 금액
+    UPROPERTY(Replicated)
+    int32 BettingMoney = 0;
+
+    // 라운드 내 베팅 금액
+    UPROPERTY(Replicated)
+    int32 RoundBettingMoney = 0;
+
+    // 획득 금액
+    UPROPERTY(Replicated)
+    int32 RewardMoney = 0;
+
+    // 액션
+    UPROPERTY(Replicated)
     EPlayerAction PlayerAction = EPlayerAction::None;
 
-    // 플레이어 핸드카드
-    UPROPERTY()
+    // 핸드랭크 정보
+    UPROPERTY(Replicated)
+    FPlayerHandRankInfo HandRankInfo;
+
+    // 핸드카드
+    UPROPERTY(Replicated)
     TArray<FPlayingCard> HandCards;
+
+private:
+    UPROPERTY()
+    ATHPlayerController* THPlayerController = nullptr;
 };

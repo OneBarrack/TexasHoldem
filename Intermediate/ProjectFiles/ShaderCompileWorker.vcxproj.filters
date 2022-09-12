@@ -3,20 +3,20 @@
   <ItemGroup>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ShaderCompileWorker\ShaderCompileWorker.Target.cs" />
     <Filter Include="Config">
-      <UniqueIdentifier>{C9249272-9189-4260-A15A-95DA1110EE43}</UniqueIdentifier>
+      <UniqueIdentifier>{A2E5E3D7-E4E2-4AD4-90AE-84C9A9AF3152}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Programs\ShaderCompileWorker\Config\DefaultEngine.ini">
       <Filter>Config</Filter>
     </None>
     <Filter Include="Config\Mac">
-      <UniqueIdentifier>{E5B16660-DA45-470E-BD29-8073BBECCBB7}</UniqueIdentifier>
+      <UniqueIdentifier>{ABCD7FCD-2E5E-4934-91CD-B9BDCAE56FF1}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Programs\ShaderCompileWorker\Config\Mac\MacEngine.ini">
       <Filter>Config\Mac</Filter>
     </None>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ShaderCompileWorker\ShaderCompileWorker.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{7BE820BF-C7C7-4619-8F9B-A692290BD7ED}</UniqueIdentifier>
+      <UniqueIdentifier>{E7ECD0A9-758C-4E59-9CBE-899D9CF0F14D}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\ShaderCompileWorker\Private\ShaderCompileWorker.cpp">
       <Filter>Private</Filter>

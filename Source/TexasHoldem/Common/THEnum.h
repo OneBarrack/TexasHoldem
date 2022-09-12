@@ -7,13 +7,13 @@
 #include "THEnum.generated.h"
 
 UENUM(BlueprintType)
-enum class EPlayingCardShape : uint8
+enum class EPlayingCardSuit : uint8
 {
     None = 0,
-    Spade,
-    Diamond,
-    Heart,
-    Clover,
+    Spades,
+    Diamonds,
+    Hearts,
+    Clubs,
     Max
 };
 
@@ -22,7 +22,6 @@ enum class EPlayingCardValue : uint8
 {
     None = 0,
     Ace,
-    One,
     Two,
     Three,
     Four,
@@ -39,6 +38,22 @@ enum class EPlayingCardValue : uint8
 };
 
 UENUM(BlueprintType)
+enum class EGamePlayState : uint8
+{
+    None = 0,
+    Prepare,
+    StartUp,
+    PreFlop,
+    Flop,
+    Turn,
+    River,
+    Betting,
+    Showdown,
+    FinishUp,    
+    Wait
+};
+
+UENUM(BlueprintType)
 enum class EBettingRound : uint8
 {
     None = 0,
@@ -50,38 +65,51 @@ enum class EBettingRound : uint8
 };
 
 UENUM(BlueprintType)
-enum class EHandRanking : uint8
+enum class EHandRank : uint8
 {
     None = 0,
-    RoyalFlush,
-    StraightFlush,
-    FourOfAKind,
-    FullHouse,
-    Flush,
-    Straight,
-    ThreeOfAKind,
-    TwoPair,
-    OnePair,
     HighCard,
+    OnePair,
+    TwoPair,
+    ThreeOfAKind,
+    Straight,
+    Flush,
+    FullHouse,
+    FourOfAKind,
+    StraightFlush,
+    RoyalFlush,
     Max
 };
 
 UENUM(BlueprintType)
-enum class EPlayerPosition : uint8
+enum class EPlayerRole : uint8
 {
     None = 0,
-    Button,
+    Dealer,
     SmallBlind,
-    BigBlind
+    BigBlind,
+    Max
 };
 
 UENUM(BlueprintType)
 enum class EPlayerAction : uint8
 {
     None = 0,
-    Check,
-    Bet,
-    Call,
+    Quarter,
+    Half,
+    Full,
     Raise,
-    Fold
+    Allin,
+    Check,
+    Call,
+    Fold    
+};
+
+UENUM(BlueprintType)
+enum class EPlayerTurnState : uint8
+{
+    None = 0,
+    Wait,
+    InProgress,
+    Done,
 };

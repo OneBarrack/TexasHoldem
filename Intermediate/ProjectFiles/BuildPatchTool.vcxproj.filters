@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\BuildPatchTool.Target.cs" />
     <Filter Include="Config">
-      <UniqueIdentifier>{8404105F-BFC3-4B8C-AE6C-86D7C8EEBC2F}</UniqueIdentifier>
+      <UniqueIdentifier>{00DA3343-9B79-447F-A15D-121679C88698}</UniqueIdentifier>
     </Filter>
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Programs\BuildPatchTool\Config\DefaultEngine.ini">
       <Filter>Config</Filter>
@@ -11,7 +11,7 @@
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\BuildPatchTool.Automation.cs" />
     <None Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\BuildPatchTool.Build.cs" />
     <Filter Include="Private">
-      <UniqueIdentifier>{A3E8837B-6A61-4182-83EF-CCF48D063E69}</UniqueIdentifier>
+      <UniqueIdentifier>{94A595EC-7E9B-4AB4-9008-63DCB1A72148}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\Private\BuildPatchTool.cpp">
       <Filter>Private</Filter>
@@ -20,7 +20,7 @@
       <Filter>Private</Filter>
     </ClCompile>
     <Filter Include="Private\ToolModes">
-      <UniqueIdentifier>{4309B1A6-9E63-4492-B2AB-7623245F4157}</UniqueIdentifier>
+      <UniqueIdentifier>{86642C36-1DBA-4AD4-9549-5CA198FE0A9D}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\Private\ToolModes\AutomationMode.cpp">
       <Filter>Private\ToolModes</Filter>
@@ -50,19 +50,19 @@
       <Filter>Private\ToolModes</Filter>
     </ClCompile>
     <Filter Include="Public">
-      <UniqueIdentifier>{26F5A550-63D4-409C-B2B8-3C1D0EACABF1}</UniqueIdentifier>
+      <UniqueIdentifier>{F32F2DDC-ECE0-4022-9F24-265319C7EF47}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\Public\BuildPatchTool.h">
       <Filter>Public</Filter>
     </ClInclude>
     <Filter Include="Public\Interfaces">
-      <UniqueIdentifier>{4FAF7B44-A459-478F-B0B3-8672E67CDD0F}</UniqueIdentifier>
+      <UniqueIdentifier>{41A6D9D1-0EF4-4300-A8C7-05B64A88E4BB}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\Public\Interfaces\ToolMode.h">
       <Filter>Public\Interfaces</Filter>
     </ClInclude>
     <Filter Include="Public\ToolModes">
-      <UniqueIdentifier>{A5375C83-9EAF-4B23-9A16-78C329BC0B4B}</UniqueIdentifier>
+      <UniqueIdentifier>{B30B15AE-B559-4572-865D-88FB9CB76D45}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="C:\DevProject\UnrealEngine-4.27\Engine\Source\Programs\BuildPatchTool\Public\ToolModes\AutomationMode.h">
       <Filter>Public\ToolModes</Filter>

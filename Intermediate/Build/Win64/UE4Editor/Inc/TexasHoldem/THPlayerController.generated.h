@@ -8,33 +8,91 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+enum class EPlayerAction : uint8;
+struct FPlayerActionActivateInfo;
 #ifdef TEXASHOLDEM_THPlayerController_generated_h
 #error "THPlayerController.generated.h already included, missing '#pragma once' in THPlayerController.h"
 #endif
 #define TEXASHOLDEM_THPlayerController_generated_h
 
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_SPARSE_DATA
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS_NO_PURE_DECLS
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS_NO_PURE_DECLS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_SPARSE_DATA
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_RPC_WRAPPERS \
+	virtual void Server_SendNotifyPlayerAction_Implementation(EPlayerAction const& InPlayerAction, int32 CallMoney, int32 RaiseMoney); \
+	virtual void Server_ToggleReadyState_Implementation(); \
+ \
+	DECLARE_FUNCTION(execServer_SendNotifyPlayerAction); \
+	DECLARE_FUNCTION(execServer_ToggleReadyState); \
+	DECLARE_FUNCTION(execActionFold); \
+	DECLARE_FUNCTION(execActionCall); \
+	DECLARE_FUNCTION(execActionCheck); \
+	DECLARE_FUNCTION(execActionAllin); \
+	DECLARE_FUNCTION(execActionRaise); \
+	DECLARE_FUNCTION(execActionFull); \
+	DECLARE_FUNCTION(execActionHalf); \
+	DECLARE_FUNCTION(execActionQuarter); \
+	DECLARE_FUNCTION(execToggleReadyState); \
+	DECLARE_FUNCTION(execCheckForActionActivate); \
+	DECLARE_FUNCTION(execGetPlayerActionActivateInfo);
+
+
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execServer_SendNotifyPlayerAction); \
+	DECLARE_FUNCTION(execServer_ToggleReadyState); \
+	DECLARE_FUNCTION(execActionFold); \
+	DECLARE_FUNCTION(execActionCall); \
+	DECLARE_FUNCTION(execActionCheck); \
+	DECLARE_FUNCTION(execActionAllin); \
+	DECLARE_FUNCTION(execActionRaise); \
+	DECLARE_FUNCTION(execActionFull); \
+	DECLARE_FUNCTION(execActionHalf); \
+	DECLARE_FUNCTION(execActionQuarter); \
+	DECLARE_FUNCTION(execToggleReadyState); \
+	DECLARE_FUNCTION(execCheckForActionActivate); \
+	DECLARE_FUNCTION(execGetPlayerActionActivateInfo);
+
+
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_EVENT_PARMS \
+	struct THPlayerController_eventServer_SendNotifyPlayerAction_Parms \
+	{ \
+		EPlayerAction InPlayerAction; \
+		int32 CallMoney; \
+		int32 RaiseMoney; \
+	};
+
+
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_CALLBACK_WRAPPERS
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesATHPlayerController(); \
 	friend struct Z_Construct_UClass_ATHPlayerController_Statics; \
 public: \
 	DECLARE_CLASS(ATHPlayerController, APlayerController, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/TexasHoldem"), NO_API) \
-	DECLARE_SERIALIZER(ATHPlayerController)
+	DECLARE_SERIALIZER(ATHPlayerController) \
+	enum class ENetFields_Private : uint16 \
+	{ \
+		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
+		PlayerActionActivateInfo=NETFIELD_REP_START, \
+		NETFIELD_REP_END=PlayerActionActivateInfo	}; \
+	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_INCLASS \
 private: \
 	static void StaticRegisterNativesATHPlayerController(); \
 	friend struct Z_Construct_UClass_ATHPlayerController_Statics; \
 public: \
 	DECLARE_CLASS(ATHPlayerController, APlayerController, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/TexasHoldem"), NO_API) \
-	DECLARE_SERIALIZER(ATHPlayerController)
+	DECLARE_SERIALIZER(ATHPlayerController) \
+	enum class ENetFields_Private : uint16 \
+	{ \
+		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
+		PlayerActionActivateInfo=NETFIELD_REP_START, \
+		NETFIELD_REP_END=PlayerActionActivateInfo	}; \
+	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_STANDARD_CONSTRUCTORS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ATHPlayerController(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ATHPlayerController) \
@@ -47,7 +105,7 @@ private: \
 public:
 
 
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_ENHANCED_CONSTRUCTORS \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ATHPlayerController(ATHPlayerController&&); \
@@ -58,28 +116,37 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ATHPlayerController)
 
 
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_10_PROLOG
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_GENERATED_BODY_LEGACY \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_PRIVATE_PROPERTY_OFFSET \
+	FORCEINLINE static uint32 __PPO__PlayerActionActivateInfo() { return STRUCT_OFFSET(ATHPlayerController, PlayerActionActivateInfo); } \
+	FORCEINLINE static uint32 __PPO__PossessedPlayer() { return STRUCT_OFFSET(ATHPlayerController, PossessedPlayer); }
+
+
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_17_PROLOG \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_EVENT_PARMS
+
+
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_SPARSE_DATA \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_STANDARD_CONSTRUCTORS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_PRIVATE_PROPERTY_OFFSET \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_SPARSE_DATA \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_RPC_WRAPPERS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_CALLBACK_WRAPPERS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_INCLASS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_GENERATED_BODY \
+#define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_PRIVATE_PROPERTY_OFFSET \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_SPARSE_DATA \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_INCLASS_NO_PURE_DECLS \
-	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_13_ENHANCED_CONSTRUCTORS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_PRIVATE_PROPERTY_OFFSET \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_SPARSE_DATA \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_CALLBACK_WRAPPERS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_INCLASS_NO_PURE_DECLS \
+	TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

@@ -1,12 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "THPlayer.h"
+#include "PlayerState/THPlayerState.h"
+#include "Controller/THPlayerController.h"
 
 // Sets default values
 ATHPlayer::ATHPlayer()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true;	
 }
 
 // Called when the game starts or when spawned
@@ -14,15 +17,24 @@ void ATHPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	// HandCard의 Shape 타입과 숫자 추출
-	//const TCHAR* PlayingCardTypeEnumClassName = TEXT("EPlayingCardShape");
+	// HandCard의 Suit 타입과 숫자 추출
+	//const TCHAR* PlayingCardTypeEnumClassName = TEXT("EPlayingCardSuit");
 	//const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, PlayingCardTypeEnumClassName, true);
 
-	//const FString FirstHandCardTypeName = EnumPtr->GetNameStringByValue((int32)HandCards[0].Shape);
-	//UE_LOG(LogTemp, Log, TEXT("Card1 Shape:%s, Number:%d"), *FirstHandCardTypeName, HandCards[0].Number)
+	//const FString FirstHandCardTypeName = EnumPtr->GetNameStringByValue((int32)HandCards[0].Suit);
+	//UE_LOG(LogTemp, Log, TEXT("Card1 Suit:%s, Number:%d"), *FirstHandCardTypeName, HandCards[0].Number)
 
-	//const FString SecondHandCardTypeName = EnumPtr->GetNameStringByValue((int32)HandCards[1].Shape);
- //   UE_LOG(LogTemp, Log, TEXT("Card1 Shape:%s, Number:%d"), *SecondHandCardTypeName, HandCards[1].Number)
+	//const FString SecondHandCardTypeName = EnumPtr->GetNameStringByValue((int32)HandCards[1].Suit);
+ //   UE_LOG(LogTemp, Log, TEXT("Card1 Suit:%s, Number:%d"), *SecondHandCardTypeName, HandCards[1].Number)
+}
+
+void ATHPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ATHPlayer, PlayerNickName);
+	DOREPLIFETIME(ATHPlayer, PlayerRole);
+	DOREPLIFETIME(ATHPlayer, Money);
 }
 
 // Called every frame
@@ -48,4 +60,29 @@ void ATHPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+ATHPlayerState* ATHPlayer::GetPlayerState() const
+{
+	if (ATHPlayerController* THController = Cast<ATHPlayerController>(GetController()))
+	{
+		return THController->GetPlayerState();
+	}
+
+	return nullptr;
+}
+
+FString ATHPlayer::GetPlayerNickName()
+{
+	return PlayerNickName;
+}
+
+EPlayerRole ATHPlayer::GetPlayerRole()
+{
+	return PlayerRole;
+}
+
+int32 ATHPlayer::GetMoney()
+{
+	return Money;
 }

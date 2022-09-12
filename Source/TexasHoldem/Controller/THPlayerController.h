@@ -5,9 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TexasHoldem.h"
-#include "Manager/THGamePlayManager.h"
+#include "Manager/THHoldemPlayManager.h"
 #include "THPlayerController.generated.h"
 
+class ATHGameMode;
+class ATHGameState;
+class ATHPlayerState;
 class ATHPlayer;
 
 /** PlayerController class used to enable cursor */
@@ -28,7 +31,7 @@ protected:
 	static const FName InputActionKeyReady;
 
 public:
-	ATHPlayerController();
+    ATHPlayerController();
 
 public:
 	virtual void BeginPlay() override;
@@ -36,33 +39,84 @@ public:
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void SetupInputComponent() override;
 
-public:
+protected:
 	virtual void Tick(float DeltaSeconds) override;
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:
-	//UFUNCTION(Server, Reliable)
-	void ActionSpaceBar();
-	//bool ActionSpaceBar_Validate() { return true; }
-	void ActionKeyBoard1();
-	void ActionKeyBoard2();
-	void ActionKeyBoard3();
-	void ActionKeyBoard4();
-	void ActionKeyBoard5();
-	void ActionKeyBoard6();
-	void ActionKeyReady();
+    void Init();
 
-	//UFUNCTION(NetMulticast, Reliable)
-	//void MultiActionSpaceBar();
-	//bool MultiActionSpaceBar_Validate() { return true; }
-    // Server
-    UFUNCTION(Server, Reliable)
-    void Server_SetNextBettingRound();
-    void Server_SetNextBettingRound_Implementation();
+    ATHGameMode* GetGameMode() const;
+	ATHGameState* GetGameState() const;
+	ATHPlayerState* GetPlayerState() const;
+    ATHPlayer* GetPlayerPawn() const;
+
+public:
+    UFUNCTION(BlueprintCallable)
+    const FPlayerActionActivateInfo GetPlayerActionActivateInfo();
+
+    UFUNCTION(BlueprintCallable)
+    void CheckForActionActivate();
+
+	UFUNCTION(BlueprintCallable)
+	void ToggleReadyState();
+
+    UFUNCTION(BlueprintCallable)
+    void ActionQuarter();
+
+    UFUNCTION(BlueprintCallable)
+    void ActionHalf();
+
+    UFUNCTION(BlueprintCallable)
+    void ActionFull();
+
+    UFUNCTION(BlueprintCallable)
+    void ActionRaise(const int32 RaiseMoney);
+
+    UFUNCTION(BlueprintCallable)
+    void ActionAllin();
+
+	UFUNCTION(BlueprintCallable)
+	void ActionCheck();
+
+	UFUNCTION(BlueprintCallable)
+	void ActionCall();
+
+	UFUNCTION(BlueprintCallable)
+	void ActionFold();
 
 private:
-	UPROPERTY()
-    ATHPlayer* PossessedPlayer;
+	// Server
+    UFUNCTION(Server, Reliable)
+    void Server_ToggleReadyState();
+    void Server_ToggleReadyState_Implementation();
+    bool Server_ToggleReadyState_Validate() { return true; }
+
+    UFUNCTION(Server, Reliable)
+    void Server_SendNotifyPlayerAction(const EPlayerAction& InPlayerAction, int32 CallMoney = 0, int32 RaiseMoney = 0);
+	void Server_SendNotifyPlayerAction_Implementation(const EPlayerAction& InPlayerAction, int32 CallMoney = 0, int32 RaiseMoney = 0);
+	bool Server_SendNotifyPlayerAction_Validate(const EPlayerAction& InPlayerAction, int32 CallMoney = 0, int32 RaiseMoney = 0) { return true; }
+
+public: /* Debeg¿ë */    
+    //UFUNCTION(Server, Reliable)
+    void ActionSpaceBar();
+    //bool ActionSpaceBar_Validate() { return true; }
+    void ActionKeyBoard1();
+    void ActionKeyBoard2();
+    void ActionKeyBoard3();
+    void ActionKeyBoard4();
+    void ActionKeyBoard5();
+    void ActionKeyBoard6();
+    void ActionKeyReady();
+    
+    UPROPERTY()
+    UTHHoldemPlayManager* GamePlayMgr = nullptr; //Debug    
+    /////////////////////////
+
+private:
+    UPROPERTY(replicated)
+    FPlayerActionActivateInfo PlayerActionActivateInfo;
 
 	UPROPERTY()
-	UTHGamePlayManager* GamePlayMgr; //Debug
+    ATHPlayer* PossessedPlayer = nullptr;
 };
