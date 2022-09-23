@@ -38,12 +38,14 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void SetupInputComponent() override;
+    virtual void Destroyed() override;
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:
+    UFUNCTION()
     void Init();
 
     ATHGameMode* GetGameMode() const;
@@ -85,6 +87,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ActionFold();
 
+public:
+    UFUNCTION()
+    void HandleNetworkFailure(UWorld* World, UNetDriver* NetDriver, ENetworkFailure::Type FailureType, const FString& ErrorString);
+
 private:
 	// Server
     UFUNCTION(Server, Reliable)
@@ -112,10 +118,18 @@ public: /* Debeg¿ë */
     UPROPERTY()
     UTHHoldemPlayManager* GamePlayMgr = nullptr; //Debug    
     /////////////////////////
+    UFUNCTION(BlueprintCallable)
+    void ChangeHUDWidget(TSubclassOf<UUserWidget> NewHUDWidgetClass);
+
+private:
+    FDelegateHandle NetworkFailureDelegateHandle;
 
 private:
     UPROPERTY(replicated)
     FPlayerActionActivateInfo PlayerActionActivateInfo;
+
+    UPROPERTY()
+    UUserWidget* CurrentHUDWidget = nullptr;
 
 	UPROPERTY()
     ATHPlayer* PossessedPlayer = nullptr;

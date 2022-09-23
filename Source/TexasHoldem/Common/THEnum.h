@@ -44,10 +44,13 @@ enum class EGamePlayState : uint8
     Prepare,
     StartUp,
     PreFlop,
+    PreFlopBetting,
     Flop,
+    FlopBetting,
     Turn,
+    TurnBetting,
     River,
-    Betting,
+    RiverBetting,
     Showdown,
     FinishUp,    
     Wait
@@ -61,7 +64,7 @@ enum class EBettingRound : uint8
     Flop,
     Turn,
     River,
-    Max
+    End
 };
 
 UENUM(BlueprintType)
@@ -78,7 +81,6 @@ enum class EHandRank : uint8
     FourOfAKind,
     StraightFlush,
     RoyalFlush,
-    Max
 };
 
 UENUM(BlueprintType)
@@ -87,8 +89,7 @@ enum class EPlayerRole : uint8
     None = 0,
     Dealer,
     SmallBlind,
-    BigBlind,
-    Max
+    BigBlind
 };
 
 UENUM(BlueprintType)

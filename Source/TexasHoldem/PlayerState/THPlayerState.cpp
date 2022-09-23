@@ -11,17 +11,16 @@ ATHPlayerState::ATHPlayerState()
 
 void ATHPlayerState::Init()
 {
-    bReady                   = false;
-    PlayerTurnState          = EPlayerTurnState::None;
-    PlayerRole               = EPlayerRole::None;
-    BettingMoney             = 0;
-    RoundBettingMoney        = 0;
-    RewardMoney              = 0;
-    PlayerAction             = EPlayerAction::None;
-    HandRankInfo             = FPlayerHandRankInfo();
+    bReady            = true;
+    PlayerTurnState   = EPlayerTurnState::None;
+    PlayerRole        = EPlayerRole::None;
+    BettingMoney      = 0;
+    RoundBettingMoney = 0;
+    ProfitMoney       = 0;
+    PlayerAction      = EPlayerAction::None;
+    bIsWinner         = false;
+    HandRankInfo      = FPlayerHandRankInfo();
     HandCards.Empty();
-
-    GetPlayerController()->Init();
 }
 
 void ATHPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -36,15 +35,18 @@ void ATHPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
     DOREPLIFETIME(ATHPlayerState, RequiredMoneyForCall);
     DOREPLIFETIME(ATHPlayerState, BettingMoney);
     DOREPLIFETIME(ATHPlayerState, RoundBettingMoney);
-    DOREPLIFETIME(ATHPlayerState, RewardMoney);
+    DOREPLIFETIME(ATHPlayerState, ProfitMoney);
     DOREPLIFETIME(ATHPlayerState, PlayerRole);
     DOREPLIFETIME(ATHPlayerState, PlayerAction);
+    DOREPLIFETIME(ATHPlayerState, bIsWinner);
     DOREPLIFETIME(ATHPlayerState, HandRankInfo);
     DOREPLIFETIME(ATHPlayerState, HandCards);
 }
 void ATHPlayerState::BeginPlay()
 {
-    
+    Super::BeginPlay();
+
+    GetGameState()->OnNotifyRestartGame.AddDynamic(this, &ATHPlayerState::Init);
 }
 
 ATHGameState* ATHPlayerState::GetGameState() const
@@ -107,9 +109,9 @@ const int32 ATHPlayerState::GetRoundBettingMoney() const
     return RoundBettingMoney;
 }
 
-const int32 ATHPlayerState::GetRewardMoney() const
+const int32 ATHPlayerState::GetProfitMoney() const
 {
-    return RewardMoney;
+    return ProfitMoney;
 }
 
 TArray<FPlayingCard> ATHPlayerState::GetHandCards() const
@@ -120,6 +122,11 @@ TArray<FPlayingCard> ATHPlayerState::GetHandCards() const
 const EPlayerAction ATHPlayerState::GetPlayerAction() const
 {
     return PlayerAction;
+}
+
+const bool ATHPlayerState::IsWinner() const
+{
+    return bIsWinner;
 }
 
 const FPlayerHandRankInfo ATHPlayerState::GetPlayerHandRankInfo() const
@@ -211,19 +218,19 @@ void ATHPlayerState::AddRoundBettingMoney(const int32& InRoundBettingMoney)
     AddBettingMoney(InRoundBettingMoney);
 }
 
-void ATHPlayerState::SetRewardMoney(const int32& InRewardMoney)
+void ATHPlayerState::SetProfitMoney(const int32& InProfitMoney)
 {
-    int32 OldRewardMoney = RewardMoney;
-    RewardMoney = InRewardMoney;
+    int32 OldRewardMoney = ProfitMoney;
+    ProfitMoney = InProfitMoney;
 
     UE_LOG(LogTemp, Log, TEXT("[%s] Old(%d) New(%d) Diff(%d) Player::%s"), ANSI_TO_TCHAR(__FUNCTION__),
-        OldRewardMoney, RewardMoney, RewardMoney - OldRewardMoney, *GetPlayerNickName());
+        OldRewardMoney, ProfitMoney, ProfitMoney - OldRewardMoney, *GetPlayerNickName());
 }
 
-void ATHPlayerState::AddRewardMoney(const int32& InRewardMoney)
+void ATHPlayerState::AddProfitMoney(const int32& InProfitMoney)
 {
-    SetRewardMoney(RewardMoney + InRewardMoney);
-    AddMoney(-InRewardMoney);
+    SetProfitMoney(ProfitMoney + InProfitMoney);
+    AddMoney(-InProfitMoney);
 }
 
 void ATHPlayerState::SetPlayerAction(const EPlayerAction& InPlayerAction)
@@ -232,6 +239,11 @@ void ATHPlayerState::SetPlayerAction(const EPlayerAction& InPlayerAction)
 
     UE_LOG(LogTemp, Log, TEXT("[%s] PlayerAction(%s) Player::%s"), ANSI_TO_TCHAR(__FUNCTION__),
         *UTHGameDebugManager::GetEnumAsString(PlayerAction), *GetPlayerNickName());
+}
+
+void ATHPlayerState::SetIsWinner(const bool& bInIsWinner)
+{
+    bIsWinner = bInIsWinner;
 }
 
 void ATHPlayerState::SetPlayerHandRankInfo(const FPlayerHandRankInfo InHandRankInfo)
@@ -245,6 +257,18 @@ void ATHPlayerState::SetHandCards(const TArray<FPlayingCard>& InHandCards)
 
     UE_LOG(LogTemp, Log, TEXT("[%s] HandCards(%s, %s), (%s, %s) Player::%s"),
         ANSI_TO_TCHAR(__FUNCTION__),
+        *UTHGameDebugManager::GetEnumAsString(HandCards[0].Suit),
+        *UTHGameDebugManager::GetEnumAsString(HandCards[0].Value),
+        *UTHGameDebugManager::GetEnumAsString(HandCards[1].Suit),
+        *UTHGameDebugManager::GetEnumAsString(HandCards[1].Value),
+        *GetPlayerNickName());
+}
+
+void ATHPlayerState::OnRep_HandCards()
+{    
+    UE_LOG(LogTemp, Log, TEXT("[%s] IsServer(%d) HandCards(%s, %s), (%s, %s) Player::%s"),
+        ANSI_TO_TCHAR(__FUNCTION__),
+        HasAuthority(),
         *UTHGameDebugManager::GetEnumAsString(HandCards[0].Suit),
         *UTHGameDebugManager::GetEnumAsString(HandCards[0].Value),
         *UTHGameDebugManager::GetEnumAsString(HandCards[1].Suit),

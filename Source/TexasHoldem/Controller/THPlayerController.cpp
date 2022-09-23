@@ -7,7 +7,7 @@
 #include "PlayerState/THPlayerState.h"
 #include "GameFramework/PlayerState.h"
 #include "Manager/THGameDebugManager.h"
-
+#include "Blueprint/UserWidget.h"
 
 const FName ATHPlayerController::InputActionMouseLeft = FName(TEXT("MouseLeft"));
 const FName ATHPlayerController::InputActionSpaceBar  = FName(TEXT("SpaceBar"));
@@ -39,6 +39,10 @@ void ATHPlayerController::BeginPlay()
 	}
 
 	SetInputMode(FInputModeGameAndUI());
+
+	NetworkFailureDelegateHandle = GEngine->OnNetworkFailure().AddUObject(this, &ATHPlayerController::HandleNetworkFailure);
+
+	GetGameState()->OnNotifyRestartGame.AddDynamic(this, &ATHPlayerController::Init);
 }
 
 void ATHPlayerController::PostInitializeComponents()
@@ -81,6 +85,12 @@ void ATHPlayerController::SetupInputComponent()
 	InputComponent->BindAction(InputActionKeyReady, IE_Pressed, this, &ATHPlayerController::ActionKeyReady);
 }
 
+void ATHPlayerController::Destroyed()
+{
+	Super::Destroyed();
+	GEngine->OnNetworkFailure().Remove(NetworkFailureDelegateHandle);
+}
+
 void ATHPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -91,6 +101,11 @@ void ATHPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	
 	DOREPLIFETIME(ATHPlayerController, PlayerActionActivateInfo);
+}
+
+void ATHPlayerController::HandleNetworkFailure(UWorld* World, UNetDriver* NetDriver, ENetworkFailure::Type FailureType, const FString& ErrorString)
+{
+	UE_LOG(LogTemp, Log, TEXT("[%s] %s"), ANSI_TO_TCHAR(__FUNCTION__), *ErrorString);
 }
 
 ATHGameMode* ATHPlayerController::GetGameMode() const
@@ -213,7 +228,8 @@ void ATHPlayerController::CheckForActionActivate()
 
         // Call
 		int32 CallMoney = HighRoundBettingMoney - PlayerRoundBettingMoney; // 콜을 하기위한 필요 머니
-        if (PlayerMoney < CallMoney)
+		// 플레이어 보유금액이 콜을 하기에 부족하다면 콜 액션을 취할 수 없다.
+		if (PlayerMoney < CallMoney)
         {
             PlayerActionActivateInfo.bEnabledCall = false;
         }
@@ -225,11 +241,23 @@ void ATHPlayerController::CheckForActionActivate()
         // 화면 중앙에 보여질 콜에 필요한 머니는 공유되어야 하므로 PlayerState로 전달하여 GameState에서 읽을 수 있도록 한다.
         THPlayerState->SetRequiredMoneyForCall(CallMoney);
 
+		// Raise
+		int32 RaiseMoney = MinRaiseMoney;
+		// 플레이어 보유금액이 콜 + 레이즈를 하기에 부족하다면 레이즈 액션을 취할 수 없다.
+		if (PlayerMoney < CallMoney + RaiseMoney)
+		{			
+			PlayerActionActivateInfo.bEnabledRaise = false;
+		}
+		else
+		{
+			PlayerActionActivateInfo.bEnabledRaise = true;
+		}
+
         // Full
         int32 FullMoney = TotalPotMoney + CallMoney;
+		// 플레이어 보유금액이 콜 + 풀을 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 풀 액션을 취할 수 없다.
         if (PlayerMoney < CallMoney + FullMoney || FullMoney < MinRaiseMoney)
-        {
-			// 플레이어 보유금액이 콜 + 풀을 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 액션을 취할 수 없다.
+        {			
             PlayerActionActivateInfo.bEnabledFull = false;
         }
         else
@@ -240,9 +268,9 @@ void ATHPlayerController::CheckForActionActivate()
 
         // Half
         int32 HalfMoney = (TotalPotMoney + CallMoney) / 2;
+		// 플레이어 보유금액이 콜 + 하프를 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 하프 액션을 취할 수 없다.
         if (PlayerMoney < CallMoney + HalfMoney || HalfMoney < MinRaiseMoney)
         {
-			// 플레이어 보유금액이 콜 + 하프를 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 액션을 취할 수 없다.
             PlayerActionActivateInfo.bEnabledHalf = false;
         }
         else
@@ -253,9 +281,9 @@ void ATHPlayerController::CheckForActionActivate()
 
         // Quarter
         int32 QuarterMoney = (TotalPotMoney + CallMoney) / 4;
+		// 플레이어 보유금액이 콜 + 쿼터를 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 쿼터 액션을 취할 수 없다.
         if (PlayerMoney < CallMoney + QuarterMoney || QuarterMoney < MinRaiseMoney)
         {
-			// 플레이어 보유금액이 콜 + 쿼터를 하기에 부족하거나 하프금액이 최소 레이즈 금액보다 적다면 액션을 취할 수 없다.
             PlayerActionActivateInfo.bEnabledQuarter = false;
         }
         else
@@ -263,6 +291,17 @@ void ATHPlayerController::CheckForActionActivate()
             PlayerActionActivateInfo.bEnabledQuarter = true;
         }
         PlayerActionActivateInfo.RequiredMoneyForQuarter = QuarterMoney;
+
+		// ALL-IN
+		// 플레이어 보유금액이 0원이면 ALL-IN 액션을 취할 수 없다.
+		if (PlayerMoney == 0)
+		{
+			PlayerActionActivateInfo.bEnabledAllin = false;
+		}
+		else
+		{
+			PlayerActionActivateInfo.bEnabledAllin = true;
+		}
 
         UE_LOG(LogTemp, Log, TEXT("[%s] TotalPotMoney(%d) MinRaiseMoney(%d) HighRoundBettingMoney(%d) PlayerRoundBettingMoney(%d) PlayerMoney(%d) Call(%d) Quarter(%d) Half(%d) Full(%d) Player:%s"), 
 			ANSI_TO_TCHAR(__FUNCTION__), 
@@ -274,6 +313,23 @@ void ATHPlayerController::ActionKeyReady()
 {
     ToggleReadyState();
     UE_LOG(LogTemp, Log, TEXT("Ready"));
+}
+
+void ATHPlayerController::ChangeHUDWidget(TSubclassOf<UUserWidget> NewHUDWidgetClass)
+{
+    if (CurrentHUDWidget != nullptr)
+    {
+		CurrentHUDWidget->RemoveFromViewport();
+		CurrentHUDWidget = nullptr;
+    }
+    if (NewHUDWidgetClass != nullptr)
+    {
+		CurrentHUDWidget = CreateWidget<UUserWidget>(GetWorld(), NewHUDWidgetClass);
+        if (CurrentHUDWidget != nullptr)
+        {
+			CurrentHUDWidget->AddToViewport();
+        }
+    }
 }
 
 void ATHPlayerController::Server_ToggleReadyState_Implementation()

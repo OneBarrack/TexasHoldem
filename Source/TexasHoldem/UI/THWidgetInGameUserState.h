@@ -18,11 +18,28 @@ class TEXASHOLDEM_API UTHWidgetInGameUserState : public UUserWidget
 protected:
     virtual bool Initialize() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	virtual void BeginDestroy() override;
 
 private:
+	UFUNCTION()
+	void SetTHPlayerStateForSubWidgets(const TArray<ATHPlayerState*>& PlayersForTableSeattingPos);
+
+public:
+	UPROPERTY(BlueprintReadOnly)
 	TArray<UTHWidgetInGameUserStateSub*> SubWidgetUserStates;
+
+	UPROPERTY(BlueprintReadOnly)
 	TArray<UTHWidgetInGameUserStateSub*> SubWidgetUserActionStates;
+
+	UPROPERTY(BlueprintReadOnly)
 	TArray<UTHWidgetInGameUserStateSub*> SubWidgetUserBettingMoneys;
+
+	UPROPERTY(BlueprintReadOnly)
 	TArray<UTHWidgetInGameUserStateSub*> SubWidgetPlayerRoles;
+
+	UPROPERTY(BlueprintReadOnly)
 	TArray<UTHWidgetInGameUserStateSub*> SubWidgetPlayerReadyStates;
+
+private:
+	bool bNeedUpdatePlayerStateForSubWidget = false;
 };

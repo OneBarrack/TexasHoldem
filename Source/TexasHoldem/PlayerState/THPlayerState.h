@@ -19,6 +19,7 @@ public:
     ATHPlayerState();
 
 public:
+    UFUNCTION()
     void Init();
 
 protected:
@@ -64,10 +65,13 @@ public:
     const int32 GetRoundBettingMoney() const;
 
     UFUNCTION(BlueprintPure)
-    const int32 GetRewardMoney() const;
+    const int32 GetProfitMoney() const;
 
     UFUNCTION(BlueprintPure)
     const EPlayerAction GetPlayerAction() const;
+
+    UFUNCTION(BlueprintPure)
+    const bool IsWinner() const;
 
     UFUNCTION(BlueprintPure)
     const FPlayerHandRankInfo GetPlayerHandRankInfo() const;
@@ -112,13 +116,16 @@ public:
     void AddRoundBettingMoney(const int32& InRoundBettingMoney);
 
     UFUNCTION(BlueprintCallable)
-    void SetRewardMoney(const int32& InRewardMoney);
+    void SetProfitMoney(const int32& InProfitMoney);
 
     UFUNCTION(BlueprintCallable)
-    void AddRewardMoney(const int32& InRewardMoney);
+    void AddProfitMoney(const int32& InProfitMoney);
 
     UFUNCTION(BlueprintCallable)
     void SetPlayerAction(const EPlayerAction& InPlayerAction);
+
+    UFUNCTION(BlueprintCallable)
+    void SetIsWinner(const bool& bInIsWinner);
 
     UFUNCTION(BlueprintCallable)
     void SetPlayerHandRankInfo(const FPlayerHandRankInfo InHandRankInfo);
@@ -126,10 +133,15 @@ public:
     UFUNCTION(BlueprintCallable)
     void SetHandCards(const TArray<FPlayingCard>& InHandCards);
 
+public:
+    //Test
+    UFUNCTION()
+    void OnRep_HandCards();
+
 private:
     // 레디 상태
     UPROPERTY(Replicated)
-    bool bReady = false;
+    bool bReady = true;
 
     // 테이블 내 앉은 자리
     UPROPERTY(Replicated)
@@ -137,7 +149,7 @@ private:
 
     // 플레이어 턴 상태
     UPROPERTY(Replicated)
-    EPlayerTurnState PlayerTurnState;
+    EPlayerTurnState PlayerTurnState = EPlayerTurnState::None;
 
     // 이름
     UPROPERTY(Replicated)
@@ -165,18 +177,23 @@ private:
 
     // 획득 금액
     UPROPERTY(Replicated)
-    int32 RewardMoney = 0;
+    int32 ProfitMoney = 0;
 
     // 액션
     UPROPERTY(Replicated)
     EPlayerAction PlayerAction = EPlayerAction::None;
+
+    // 승자인지
+    UPROPERTY(Replicated)
+    bool bIsWinner = false;
 
     // 핸드랭크 정보
     UPROPERTY(Replicated)
     FPlayerHandRankInfo HandRankInfo;
 
     // 핸드카드
-    UPROPERTY(Replicated)
+    //UPROPERTY(Replicated)
+    UPROPERTY(ReplicatedUsing = OnRep_HandCards)
     TArray<FPlayingCard> HandCards;
 
 private:

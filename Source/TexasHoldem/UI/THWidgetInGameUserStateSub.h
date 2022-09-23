@@ -16,10 +16,10 @@ class TEXASHOLDEM_API UTHWidgetInGameUserStateSub : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintPure)
-        ATHPlayerState* GetTHPlayerState();
+    ATHPlayerState* GetTHPlayerState();
 
     UFUNCTION(BlueprintCallable)
-        void SetTHPlayerState(ATHPlayerState* InTHPlayerState);
+    void SetTHPlayerState(ATHPlayerState* InTHPlayerState);
 
 private:
     ATHPlayerState* THPlayerState = nullptr;

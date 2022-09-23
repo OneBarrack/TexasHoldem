@@ -22,6 +22,8 @@ public:
 
 protected:
 	virtual void PostInitializeComponents() override;
+	virtual void PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage) override;
+	virtual APlayerController* Login(UPlayer* NewPlayer, ENetRole InRemoteRole, const FString& Portal, const FString& Options, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage) override;
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 	virtual void Logout(AController* Exiting) override;
 	virtual void BeginPlay() override;
@@ -31,8 +33,10 @@ public:
 	virtual void StartPlay() override;	
 
 public:
-	void Init();
+	// 홀덤 스타트
+	UFUNCTION(BlueprintCallable)
 	void RestartTexasHoldem();
+
 	void GiveTurnToPlayer(ATHPlayerState* BettingPlayer);
 	void ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const int32 CallMoney, const int32 RaiseMoney);
 
@@ -40,21 +44,24 @@ private:
 	// Related init
     void InitBettingRound(bool bNotifyRaiseAction = false);
 	void InitSurvivedPlayersForBettingRound(bool bNotifyRaiseAction);
-
-	void SetGamePlayState(EGamePlayState InGamePlayState);
+		
 	void AddPlayerInHoldemTable(ATHPlayerController* LoginPlayerController);
 	void RemovePlayerInHoldemTable(ATHPlayerController* LogoutPlayerController);
 	bool IsReadyForAllPlayers();
 
 	// Dealer 포지션 기준으로 시계방향으로 가장 가까운 플레이어들을 순차적으로 GamePlayers에 적재 및 PlayerRole별 포지션 적재
 	void ExtractOrderedInGamePlayers();
-	void SetPlayerForPlayerRole(ATHPlayerState* TargetPlayer, EPlayerRole& PlayerRole); 
+	
+	/** 승자 추출 **/
+	// 올 Fold로 인한 단독승리
+	void FinishGameForFoldAll();
 
-	// 승자 추출 : 단독승리(Array Count : 1)
-	TArray<ATHPlayerState*> ExtractWinners();
+	// Showdown을 통한 승자 플레이어 추출. 단독승리(Array Count : 1), else : 무승부
+	void ProceedShowDown();
+	void MarkingForLastBest5Cards(TArray<ATHPlayerState*>& Winners);
 	void CalculatePotMoney(TMap<FPlayerHandRankInfo, TArray<ATHPlayerState*>>& PlayersForHandRankInfo);
-	void CalculatePotMoneySingle(TArray<ATHPlayerState*>& PotPlayers, int32& PrevMaxBettingMoney, int32& RemainTotalPot);
-	void CalculatePotMoneyChop(TArray<ATHPlayerState*>& PotPlayers, int32& PrevMaxBettingMoney, int32& RemainTotalPot);
+	void CalculatePotMoneySingle(TArray<ATHPlayerState*>& PotPlayers, int32& RemainTotalPot);
+	void CalculatePotMoneyChop(TArray<ATHPlayerState*>& PotPlayers, int32& RemainTotalPot);
 
 private:
     // Play Cycle
@@ -75,6 +82,71 @@ private:
     void CalcPotMoneyForRaiseAction(ATHPlayerState* BettingPlayer, const int32 CallMoney, const int32 RaiseMoney);
     void CalcPotMoneyForFoldAction(ATHPlayerState* BettingPlayer);
 
+private:
+	// Get() Set() For GameState, PlayerState
+	// GameState
+	const int32 GetLoginPlayerCount();
+	const int32 GetGamePlayCount();
+	const int32 GetBlindBettingMoney();
+	const int32 GetTotalPotMoney();
+	const EBettingRound GetBettingRound();
+	const EGamePlayState GetGamePlayState();
+    ATHPlayerState* GetPlayerForPlayerRole(const EPlayerRole InPlayerRole);
+	ATHPlayerState* GetCurrentTurnPlayer();
+	ATHPlayerState* GetNextInGamePlayer(ATHPlayerState* TargetPlayer);
+	TArray<ATHPlayerState*> GetWinnerPlayers();
+	TArray<ATHPlayerState*> GetPlayersForTableSeattingPos();
+	TArray<ATHPlayerState*> GetInGamePlayersAll();
+	TArray<ATHPlayerState*> GetInGameSurvivedPlayers();
+	TArray<FPlayingCard> GetCommunityCards();
+
+	void SetGamePlayState(EGamePlayState InGamePlayState);
+	void SetBlindBettingMoney(const int InBlindBettingMoney);
+	void IncreaseGamePlayCount();
+	void SetBettingRound(const EBettingRound& InBettingRound);
+	void SetCommunityCards(const TArray<FPlayingCard>& InCommunityCards);
+	void SetHighRoundBettingMoney(const int32& InHighRoundBettingMoney);
+	void AddTotalPotMoney(const int32& InTotalPotMoney);
+	void SetMinRaiseMoney(const int32& InMinRaiseMoney);
+	void SetAppeardRaiseAction(const bool& bInAppeardRaseAction);
+	void SetCurrentTurnPlayer(ATHPlayerState* InCurrentTurnPlayer);
+	void SetWinnerPlayers(const TArray<ATHPlayerState*>& InWinnerPlayers);
+	void SetCallMoneyForCurrentPlayer(const int32& InCallMoneyForCurrentPlayer);
+	void SetInGamePlayersAll(const TArray<ATHPlayerState*>& InInGamePlayers);
+	void SetInGameSurvivedPlayers(const TArray<ATHPlayerState*>& InInGamePlayers);
+	void SetPlayersForTableSeattingPos(const TArray<ATHPlayerState*>& InPlayersForTableSeattingPos);
+	void RemoveInGameSurvivedPlayer(ATHPlayerState* InTargetPlayer);
+
+	// PlayerState
+	const int32 GetPlayerMoney(ATHPlayerState* TargetPlayer);
+	const int32 GetPlayerBettingMoney(ATHPlayerState* TargetPlayer);
+	const int32 GetPlayerProfitMoney(ATHPlayerState* TargetPlayer);
+	const int32 GetPlayerRequiredMoneyForCall(ATHPlayerState* TargetPlayer);
+	const int32 GetPlayerRoundBettingMoney(ATHPlayerState* TargetPlayer);
+	const int32 GetPlayerTableSeattingPos(ATHPlayerState* TargetPlayer);
+	ATHPlayerController* GetPlayerController(ATHPlayerState* TargetPlayer);
+	const EPlayerAction GetPlayerAction(ATHPlayerState* TargetPlayer);
+	const EPlayerTurnState GetPlayerTurnState(ATHPlayerState* TargetPlayer);
+	const FString GetPlayerNickName(ATHPlayerState* TargetPlayer);
+	const FPlayerHandRankInfo GetPlayerHandRankInfo(ATHPlayerState* TargetPlayer);
+	TArray<FPlayingCard> GetPlayerHandCards(ATHPlayerState* TargetPlayer);
+
+    void SetPlayerRole(ATHPlayerState* TargetPlayer, EPlayerRole& PlayerRole);
+	void SetPlayerHandCards(ATHPlayerState* TargetPlayer, const TArray<FPlayingCard>& InHandCards);
+	void SetPlayerRoundBettingMoney(ATHPlayerState* TargetPlayer, const int32 InRoundBettingMoney);
+	void AddPlayerRoundBettingMoney(ATHPlayerState* TargetPlayer, const int32 InRoundBettingMoney);
+	void SetPlayerBettingMoney(ATHPlayerState* TargetPlayer, const int32 InRoundBettingMoney);
+	void SetPlayerTurnState(ATHPlayerState* TargetPlayer, const EPlayerTurnState& InPlayerTurnState);
+	void AddPlayerMoney(ATHPlayerState* TargetPlayer, const int32 InMoney);
+	void SetPlayerMoney(ATHPlayerState* TargetPlayer, const int32 InMoney);
+	void SetPlayerNickName(ATHPlayerState* TargetPlayer, const FString InName);
+	void SetPlayerAction(ATHPlayerState* TargetPlayer, const EPlayerAction& InPlayerAction);	
+	void SetPlayerProfitMoney(ATHPlayerState* TargetPlayer, const int32 InProfitMoney);
+	void SetPlayerHandRankInfo(ATHPlayerState* TargetPlayer, const FPlayerHandRankInfo& InHandRankInfo);
+	void SetPlayerTableSeattingPos(ATHPlayerState* TargetPlayer, const int32 InTableSeattingPos);
+
+	bool IsPlayerReady(ATHPlayerState* TargetPlayer);
+
 public:
 	// 2인(1대1) 매치인지
 	UPROPERTY()
@@ -84,9 +156,13 @@ public:
 	UPROPERTY()
 	bool bIsBettingRoundEnded = false;
 
-    // 우승 플레이어
+	// 모두 Fold하여 게임 종료 되었는지
     UPROPERTY()
-    TArray<ATHPlayerState*> WinnerPlayers;
+    bool bFinishedGameForFoldAll = false;
+
+    // 테이블 내 Dealer 포지션
+    UPROPERTY()
+    int32 DealerPosForTable = -1;
 
 private:    
 	// 게임스테이트
@@ -94,8 +170,8 @@ private:
     ATHGameState* THGameState = nullptr;
 
     // Showdown 이후 FinishiUp 넘어가기까지 대기시간 타이머
-    FTimerHandle ShowdownTimerHandle;
-	float ShowdownTimerDelay = 3.0f;
+    FTimerHandle FinishDelegateTimerHandle;
+	float FinishDelegateTimerDelay = 12.0f;
 
 	// 게임 플레이 매니저
     UPROPERTY()

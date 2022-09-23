@@ -23,4 +23,5 @@ public:
 	static const FString GetEnumAsString(const EPlayerRole& PlayerRole);
 	static const FString GetEnumAsString(const EPlayerAction& PlayerAction);
 	static const FString GetEnumAsString(const EPlayerTurnState& PlayerTurnState);
+	static const FString GetPlayerHandRankInfoAsString(const FPlayerHandRankInfo& PlayerHandRankInfo);
 };

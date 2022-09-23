@@ -72,3 +72,32 @@ const FString UTHGameDebugManager::GetEnumAsString(const EPlayerTurnState& Playe
     }
     return EnumPtr->GetNameStringByIndex((int32)PlayerTurnState);
 }
+
+const FString UTHGameDebugManager::GetPlayerHandRankInfoAsString(const FPlayerHandRankInfo& PlayerHandRankInfo)
+{
+    UE_LOG(LogTemp, Log, TEXT("HandRank:%s"), *UTHGameDebugManager::GetEnumAsString(PlayerHandRankInfo.HandRank));
+    if (PlayerHandRankInfo.HighValuesOfHandRank.Num() > 0)
+    {
+        FString CardsForHandRankString("");
+        for (FPlayingCard PlayingCard : PlayerHandRankInfo.CardsForHandRank)
+        {
+            CardsForHandRankString += FString("[") +
+                *UTHGameDebugManager::GetEnumAsString(PlayingCard.Suit) + FString("_") +
+                *UTHGameDebugManager::GetEnumAsString(PlayingCard.Value) + FString("], ");
+        }
+
+        UE_LOG(LogTemp, Log, TEXT("CardsForHandRank:%s"), *CardsForHandRankString);
+    }
+    if (PlayerHandRankInfo.Kickers.Num() > 0)
+    {
+        FString TempStr("");
+        for (FPlayingCard Kicker : PlayerHandRankInfo.Kickers)
+        {
+            TempStr += FString("[") +
+                *UTHGameDebugManager::GetEnumAsString(Kicker.Suit) + FString("_") +
+                *UTHGameDebugManager::GetEnumAsString(Kicker.Value) + FString("], ");
+        }
+        UE_LOG(LogTemp, Log, TEXT("KickerList:%s"), *TempStr);
+    }
+    return FString();
+}

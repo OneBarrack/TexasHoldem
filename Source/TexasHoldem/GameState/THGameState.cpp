@@ -8,24 +8,33 @@
 ATHGameState::ATHGameState()
 {
     // MaxPlayerCount 수 만큼 인게임 플레이어 자리 생성
-    PlayersForTable.Init(nullptr, MaxPlayerCount);
+    PlayersForTableSeattingPos.Init(nullptr, MaxPlayerCount);
 }
 
 void ATHGameState::Init()
 {
+    UE_LOG(LogTemp, Log, TEXT("[%s] Start"), ANSI_TO_TCHAR(__FUNCTION__));
+
     GamePlayState         = EGamePlayState::None;
-    DealerPlayer          = nullptr;
-    SmallBlindPlayer      = nullptr;
-    BigBlindPlayer        = nullptr;
     CurrentTurnPlayer     = nullptr;
     BettingRound          = EBettingRound::None;
     TotalPotMoney         = 0;
     HighRoundBettingMoney = 0;
     MinRaiseMoney         = BlindBettingMoney;
     bAppeardRaiseAction   = false;
+    WinnerPlayers.Empty();
     CommunityCards.Empty();
     InGamePlayersAll.Empty();
     InGameSurvivedPlayers.Empty();
+
+    UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
+}
+
+void ATHGameState::PostInitializeComponents()
+{
+    Super::PostInitializeComponents();
+
+    OnNotifyRestartGame.AddDynamic(this, &ATHGameState::Init);
 }
 
 void ATHGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -33,10 +42,8 @@ void ATHGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
     DOREPLIFETIME(ATHGameState, GamePlayCount);
-    DOREPLIFETIME(ATHGameState, DealerPlayer);
-    DOREPLIFETIME(ATHGameState, SmallBlindPlayer);
-    DOREPLIFETIME(ATHGameState, BigBlindPlayer);
     DOREPLIFETIME(ATHGameState, CurrentTurnPlayer);
+    DOREPLIFETIME(ATHGameState, WinnerPlayers);
     DOREPLIFETIME(ATHGameState, GamePlayState);
     DOREPLIFETIME(ATHGameState, BettingRound);
     DOREPLIFETIME(ATHGameState, BlindBettingMoney);
@@ -46,7 +53,7 @@ void ATHGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
     DOREPLIFETIME(ATHGameState, MinRaiseMoney);
     DOREPLIFETIME(ATHGameState, bAppeardRaiseAction);
     DOREPLIFETIME(ATHGameState, CommunityCards);
-    DOREPLIFETIME(ATHGameState, PlayersForTable);
+    DOREPLIFETIME(ATHGameState, PlayersForTableSeattingPos);
     DOREPLIFETIME(ATHGameState, InGamePlayersAll);
     DOREPLIFETIME(ATHGameState, InGameSurvivedPlayers);
 }
@@ -56,7 +63,7 @@ const int32 ATHGameState::GetGamePlayCount() const
     return GamePlayCount;
 }
 
-const int32 ATHGameState::GetLoginUserCount() const
+const int32 ATHGameState::GetLoginPlayerCount() const
 {
     return PlayerArray.Num();
 }
@@ -73,16 +80,9 @@ const EGamePlayState ATHGameState::GetGamePlayState() const
 
 ATHPlayerState* ATHGameState::GetPlayerForPlayerRole(const EPlayerRole InPlayerRole) const
 {
-    ATHPlayerState* ResultPlayer = nullptr;
-
-    switch (InPlayerRole)
-    {
-    case EPlayerRole::Dealer:     ResultPlayer = DealerPlayer;     break;
-    case EPlayerRole::SmallBlind: ResultPlayer = SmallBlindPlayer; break;
-    case EPlayerRole::BigBlind:   ResultPlayer = BigBlindPlayer;   break;
-    default:
-        break;
-    }
+    ATHPlayerState* ResultPlayer = *InGamePlayersAll.FindByPredicate([&InPlayerRole](const ATHPlayerState* InGamePlayer) {
+        return InGamePlayer->GetPlayerRole() == InPlayerRole;
+    });
 
     return ResultPlayer;
 }
@@ -90,6 +90,11 @@ ATHPlayerState* ATHGameState::GetPlayerForPlayerRole(const EPlayerRole InPlayerR
 ATHPlayerState* ATHGameState::GetCurrentTurnPlayer() const
 {
     return CurrentTurnPlayer;
+}
+
+TArray<ATHPlayerState*> ATHGameState::GetWinnerPlayers() const
+{
+    return WinnerPlayers;
 }
 
 const EBettingRound ATHGameState::GetBettingRound() const
@@ -132,9 +137,9 @@ TArray<FPlayingCard> ATHGameState::GetCommunityCards() const
     return CommunityCards;
 }
 
-TArray<ATHPlayerState*> ATHGameState::GetPlayersForTable() const
+TArray<ATHPlayerState*> ATHGameState::GetPlayersForTableSeattingPos() const
 {
-    return PlayersForTable;
+    return PlayersForTableSeattingPos;
 }
 
 TArray<ATHPlayerState*> ATHGameState::GetInGamePlayersAll() const
@@ -160,30 +165,28 @@ void ATHGameState::IncreaseGamePlayCount()
     ++GamePlayCount;
 }
 
-void ATHGameState::SetPlayerForPlayerRole(ATHPlayerState* InTHPlayerState, const EPlayerRole& InPlayerRole)
-{
-    switch (InPlayerRole)
-    {
-    case EPlayerRole::Dealer:     DealerPlayer     = InTHPlayerState; break;
-    case EPlayerRole::SmallBlind: SmallBlindPlayer = InTHPlayerState; break;
-    case EPlayerRole::BigBlind:   BigBlindPlayer   = InTHPlayerState; break;
-    default:
-        break;
-    }
-}
-
 void ATHGameState::SetGamePlayState(const EGamePlayState& InGamePlayState)
 {
     GamePlayState = InGamePlayState;
 }
+
 void ATHGameState::SetCurrentTurnPlayer(ATHPlayerState* InCurrentTurnPlayer)
 {
     CurrentTurnPlayer = InCurrentTurnPlayer;
 }
 
+void ATHGameState::SetWinnerPlayers(TArray<ATHPlayerState*> InWinnerPlayers)
+{
+    WinnerPlayers = InWinnerPlayers;
+    for (ATHPlayerState* WinnerPlayer : WinnerPlayers)
+    {
+        WinnerPlayer->SetIsWinner(true);
+    }
+}
+
 void ATHGameState::SetBettingRound(const EBettingRound& InBettingRound)
 {
-    BettingRound = InBettingRound;    
+    BettingRound = InBettingRound;
 }
 
 void ATHGameState::SetBlindBettingMoney(const int32& InBlindBettingMoney)
@@ -232,9 +235,9 @@ void ATHGameState::SetCommunityCards(const TArray<FPlayingCard>& InCommunityCard
     CommunityCards = InCommunityCards;
 }
 
-void ATHGameState::SetPlayersForTable(const TArray<ATHPlayerState*>& InPlayersForTableSeattingPos)
+void ATHGameState::SetPlayersForTableSeattingPos(const TArray<ATHPlayerState*>& InPlayersForTableSeattingPos)
 {
-    PlayersForTable = InPlayersForTableSeattingPos;
+    PlayersForTableSeattingPos = InPlayersForTableSeattingPos;
 }
 
 void ATHGameState::SetInGamePlayersAll(const TArray<ATHPlayerState*>& InInGamePlayersAll)
@@ -247,7 +250,77 @@ void ATHGameState::SetInGameSurvivedPlayers(const TArray<ATHPlayerState*>& InInG
     InGameSurvivedPlayers = InInGameSurvivedPlayers;
 }
 
-void ATHGameState::RemovePlayerInGamePlayers(ATHPlayerState* InPlayerState)
+void ATHGameState::RemoveInGameSurvivedPlayer(ATHPlayerState* InPlayerState)
 {
-    InGameSurvivedPlayers.Remove(InPlayerState);
+    InGameSurvivedPlayers.RemoveSingle(InPlayerState);
+}
+
+void ATHGameState::NotifyRestartGame()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+    if (OnNotifyRestartGame.IsBound())
+    {
+        OnNotifyRestartGame.Broadcast();
+    }
+
+    Multicast_SendNotifyRestartGame();
+}
+
+void ATHGameState::Multicast_SendNotifyRestartGame_Implementation()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+    if (OnNotifyRestartGame.IsBound())
+    {
+        OnNotifyRestartGame.Broadcast();
+    }
+}
+
+void ATHGameState::OnRep_GamePlayState()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+
+    if (OnChangedGamePlayState.IsBound())
+    {
+        OnChangedGamePlayState.Broadcast(GamePlayState);
+    }
+}
+
+void ATHGameState::OnRep_CurrentTurnPlayer()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+
+    if (OnChangedCurrentTurnPlayer.IsBound())
+    {
+        OnChangedCurrentTurnPlayer.Broadcast(CurrentTurnPlayer);
+    }
+}
+
+void ATHGameState::OnRep_BettingRound()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+
+    if (OnChangedBettingRound.IsBound())
+    {
+        OnChangedBettingRound.Broadcast(BettingRound);
+    }
+}
+
+void ATHGameState::OnRep_CommunityCards()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+
+    if (OnChangedCommunityCards.IsBound())
+    {
+        OnChangedCommunityCards.Broadcast(CommunityCards);
+    }
+}
+
+void ATHGameState::OnRep_PlayersForTableSeattingPos()
+{
+    UE_LOG(LogTemp, Log, TEXT("[%s]"), ANSI_TO_TCHAR(__FUNCTION__));
+
+    if (OnChangedPlayersForTableSeattingPos.IsBound())
+    {
+        OnChangedPlayersForTableSeattingPos.Broadcast(PlayersForTableSeattingPos);
+    }
 }

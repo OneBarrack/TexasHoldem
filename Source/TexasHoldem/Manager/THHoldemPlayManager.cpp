@@ -13,9 +13,11 @@ UTHHoldemPlayManager::UTHHoldemPlayManager()
 
 void UTHHoldemPlayManager::Init()
 {
+    UE_LOG(LogTemp, Log, TEXT("[%s] Start"), ANSI_TO_TCHAR(__FUNCTION__));
+
     // 베팅라운드 초기화
     BettingRound = EBettingRound::PreFlop;
-
+    
     // 카드 더미 초기화
     CardDeck.Empty(NumOfAllCards);
     for (int i = 0; i < NumOfAllCards; ++i)
@@ -26,7 +28,7 @@ void UTHHoldemPlayManager::Init()
     // Init CommunityCards;
     CommunityCards.Empty(MaxNumOfCommunityCards);
 
-    UE_LOG(LogTemp, Log, TEXT("UTHHoldemPlayManager::Init"));
+    UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
 void UTHHoldemPlayManager::SetBettingRound(const EBettingRound InBettingRound)
@@ -41,6 +43,8 @@ const EBettingRound UTHHoldemPlayManager::GetBettingRound() const
 
 const FPlayingCard UTHHoldemPlayManager::GetCardFromCardDeck()
 {
+    UE_LOG(LogTemp, Log, TEXT("[%s] Start"), ANSI_TO_TCHAR(__FUNCTION__));
+
     FPlayingCard PlayingCard;
     if (CardDeck.Num() == 0)
     {
@@ -70,6 +74,9 @@ const FPlayingCard UTHHoldemPlayManager::GetCardFromCardDeck()
     int32 CardNumber = (CardDeckValue % NumOfCardsForSuit) + 1;
     PlayingCard.Value = static_cast<EPlayingCardValue>(CardNumber);
 
+    UE_LOG(LogTemp, Log, TEXT("[%s] End. CardDeckIndex:%d, CardDeckValue:%d"), 
+        ANSI_TO_TCHAR(__FUNCTION__), CardDeckArrayIndex, CardDeckValue);
+
     return PlayingCard;
 }
 
@@ -85,30 +92,16 @@ const int UTHHoldemPlayManager::GetCurrentCardDeckCount() const
 
 void UTHHoldemPlayManager::AddCardToCommunityCards()
 {
-    switch (BettingRound)
+    // Add 5 cards for community card set
+    for (int i = 0; i < 5; ++i)
     {
-    case EBettingRound::PreFlop:
-        break;
-    case EBettingRound::Flop: // Added 3 card
-        for (int i = 0; i < 3; ++i)
-        {
-            CommunityCards.Add(GetCardFromCardDeck());
-        }
-        break;
-    case EBettingRound::Turn: // Added 1 card
-        CommunityCards.Add(GetCardFromCardDeck()); 
-        break;
-    case EBettingRound::River: // Added 1 card
         CommunityCards.Add(GetCardFromCardDeck());
-        break;
-    default:
-        checkNoEntry();
-        break;
     }
     
     for (FPlayingCard& CommunityCard : CommunityCards)
     {
-        UE_LOG(LogTemp, Log, TEXT("UTHHoldemPlayManager::AddCardToCommunityCards BettingRound(%s) Suit(%s) Value(%s)"),
+        UE_LOG(LogTemp, Log, TEXT("[%s] BettingRound(%s) Suit(%s) Value(%s)"),
+            ANSI_TO_TCHAR(__FUNCTION__),
             *UTHGameDebugManager::GetEnumAsString(BettingRound),
             *UTHGameDebugManager::GetEnumAsString(CommunityCard.Suit),
             *UTHGameDebugManager::GetEnumAsString(CommunityCard.Value));
@@ -117,18 +110,28 @@ void UTHHoldemPlayManager::AddCardToCommunityCards()
 
 FPlayerHandRankInfo UTHHoldemPlayManager::GetHandRankInfo(const TArray<FPlayingCard> InHandCards)
 {
+    UE_LOG(LogTemp, Log, TEXT("[%s] Start"), ANSI_TO_TCHAR(__FUNCTION__));
+
     FPlayerHandRankInfo PlayerHandRankInfo;
 
-    // 공유카드 5장과 핸드 2장으로 총 7장이 되어 있어야 한다.
-    if (CommunityCards.Num() != 5 || InHandCards.Num() != 2)
+    // 핸드카드는 2장이어야 한다.
+    if (InHandCards.Num() != 2)
     {
         return PlayerHandRankInfo;
     }
 
-    // 공유카드 5장과 핸드 2장을 합친 7장의 최종카드 생성
+    // 공유카드와 핸드 2장을 합친 카드 생성
     TArray<FPlayingCard> FinalHandCards;
     FinalHandCards.Append(CommunityCards);
     FinalHandCards.Append(InHandCards);
+    
+    //// 7장의 최종카드가 만들어지지 않았다면 공백카드로 채워 7장을 만들어 아래 로직 수행
+    //if (FinalHandCards.Num() < 7)
+    //{
+    //    TArray<FPlayingCard> BlankCards;
+    //    BlankCards.Init(FPlayingCard(), 7 - FinalHandCards.Num());
+    //    FinalHandCards.Append(BlankCards);
+    //}
 
     if (IsRoyalFlush(FinalHandCards, PlayerHandRankInfo))
     {
@@ -176,7 +179,10 @@ FPlayerHandRankInfo UTHHoldemPlayManager::GetHandRankInfo(const TArray<FPlayingC
         checkNoEntry();
     }
 
-    UE_LOG(LogTemp, Log, TEXT("UTHHoldemPlayManager::GetHandRank HandRank:%s"), *UTHGameDebugManager::GetEnumAsString(PlayerHandRankInfo.HandRank));
+    UE_LOG(LogTemp, Log, TEXT("[%s] End. HandRank:%s"), 
+        ANSI_TO_TCHAR(__FUNCTION__),
+        *UTHGameDebugManager::GetEnumAsString(PlayerHandRankInfo.HandRank));
+
     return PlayerHandRankInfo;
 }
 
@@ -190,7 +196,8 @@ bool UTHHoldemPlayManager::IsRoyalFlush(const TArray<FPlayingCard> FinalHandCard
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
-    
+    TArray<FPlayingCard> CardsForHandRank;
+
     // 최종 카드를 Suit 기준 TMap으로 분류 (Key : Card suit, Value : Card Value)
     TMap<EPlayingCardSuit, TArray<EPlayingCardValue>> CardsForSuit;
     CardsForSuit.Add(EPlayingCardSuit::Spades);
@@ -221,12 +228,19 @@ bool UTHHoldemPlayManager::IsRoyalFlush(const TArray<FPlayingCard> FinalHandCard
             CardValuesForSuit.Contains(EPlayingCardValue::King) &&
             CardValuesForSuit.Contains(EPlayingCardValue::Ace))
         {
-            PlayerHandRankInfo.HighValuesOfHandRank.Add(EPlayingCardValue::Ace);
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, EPlayingCardValue::Ten });
+            CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, EPlayingCardValue::Jack });
+            CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, EPlayingCardValue::Queen });
+            CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, EPlayingCardValue::King });
+            CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, EPlayingCardValue::Ace });            
+
             bResult = true;
             break;
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     return bResult;
 }
 
@@ -241,6 +255,7 @@ bool UTHHoldemPlayManager::IsStraightFlush(const TArray<FPlayingCard> FinalHandC
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
 
     // 내림차순으로 카드 정렬
@@ -281,6 +296,9 @@ bool UTHHoldemPlayManager::IsStraightFlush(const TArray<FPlayingCard> FinalHandC
         int32 PrevCardNum = 0; // 직전 카드의 숫자
         for (EPlayingCardValue& CardValue : CardValuesForSuit)
         {
+            // 실제 Value(HighAce라면 Ace로 변환)
+            EPlayingCardValue ActualCardValue = (CardValue == EPlayingCardValue::HighAce) ? EPlayingCardValue::Ace : CardValue;
+
             // 현재 카드 숫자
             int32 CardNum = static_cast<int32>(CardValue);
 
@@ -296,18 +314,26 @@ bool UTHHoldemPlayManager::IsStraightFlush(const TArray<FPlayingCard> FinalHandC
                 // 가장 높은 숫자이므로 핸드랭크의 하이밸류 적재
                 HighValuesOfHandRank.Add(CardValue);
 
+                // 핸드랭크 카드리스트 적재
+                CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, ActualCardValue });
+
                 StraightNumCount = 1;
                 PrevCardNum = CardNum;
             }
             // 직전 카드의 숫자보다 1이 작은지
             else if (CardNum == PrevCardNum - 1)
             {
+                // 핸드랭크 카드리스트 적재
+                CardsForHandRank.Add(FPlayingCard{ CardForSuit.Key, ActualCardValue });
+
                 ++StraightNumCount;
                 PrevCardNum = CardNum;
             }
             // 연속성이 깨졌으므로 초기화
             else
             {
+                PlayerHandRankInfo.CardsForHandRank.Empty();
+
                 StraightNumCount = 0;
                 PrevCardNum = 0;
             }
@@ -321,6 +347,7 @@ bool UTHHoldemPlayManager::IsStraightFlush(const TArray<FPlayingCard> FinalHandC
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     return bResult;
 }
@@ -336,6 +363,7 @@ bool UTHHoldemPlayManager::IsFourOfAKind(const TArray<FPlayingCard> FinalHandCar
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
     TArray<FPlayingCard> Kickers;
 
@@ -350,6 +378,13 @@ bool UTHHoldemPlayManager::IsFourOfAKind(const TArray<FPlayingCard> FinalHandCar
     FinalCards.Sort([](const FPlayingCard& FinalCardA, const FPlayingCard& FinalCardB) {
         return FinalCardA.Value > FinalCardB.Value;
     });
+
+    // HighAce(14)카드를 다시 모두 Ace(1)로 바꾸어준다.
+    while (FPlayingCard* AceCard = FinalCards.FindByPredicate(
+        [](const FPlayingCard& FinalCard) { return FinalCard.Value == EPlayingCardValue::HighAce; }))
+    {
+        AceCard->Value = EPlayingCardValue::Ace;
+    }
 
     // 카드에 존재하는 Value들을 Set으로 분류
     TSet<EPlayingCardValue> CardValues;
@@ -377,6 +412,12 @@ bool UTHHoldemPlayManager::IsFourOfAKind(const TArray<FPlayingCard> FinalHandCar
                 return FinalCard.Value == CardValue;
             });
             
+            // 핸드랭크 카드리스트 적재. 
+            CardsForHandRank.Add(FPlayingCard{ EPlayingCardSuit::Spades, CardValue });
+            CardsForHandRank.Add(FPlayingCard{ EPlayingCardSuit::Diamonds, CardValue });
+            CardsForHandRank.Add(FPlayingCard{ EPlayingCardSuit::Hearts, CardValue });
+            CardsForHandRank.Add(FPlayingCard{ EPlayingCardSuit::Clubs, CardValue });
+
             // 포카드를 제외한 카드 중 가장 높은 Value를 키커에 적재
             Kickers.Add(FinalCards[0]);
 
@@ -386,6 +427,7 @@ bool UTHHoldemPlayManager::IsFourOfAKind(const TArray<FPlayingCard> FinalHandCar
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     PlayerHandRankInfo.Kickers = Kickers;
     return bResult;
@@ -402,6 +444,7 @@ bool UTHHoldemPlayManager::IsFullHouse(const TArray<FPlayingCard> FinalHandCards
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
 
     // Ace(1)카드가 있다면 모두 HighAce(14)로 바꾸어준다.
@@ -415,6 +458,13 @@ bool UTHHoldemPlayManager::IsFullHouse(const TArray<FPlayingCard> FinalHandCards
     FinalCards.Sort([](const FPlayingCard& FinalCardA, const FPlayingCard& FinalCardB) {
         return FinalCardA.Value > FinalCardB.Value;
     });
+
+    // HighAce(14)카드를 다시 모두 Ace(1)로 바꾸어준다.
+    while (FPlayingCard* AceCard = FinalCards.FindByPredicate(
+        [](const FPlayingCard& FinalCard) { return FinalCard.Value == EPlayingCardValue::HighAce; }))
+    {
+        AceCard->Value = EPlayingCardValue::Ace;
+    }
 
     // 카드에 존재하는 Value들을 Set으로 분류
     TSet<EPlayingCardValue> CardValues;
@@ -443,6 +493,10 @@ bool UTHHoldemPlayManager::IsFullHouse(const TArray<FPlayingCard> FinalHandCards
                 // 이미 찾은 Pair가 없는 경우 Value 적재
                 if (PairValue == EPlayingCardValue::None)
                 {
+                    // 핸드랭크 카드리스트 적재
+                    CardsForHandRank.Add(CardsForCardValue[0]);
+                    CardsForHandRank.Add(CardsForCardValue[1]);
+
                     PairValue = CardValue;
                 }
             }
@@ -452,13 +506,23 @@ bool UTHHoldemPlayManager::IsFullHouse(const TArray<FPlayingCard> FinalHandCards
             // Triple 체크
             if (CardsForCardValue.Num() == 3)
             {
-                // 이미 Triple을 찾은 상태인지
+                // 이미 찾은 Triple이 없는 경우 Triple로 적재
                 if (TripleValue == EPlayingCardValue::None)
-                {                    
+                {
+                    // 핸드랭크 카드리스트 적재
+                    CardsForHandRank.Add(CardsForCardValue[0]);
+                    CardsForHandRank.Add(CardsForCardValue[1]);
+                    CardsForHandRank.Add(CardsForCardValue[2]);
+
                     TripleValue = CardValue;
                 }
+                // 이미 찾은 Triple이 있다면 Pair로 2장만 적재
                 else
                 {
+                    // 핸드랭크 카드리스트 적재
+                    CardsForHandRank.Add(CardsForCardValue[0]);
+                    CardsForHandRank.Add(CardsForCardValue[1]);
+
                     PairValue = CardValue;
                 }
             }
@@ -480,6 +544,7 @@ bool UTHHoldemPlayManager::IsFullHouse(const TArray<FPlayingCard> FinalHandCards
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     return bResult;
 }
@@ -495,6 +560,7 @@ bool UTHHoldemPlayManager::IsFlush(const TArray<FPlayingCard> FinalHandCards, FP
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
 
     // Ace(1)카드가 있다면 모두 HighAce(14)로 바꾸어준다.
@@ -522,13 +588,21 @@ bool UTHHoldemPlayManager::IsFlush(const TArray<FPlayingCard> FinalHandCards, FP
         // 카드 수가 5장이라면 Flush
         if (CardsForCardSuit.Num() >= 5)
         {
-            // 5장 중 HighValueCard 추출
-            FPlayingCard HighValueCard = *Algo::MaxElement(CardsForCardSuit, [](const FPlayingCard& CardA, const FPlayingCard& CardB) {
-                return CardA.Value < CardB.Value;
+            // 높은 Value 순의 내림차순으로 정렬
+            CardsForCardSuit.Sort([](const FPlayingCard& CardA, const FPlayingCard& CardB) {
+                return CardA.Value > CardB.Value;
             });
 
             // HighValue 적재
-            HighValuesOfHandRank.Add(HighValueCard.Value);
+            HighValuesOfHandRank.Add(CardsForCardSuit[0].Value);
+
+            // 핸드랭크 카드리스트 적재
+            for (int32 CardIndex = 0; CardIndex < 5; ++CardIndex)
+            {
+                // 실제 Value(HighAce라면 Ace로 변환)
+                EPlayingCardValue ActualCardValue = (CardsForCardSuit[CardIndex].Value == EPlayingCardValue::HighAce) ? EPlayingCardValue::Ace : CardsForCardSuit[CardIndex].Value;
+                CardsForHandRank.Add(FPlayingCard{ CardsForCardSuit[CardIndex].Suit, ActualCardValue });
+            }
 
             // True 반환
             bResult = true;
@@ -536,6 +610,7 @@ bool UTHHoldemPlayManager::IsFlush(const TArray<FPlayingCard> FinalHandCards, FP
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     return bResult;
 }
@@ -551,6 +626,7 @@ bool UTHHoldemPlayManager::IsStraight(const TArray<FPlayingCard> FinalHandCards,
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
 
     // 카드에 존재하는 Value들을 Set으로 분류
@@ -575,6 +651,9 @@ bool UTHHoldemPlayManager::IsStraight(const TArray<FPlayingCard> FinalHandCards,
     int32 PrevCardNum = 0; // 직전 카드의 숫자
     for (auto& CardValue : CardValues)
     {
+        // 실제 Value(HighAce라면 Ace로 변환)
+        EPlayingCardValue ActualCardValue = (CardValue == EPlayingCardValue::HighAce) ? EPlayingCardValue::Ace : CardValue;
+
         // 현재 카드 숫자
         int32 CardNum = static_cast<int32>(CardValue);
 
@@ -583,6 +662,11 @@ bool UTHHoldemPlayManager::IsStraight(const TArray<FPlayingCard> FinalHandCards,
         {
             // 가장 높은 숫자이므로 핸드랭크의 하이밸류 적재
             HighValuesOfHandRank.Add(CardValue);
+            
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Add(*FinalCards.FindByPredicate([&ActualCardValue](const FPlayingCard& FinalCard) {
+                return FinalCard.Value == ActualCardValue;
+            }));
 
             StraightNumCount = 1;
             PrevCardNum = CardNum;
@@ -590,12 +674,20 @@ bool UTHHoldemPlayManager::IsStraight(const TArray<FPlayingCard> FinalHandCards,
         // 직전 카드의 숫자보다 1이 작은지
         else if (CardNum == PrevCardNum - 1) 
         {
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Add(*FinalCards.FindByPredicate([&ActualCardValue](const FPlayingCard& FinalCard) {
+                return FinalCard.Value == ActualCardValue;
+            }));
+
             ++StraightNumCount;
             PrevCardNum = CardNum;
         }
         // 연속성이 깨졌으므로 초기화
         else 
         {
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Empty();
+
             StraightNumCount = 0;
             PrevCardNum = 0;
         }
@@ -608,6 +700,7 @@ bool UTHHoldemPlayManager::IsStraight(const TArray<FPlayingCard> FinalHandCards,
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     return bResult;
 }
@@ -623,6 +716,7 @@ bool UTHHoldemPlayManager::IsThreeOfAKind(const TArray<FPlayingCard> FinalHandCa
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
     TArray<FPlayingCard> Kickers;
 
@@ -637,6 +731,13 @@ bool UTHHoldemPlayManager::IsThreeOfAKind(const TArray<FPlayingCard> FinalHandCa
     FinalCards.Sort([](const FPlayingCard& FinalCardA, const FPlayingCard& FinalCardB) {
         return FinalCardA.Value > FinalCardB.Value;
     });
+
+    // HighAce(14)카드를 다시 모두 Ace(1)로 바꾸어준다.
+    while (FPlayingCard* AceCard = FinalCards.FindByPredicate(
+        [](const FPlayingCard& FinalCard) { return FinalCard.Value == EPlayingCardValue::HighAce; }))
+    {
+        AceCard->Value = EPlayingCardValue::Ace;
+    }
 
     // 카드에 존재하는 Value들을 Set으로 분류
     TSet<EPlayingCardValue> CardValues;
@@ -656,6 +757,11 @@ bool UTHHoldemPlayManager::IsThreeOfAKind(const TArray<FPlayingCard> FinalHandCa
         // 카드 수가 3장이라면
         if (CardsForCardValue.Num() == 3)
         {
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Add(CardsForCardValue[0]);
+            CardsForHandRank.Add(CardsForCardValue[1]);
+            CardsForHandRank.Add(CardsForCardValue[2]);
+
             // 핸드랭크의 하이밸류 적재
             HighValuesOfHandRank.Add(CardValue);
 
@@ -674,6 +780,7 @@ bool UTHHoldemPlayManager::IsThreeOfAKind(const TArray<FPlayingCard> FinalHandCa
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     PlayerHandRankInfo.Kickers = Kickers;
     return bResult;
@@ -690,6 +797,7 @@ bool UTHHoldemPlayManager::IsTwoPair(const TArray<FPlayingCard> FinalHandCards, 
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
     TArray<FPlayingCard> Kickers;
 
@@ -704,6 +812,13 @@ bool UTHHoldemPlayManager::IsTwoPair(const TArray<FPlayingCard> FinalHandCards, 
     FinalCards.Sort([](const FPlayingCard& FinalCardA, const FPlayingCard& FinalCardB) {
         return FinalCardA.Value > FinalCardB.Value;
     });
+
+    // HighAce(14)카드를 다시 모두 Ace(1)로 바꾸어준다.
+    while (FPlayingCard* AceCard = FinalCards.FindByPredicate(
+        [](const FPlayingCard& FinalCard) { return FinalCard.Value == EPlayingCardValue::HighAce; }))
+    {
+        AceCard->Value = EPlayingCardValue::Ace;
+    }
 
     // 카드에 존재하는 Value들을 Set으로 분류
     TSet<EPlayingCardValue> CardValues;
@@ -726,6 +841,10 @@ bool UTHHoldemPlayManager::IsTwoPair(const TArray<FPlayingCard> FinalHandCards, 
             // Pair 수 증가
             ++PairCount;
 
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Add(CardsForCardValue[0]);
+            CardsForHandRank.Add(CardsForCardValue[1]);
+
             // 핸드랭크의 하이밸류 적재
             HighValuesOfHandRank.Add(CardValue);
 
@@ -747,6 +866,7 @@ bool UTHHoldemPlayManager::IsTwoPair(const TArray<FPlayingCard> FinalHandCards, 
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     PlayerHandRankInfo.Kickers = Kickers;
     return bResult;
@@ -763,6 +883,7 @@ bool UTHHoldemPlayManager::IsOnePair(const TArray<FPlayingCard> FinalHandCards, 
 {
     bool bResult = false;
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<FPlayingCard> CardsForHandRank;
     TArray<EPlayingCardValue> HighValuesOfHandRank;
     TArray<FPlayingCard> Kickers;
 
@@ -777,6 +898,13 @@ bool UTHHoldemPlayManager::IsOnePair(const TArray<FPlayingCard> FinalHandCards, 
     FinalCards.Sort([](const FPlayingCard& FinalCardA, const FPlayingCard& FinalCardB) {
         return FinalCardA.Value > FinalCardB.Value;
     });
+
+    // HighAce(14)카드를 다시 모두 Ace(1)로 바꾸어준다.
+    while (FPlayingCard* AceCard = FinalCards.FindByPredicate(
+        [](const FPlayingCard& FinalCard) { return FinalCard.Value == EPlayingCardValue::HighAce; }))
+    {
+        AceCard->Value = EPlayingCardValue::Ace;
+    }
 
     // 카드에 존재하는 Value들을 Set으로 분류
     TSet<EPlayingCardValue> CardValues;
@@ -795,6 +923,10 @@ bool UTHHoldemPlayManager::IsOnePair(const TArray<FPlayingCard> FinalHandCards, 
         // Pair 체크
         if (CardsForCardValue.Num() == 2)
         {
+            // 핸드랭크 카드리스트 적재
+            CardsForHandRank.Add(CardsForCardValue[0]);
+            CardsForHandRank.Add(CardsForCardValue[1]);
+
             // 핸드랭크의 하이밸류 적재
             HighValuesOfHandRank.Add(CardValue);
 
@@ -813,6 +945,7 @@ bool UTHHoldemPlayManager::IsOnePair(const TArray<FPlayingCard> FinalHandCards, 
         }
     }
 
+    PlayerHandRankInfo.CardsForHandRank = CardsForHandRank;
     PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     PlayerHandRankInfo.Kickers = Kickers;
     return bResult;
@@ -821,6 +954,7 @@ bool UTHHoldemPlayManager::IsOnePair(const TArray<FPlayingCard> FinalHandCards, 
 bool UTHHoldemPlayManager::IsHighCard(const TArray<FPlayingCard> FinalHandCards, FPlayerHandRankInfo& PlayerHandRankInfo)
 {
     TArray<FPlayingCard> FinalCards = FinalHandCards;
+    TArray<EPlayingCardValue> HighValuesOfHandRank;
     TArray<FPlayingCard> Kickers;
 
     // Ace(1)카드가 있다면 모두 HighAce(14)로 바꾸어준다.
@@ -835,12 +969,21 @@ bool UTHHoldemPlayManager::IsHighCard(const TArray<FPlayingCard> FinalHandCards,
         return FinalCardA.Value > FinalCardB.Value;
     });
 
-    // 최종카드 중 가장 높은 순의 Value 카드 5장을 키커에 적재
-    for (int32 CardIndex = 0; CardIndex < 5; ++CardIndex)
+    // HighAce(14)카드를 다시 모두 Ace(1)로 바꾸어준다.
+    while (FPlayingCard* AceCard = FinalCards.FindByPredicate(
+        [](const FPlayingCard& FinalCard) { return FinalCard.Value == EPlayingCardValue::HighAce; }))
     {
+        AceCard->Value = EPlayingCardValue::Ace;
+    }
+
+    // 최종카드 중 가장 높은 순의 Value 카드 5장을 키커에 적재
+    HighValuesOfHandRank.Add(FinalCards[0].Value);
+    for (int32 CardIndex = 0; CardIndex < 5; ++CardIndex)
+    {        
         Kickers.Add(FinalCards[CardIndex]);
     }
     
+    PlayerHandRankInfo.HighValuesOfHandRank = HighValuesOfHandRank;
     PlayerHandRankInfo.Kickers = Kickers;
     return true;
 }

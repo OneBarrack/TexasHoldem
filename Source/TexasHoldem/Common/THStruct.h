@@ -18,6 +18,16 @@ public:
 
     UPROPERTY(BlueprintReadOnly)
     EPlayingCardValue Value = EPlayingCardValue::None;
+
+    UPROPERTY(BlueprintReadOnly)
+    bool IsOneOfTheLastBest5Cards = false;
+
+    bool operator==(const FPlayingCard& InPlayingCard) const
+    {
+        return (this->Suit == InPlayingCard.Suit   &&
+                this->Value == InPlayingCard.Value &&
+                this->IsOneOfTheLastBest5Cards == InPlayingCard.IsOneOfTheLastBest5Cards);
+    }
 };
 
 USTRUCT(BlueprintType)
@@ -74,6 +84,10 @@ public:
     // 족보(Hand Rank)
     UPROPERTY(BlueprintReadOnly)
     EHandRank HandRank = EHandRank::None;
+
+    // 족보에 해당하는 카드리스트 (하이카드 제외)
+    UPROPERTY(BlueprintReadOnly)
+    TArray<FPlayingCard> CardsForHandRank;
 
     // 족보 내 HighValues(세부 족보 수 만큼 높은 순으로 적재)
     UPROPERTY(BlueprintReadOnly)
