@@ -11,18 +11,32 @@
 #endif
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeTexasHoldem_init() {}
+	TEXASHOLDEM_API UFunction* Z_Construct_UDelegateFunction_TexasHoldem_OnNotifyRestartGameSignature__DelegateSignature();
+	TEXASHOLDEM_API UFunction* Z_Construct_UDelegateFunction_TexasHoldem_OnChangedGamePlayStateSignature__DelegateSignature();
+	TEXASHOLDEM_API UFunction* Z_Construct_UDelegateFunction_TexasHoldem_OnChangedCurrentTurnPlayerSignature__DelegateSignature();
+	TEXASHOLDEM_API UFunction* Z_Construct_UDelegateFunction_TexasHoldem_OnChangedBettingRoundSignature__DelegateSignature();
+	TEXASHOLDEM_API UFunction* Z_Construct_UDelegateFunction_TexasHoldem_OnChangedCommunityCardsSignature__DelegateSignature();
+	TEXASHOLDEM_API UFunction* Z_Construct_UDelegateFunction_TexasHoldem_OnChangedPlayersForTableSeattingPosSignature__DelegateSignature();
 	UPackage* Z_Construct_UPackage__Script_TexasHoldem()
 	{
 		static UPackage* ReturnPackage = nullptr;
 		if (!ReturnPackage)
 		{
+			static UObject* (*const SingletonFuncArray[])() = {
+				(UObject* (*)())Z_Construct_UDelegateFunction_TexasHoldem_OnNotifyRestartGameSignature__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_TexasHoldem_OnChangedGamePlayStateSignature__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_TexasHoldem_OnChangedCurrentTurnPlayerSignature__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_TexasHoldem_OnChangedBettingRoundSignature__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_TexasHoldem_OnChangedCommunityCardsSignature__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_TexasHoldem_OnChangedPlayersForTableSeattingPosSignature__DelegateSignature,
+			};
 			static const UE4CodeGen_Private::FPackageParams PackageParams = {
 				"/Script/TexasHoldem",
-				nullptr,
-				0,
+				SingletonFuncArray,
+				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x17D70973,
-				0x6673A006,
+				0xDF92782B,
+				0xCBB1412E,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

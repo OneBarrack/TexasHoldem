@@ -8,14 +8,29 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class ATHPlayerState;
 #ifdef TEXASHOLDEM_THGameMode_generated_h
 #error "THGameMode.generated.h already included, missing '#pragma once' in THGameMode.h"
 #endif
 #define TEXASHOLDEM_THGameMode_generated_h
 
 #define TexasHoldem_Source_TexasHoldem_GameMode_THGameMode_h_18_SPARSE_DATA
-#define TexasHoldem_Source_TexasHoldem_GameMode_THGameMode_h_18_RPC_WRAPPERS
-#define TexasHoldem_Source_TexasHoldem_GameMode_THGameMode_h_18_RPC_WRAPPERS_NO_PURE_DECLS
+#define TexasHoldem_Source_TexasHoldem_GameMode_THGameMode_h_18_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execCheckExitPlayer); \
+	DECLARE_FUNCTION(execReceiveNotifyPlayerAction); \
+	DECLARE_FUNCTION(execGiveTurnToPlayer); \
+	DECLARE_FUNCTION(execRestartTexasHoldem);
+
+
+#define TexasHoldem_Source_TexasHoldem_GameMode_THGameMode_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execCheckExitPlayer); \
+	DECLARE_FUNCTION(execReceiveNotifyPlayerAction); \
+	DECLARE_FUNCTION(execGiveTurnToPlayer); \
+	DECLARE_FUNCTION(execRestartTexasHoldem);
+
+
 #define TexasHoldem_Source_TexasHoldem_GameMode_THGameMode_h_18_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesATHGameMode(); \

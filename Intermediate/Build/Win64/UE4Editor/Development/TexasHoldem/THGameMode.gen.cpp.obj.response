@@ -233,6 +233,7 @@
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I D:\TexasHoldemProject\TexasHoldem\Intermediate\Build\Win64\UE4Editor\Inc\TexasHoldem
 /I D:\TexasHoldemProject\TexasHoldem\Source
+/I D:\TexasHoldemProject\TexasHoldem\Source\TexasHoldem
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\AugmentedReality
 /I Runtime\AugmentedReality\Public
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\MRMesh

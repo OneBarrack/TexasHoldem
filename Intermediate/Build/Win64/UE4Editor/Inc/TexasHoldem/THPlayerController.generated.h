@@ -8,8 +8,14 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UUserWidget;
+struct FPlayerSaveData;
 enum class EPlayerAction : uint8;
 struct FPlayerActionActivateInfo;
+class ATHPlayer;
+class ATHPlayerState;
+class ATHGameState;
+class ATHGameMode;
 #ifdef TEXASHOLDEM_THPlayerController_generated_h
 #error "THPlayerController.generated.h already included, missing '#pragma once' in THPlayerController.h"
 #endif
@@ -17,11 +23,18 @@ struct FPlayerActionActivateInfo;
 
 #define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_SPARSE_DATA
 #define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_RPC_WRAPPERS \
+	virtual void Client_SendNotifyExitGame_Implementation(); \
+	virtual void Server_SetPlayerSaveData_Implementation(FPlayerSaveData const& InPlayerSaveData); \
+	virtual void Server_SetGamePause_Implementation(bool bPaused); \
 	virtual void Server_SendNotifyPlayerAction_Implementation(EPlayerAction const& InPlayerAction, int32 CallMoney, int32 RaiseMoney); \
-	virtual void Server_ToggleReadyState_Implementation(); \
+	virtual void Server_ToggleReservedToExitState_Implementation(); \
  \
+	DECLARE_FUNCTION(execChangeHUDWidget); \
+	DECLARE_FUNCTION(execClient_SendNotifyExitGame); \
+	DECLARE_FUNCTION(execServer_SetPlayerSaveData); \
+	DECLARE_FUNCTION(execServer_SetGamePause); \
 	DECLARE_FUNCTION(execServer_SendNotifyPlayerAction); \
-	DECLARE_FUNCTION(execServer_ToggleReadyState); \
+	DECLARE_FUNCTION(execServer_ToggleReservedToExitState); \
 	DECLARE_FUNCTION(execActionFold); \
 	DECLARE_FUNCTION(execActionCall); \
 	DECLARE_FUNCTION(execActionCheck); \
@@ -30,15 +43,26 @@ struct FPlayerActionActivateInfo;
 	DECLARE_FUNCTION(execActionFull); \
 	DECLARE_FUNCTION(execActionHalf); \
 	DECLARE_FUNCTION(execActionQuarter); \
-	DECLARE_FUNCTION(execToggleReadyState); \
+	DECLARE_FUNCTION(execToggleReservedToExitState); \
 	DECLARE_FUNCTION(execCheckForActionActivate); \
-	DECLARE_FUNCTION(execGetPlayerActionActivateInfo);
+	DECLARE_FUNCTION(execGetPlayerActionActivateInfo); \
+	DECLARE_FUNCTION(execSetPlayerSaveData); \
+	DECLARE_FUNCTION(execExitGame); \
+	DECLARE_FUNCTION(execGetPlayerPawn); \
+	DECLARE_FUNCTION(execGetPlayerState); \
+	DECLARE_FUNCTION(execGetGameState); \
+	DECLARE_FUNCTION(execGetGameMode); \
+	DECLARE_FUNCTION(execInit);
 
 
 #define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execChangeHUDWidget); \
+	DECLARE_FUNCTION(execClient_SendNotifyExitGame); \
+	DECLARE_FUNCTION(execServer_SetPlayerSaveData); \
+	DECLARE_FUNCTION(execServer_SetGamePause); \
 	DECLARE_FUNCTION(execServer_SendNotifyPlayerAction); \
-	DECLARE_FUNCTION(execServer_ToggleReadyState); \
+	DECLARE_FUNCTION(execServer_ToggleReservedToExitState); \
 	DECLARE_FUNCTION(execActionFold); \
 	DECLARE_FUNCTION(execActionCall); \
 	DECLARE_FUNCTION(execActionCheck); \
@@ -47,9 +71,16 @@ struct FPlayerActionActivateInfo;
 	DECLARE_FUNCTION(execActionFull); \
 	DECLARE_FUNCTION(execActionHalf); \
 	DECLARE_FUNCTION(execActionQuarter); \
-	DECLARE_FUNCTION(execToggleReadyState); \
+	DECLARE_FUNCTION(execToggleReservedToExitState); \
 	DECLARE_FUNCTION(execCheckForActionActivate); \
-	DECLARE_FUNCTION(execGetPlayerActionActivateInfo);
+	DECLARE_FUNCTION(execGetPlayerActionActivateInfo); \
+	DECLARE_FUNCTION(execSetPlayerSaveData); \
+	DECLARE_FUNCTION(execExitGame); \
+	DECLARE_FUNCTION(execGetPlayerPawn); \
+	DECLARE_FUNCTION(execGetPlayerState); \
+	DECLARE_FUNCTION(execGetGameState); \
+	DECLARE_FUNCTION(execGetGameMode); \
+	DECLARE_FUNCTION(execInit);
 
 
 #define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_EVENT_PARMS \
@@ -58,6 +89,14 @@ struct FPlayerActionActivateInfo;
 		EPlayerAction InPlayerAction; \
 		int32 CallMoney; \
 		int32 RaiseMoney; \
+	}; \
+	struct THPlayerController_eventServer_SetGamePause_Parms \
+	{ \
+		bool bPaused; \
+	}; \
+	struct THPlayerController_eventServer_SetPlayerSaveData_Parms \
+	{ \
+		FPlayerSaveData InPlayerSaveData; \
 	};
 
 
@@ -118,6 +157,7 @@ public: \
 
 #define TexasHoldem_Source_TexasHoldem_Controller_THPlayerController_h_20_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__PlayerActionActivateInfo() { return STRUCT_OFFSET(ATHPlayerController, PlayerActionActivateInfo); } \
+	FORCEINLINE static uint32 __PPO__CurrentHUDWidget() { return STRUCT_OFFSET(ATHPlayerController, CurrentHUDWidget); } \
 	FORCEINLINE static uint32 __PPO__PossessedPlayer() { return STRUCT_OFFSET(ATHPlayerController, PossessedPlayer); }
 
 

@@ -9,6 +9,11 @@
 			"Name": "TexasHoldemEditor",
 			"Path": "D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldemEditor.Target.cs",
 			"Type": "Editor"
+		},
+		{
+			"Name": "TexasHoldemServer",
+			"Path": "D:\\TexasHoldemProject\\TexasHoldem\\Source\\TexasHoldemServer.Target.cs",
+			"Type": "Server"
 		}
 	]
 }
