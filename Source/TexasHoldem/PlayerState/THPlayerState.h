@@ -25,6 +25,7 @@ public:
 protected:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     virtual void BeginPlay() override;
+    virtual void Tick(float DeltaSeconds);
 
 public:
     UFUNCTION(BlueprintPure)
@@ -38,7 +39,10 @@ public:
 
 public:
     UFUNCTION(BlueprintPure)
-    const bool IsReady() const;
+    const int32 GetPlayerImageIndex() const;
+
+    UFUNCTION(BlueprintPure)
+    const bool IsReservedToExit() const;
 
     UFUNCTION(BlueprintPure)
     const int32 GetTableSeattingPos() const;
@@ -80,7 +84,10 @@ public:
     TArray<FPlayingCard> GetHandCards() const;
 
     UFUNCTION(BlueprintCallable)
-    void SetReadyState(const bool& bInReady);
+    void SetPlayerImageIndex(const int32 InPlayerImageIndex);
+
+    UFUNCTION(BlueprintCallable)
+    void SetReservedToExitState(const bool bInReservedToExit);
 
     UFUNCTION(BlueprintCallable)
     void SetTableSeattingPos(const int32& InTableSeattingPos);
@@ -133,15 +140,14 @@ public:
     UFUNCTION(BlueprintCallable)
     void SetHandCards(const TArray<FPlayingCard>& InHandCards);
 
-public:
-    //Test
-    UFUNCTION()
-    void OnRep_HandCards();
-
 private:
-    // 레디 상태
+    // 플레이어 이미지
     UPROPERTY(Replicated)
-    bool bReady = true;
+    int32 PlayerImageIndex = -1;
+
+    // 나가기예약 상태
+    UPROPERTY(Replicated)
+    bool bReservedToExit = false;
 
     // 테이블 내 앉은 자리
     UPROPERTY(Replicated)
@@ -192,8 +198,7 @@ private:
     FPlayerHandRankInfo HandRankInfo;
 
     // 핸드카드
-    //UPROPERTY(Replicated)
-    UPROPERTY(ReplicatedUsing = OnRep_HandCards)
+    UPROPERTY(Replicated)
     TArray<FPlayingCard> HandCards;
 
 private:

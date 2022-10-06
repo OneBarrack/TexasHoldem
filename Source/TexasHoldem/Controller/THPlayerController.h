@@ -45,15 +45,32 @@ protected:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:
-    UFUNCTION()
+    UFUNCTION(BlueprintCallable)
     void Init();
 
+    UFUNCTION(BlueprintPure)
     ATHGameMode* GetGameMode() const;
+
+    UFUNCTION(BlueprintPure)
 	ATHGameState* GetGameState() const;
+
+    UFUNCTION(BlueprintPure)
 	ATHPlayerState* GetPlayerState() const;
+
+    UFUNCTION(BlueprintPure)
     ATHPlayer* GetPlayerPawn() const;
 
+    // 게임 종료
+    UFUNCTION()
+    void ExitGame();
+
+    UFUNCTION(BlueprintImplementableEvent)
+    void BP_ExitGame();
+
 public:
+    UFUNCTION(BlueprintCallable)
+    void SetPlayerSaveData(const FPlayerSaveData& InPlayerSaveData);
+
     UFUNCTION(BlueprintCallable)
     const FPlayerActionActivateInfo GetPlayerActionActivateInfo();
 
@@ -61,7 +78,7 @@ public:
     void CheckForActionActivate();
 
 	UFUNCTION(BlueprintCallable)
-	void ToggleReadyState();
+	void ToggleReservedToExitState();
 
     UFUNCTION(BlueprintCallable)
     void ActionQuarter();
@@ -87,23 +104,36 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ActionFold();
 
-public:
-    UFUNCTION()
-    void HandleNetworkFailure(UWorld* World, UNetDriver* NetDriver, ENetworkFailure::Type FailureType, const FString& ErrorString);
-
-private:
+private: // RPC
 	// Server
     UFUNCTION(Server, Reliable)
-    void Server_ToggleReadyState();
-    void Server_ToggleReadyState_Implementation();
-    bool Server_ToggleReadyState_Validate() { return true; }
+    void Server_ToggleReservedToExitState();
+    void Server_ToggleReservedToExitState_Implementation();
+    bool Server_ToggleReservedToExitState_Validate() { return true; }
 
     UFUNCTION(Server, Reliable)
     void Server_SendNotifyPlayerAction(const EPlayerAction& InPlayerAction, int32 CallMoney = 0, int32 RaiseMoney = 0);
 	void Server_SendNotifyPlayerAction_Implementation(const EPlayerAction& InPlayerAction, int32 CallMoney = 0, int32 RaiseMoney = 0);
 	bool Server_SendNotifyPlayerAction_Validate(const EPlayerAction& InPlayerAction, int32 CallMoney = 0, int32 RaiseMoney = 0) { return true; }
+    
+    UFUNCTION(Server, Reliable)
+    void Server_SetGamePause(const bool bPaused);
+    void Server_SetGamePause_Implementation(const bool bPaused);
+    bool Server_SetGamePause_Validate(const bool bPaused) { return true; }
 
-public: /* Debeg용 */    
+    UFUNCTION(BlueprintCallable, Server, Reliable)
+    void Server_SetPlayerSaveData(const FPlayerSaveData& InPlayerSaveData);
+    void Server_SetPlayerSaveData_Implementation(const FPlayerSaveData& InPlayerSaveData);
+    bool Server_SetPlayerSaveData_Validate(const FPlayerSaveData& InPlayerSaveData) { return true; }
+
+    // Client
+    UFUNCTION(Client, Reliable)
+    void Client_SendNotifyExitGame();
+    void Client_SendNotifyExitGame_Implementation();
+    bool Client_SendNotifyExitGame_Validate() { return true; }
+
+public: // Debug
+    /************** For Debug **************/
     //UFUNCTION(Server, Reliable)
     void ActionSpaceBar();
     //bool ActionSpaceBar_Validate() { return true; }
@@ -120,9 +150,7 @@ public: /* Debeg용 */
     /////////////////////////
     UFUNCTION(BlueprintCallable)
     void ChangeHUDWidget(TSubclassOf<UUserWidget> NewHUDWidgetClass);
-
-private:
-    FDelegateHandle NetworkFailureDelegateHandle;
+    /******************************************/
 
 private:
     UPROPERTY(replicated)

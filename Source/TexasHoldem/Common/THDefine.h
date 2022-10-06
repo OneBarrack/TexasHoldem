@@ -20,3 +20,6 @@ const int FirstBlindBettingMoney = 200;
 const float IncreaseRateForBlindBettingMoney = 2.0f;
 
 const int StartPlayerMoney = 10000;
+
+// Showdown 이후 FinishiUp 넘어가기까지 대기시간 타이머
+const float FinishDelegateTimerDelay = 10.0f;

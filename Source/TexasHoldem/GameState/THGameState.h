@@ -94,6 +94,9 @@ public:
     void IncreaseGamePlayCount();
 
     UFUNCTION(BlueprintCallable)
+    void InitGamePlayCount();
+
+    UFUNCTION(BlueprintCallable)
     void SetGamePlayState(const EGamePlayState& InGamePlayState);
 
     UFUNCTION(BlueprintCallable)
@@ -163,7 +166,7 @@ public:
     UFUNCTION()
     void OnRep_PlayersForTableSeattingPos();
 
-    // NetMulticast
+    // Multicast
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_SendNotifyRestartGame();
     void Multicast_SendNotifyRestartGame_Implementation();

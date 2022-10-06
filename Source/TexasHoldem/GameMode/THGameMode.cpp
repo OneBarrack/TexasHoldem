@@ -54,6 +54,7 @@ void ATHGameMode::PostLogin(APlayerController* NewPlayer)
 
     if (ATHPlayerController* LoginPlayerController = Cast<ATHPlayerController>(NewPlayer))
     {
+        // 홀덤 테이블 리스트에 플레이어 정보 적재
         AddPlayerInHoldemTable(LoginPlayerController);
     }
     
@@ -67,8 +68,33 @@ void ATHGameMode::Logout(AController* Exiting)
 
     if (ATHPlayerController* LogoutPlayerController = Cast<ATHPlayerController>(Exiting))
     {
-        RemovePlayerInHoldemTable(LogoutPlayerController);        
+        // 홀덤 테이블 리스트에서 플레이어 정보 삭제
+        RemovePlayerInHoldemTable(LogoutPlayerController);
+
+        if (ATHPlayerState* LogoutPlayerState = LogoutPlayerController->GetPlayerState())
+        {
+            UE_LOG(LogTemp, Log, TEXT("[%s] LogoutPlayer NickName:%s"), ANSI_TO_TCHAR(__FUNCTION__), *GetPlayerNickName(LogoutPlayerState));
+
+            // 인게임 도중 나간 것이라면 해당 플레이어는 Fold 액션을 취한 것으로 간주한다.
+            switch (GetBettingRound())
+            {
+            case EBettingRound::PreFlop: [[fallthrough]];
+            case EBettingRound::Flop:    [[fallthrough]];
+            case EBettingRound::Turn:    [[fallthrough]];
+            case EBettingRound::River:
+            {
+                TArray<ATHPlayerState*> InGameSurvivedPlayers = GetInGameSurvivedPlayers();
+                if (InGameSurvivedPlayers.Contains(LogoutPlayerState))
+                {
+                    LogoutPlayerController->ActionFold();
+                }
+            }
+            default:
+                break;
+            }
+        }
     }
+    
 
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
@@ -100,13 +126,15 @@ void ATHGameMode::RestartTexasHoldem()
     // 게임 초기화 및 스타트
     bIsOneOnOneMatch = false;
     bIsBettingRoundEnded = false;
-    bFinishedGameForFoldAll = false;
     GamePlayManager->Init();
 
     // Broadcast restart delegate 
     THGameState->NotifyRestartGame();
-    SetGamePlayState(EGamePlayState::Prepare);
 
+    // Start 시 초기화 리플리케이트가 무시되는 것을 방지하기 위해 Prepare 전 Start 타임을 일정시간 유지하도록 타이머 설정
+    FTimerDelegate CycleRestartDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::Prepare);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleRestartDelegate, 1.0f, false);
+    
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -119,14 +147,6 @@ void ATHGameMode::Tick(float DeltaSeconds)
 
 void ATHGameMode::RunPlayCycle()
 {
-    // 모두 Fold하여 플레이어가 한명 남은 상태라면
-    if (!bFinishedGameForFoldAll && GetInGameSurvivedPlayers().Num() == 1)
-    {
-        // 승리 플레이어로 설정 후 게임 Finish
-        FinishGameForFoldAll();
-        bFinishedGameForFoldAll = true;
-    }
-
     switch (GetGamePlayState())
     {
     case EGamePlayState::Prepare:        RunPlayCyclePrepare();  break;
@@ -148,10 +168,11 @@ void ATHGameMode::RunPlayCycle()
 
 void ATHGameMode::RunPlayCyclePrepare()
 {
-    // 준비상태 : 모두 레디 하였는지 체크
-    if (IsReadyForAllPlayers())
+    // 1초마다 게임 스타트에 필요한 플레이어 수가 충족되는지 체크
+    if (!GetWorldTimerManager().IsTimerActive(CycleTimerHandle))
     {
-        SetGamePlayState(EGamePlayState::StartUp);
+        FTimerDelegate CyclePrepareDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::CheckLoginPlayerCountForStartUp);
+        GetWorldTimerManager().SetTimer(CycleTimerHandle, CyclePrepareDelegate, 1.0f, true);
     }
 }
 
@@ -202,8 +223,10 @@ void ATHGameMode::RunPlayCycleStartUp()
     }
 
     // 7. PreFlop 라운드 진행
-    SetGamePlayState(EGamePlayState::PreFlop);
+    FTimerDelegate CycleStartUpDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::PreFlop);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleStartUpDelegate, 1.0f, false);
 
+    SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -255,9 +278,11 @@ void ATHGameMode::RunPlayCyclePreFlop()
     ATHPlayerState* PlayerNextToBigBlind = InGameSurvivedPlayers[(BigBlindPlayerIndex + 1) % InGameSurvivedPlayers.Num()];    
     GiveTurnToPlayer(PlayerNextToBigBlind);
 
-    // 7. 베팅 진행    
-    SetGamePlayState(EGamePlayState::PreFlopBetting);
+    // 7. 베팅 진행
+    FTimerDelegate CyclePreFlopDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::PreFlopBetting);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CyclePreFlopDelegate, 1.0f, false);
 
+    SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -283,8 +308,11 @@ void ATHGameMode::RunPlayCycleFlop()
     GiveTurnToPlayer(GetInGameSurvivedPlayers()[0]);
 
     // 4. 베팅 진행    
-    SetGamePlayState(EGamePlayState::FlopBetting);
+    FTimerDelegate CycleFlopDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::FlopBetting);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleFlopDelegate, 1.0f, false);
+    //SetGamePlayState(EGamePlayState::FlopBetting);
 
+    SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -310,8 +338,10 @@ void ATHGameMode::RunPlayCycleTurn()
     GiveTurnToPlayer(GetInGameSurvivedPlayers()[0]);
 
     // 4. 베팅 진행
-    SetGamePlayState(EGamePlayState::TurnBetting);
+    FTimerDelegate CycleTurnDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::TurnBetting);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleTurnDelegate, 1.0f, false);
 
+    SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -337,8 +367,11 @@ void ATHGameMode::RunPlayCycleRiver()
     GiveTurnToPlayer(GetInGameSurvivedPlayers()[0]);
 
     // 4. 베팅 진행
-    SetGamePlayState(EGamePlayState::RiverBetting);
+    FTimerDelegate CycleRiverDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::RiverBetting);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleRiverDelegate, 1.0f, false);
+    //SetGamePlayState(EGamePlayState::RiverBetting);
 
+    SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -361,7 +394,10 @@ void ATHGameMode::RunPlayCycleShowdown()
     SetBettingRound(EBettingRound::End);
     SetCurrentTurnPlayer(nullptr);
 
-    SetGamePlayState(EGamePlayState::FinishUp);
+    FTimerDelegate CycleShowdownDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::FinishUp);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleShowdownDelegate, 1.0f, false);
+
+    SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
@@ -381,9 +417,9 @@ void ATHGameMode::RunPlayCycleFinishUp()
             *UTHGameDebugManager::GetPlayerHandRankInfoAsString(GetPlayerHandRankInfo(SurvivedPlayer)));
     }
 
-    // Finish 화면 일정시간 유지하기 위해 타이머 설정
-    FTimerDelegate FinishDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::RestartTexasHoldem);
-    GetWorldTimerManager().SetTimer(FinishDelegateTimerHandle, FinishDelegate, FinishDelegateTimerDelay, false);
+    // FinishUp 화면이 전환되기 1초 전 나가기 예약된 플레이어 및 보유금액이 블라인드 베팅금액보다 낮은 플레이어들 퇴장을 위한 체크진행
+    FTimerDelegate CycleFinishUpDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::CheckExitPlayer);
+    GetWorldTimerManager().SetTimer(CheckExitTimerHandle, CycleFinishUpDelegate, FinishDelegateTimerDelay - 1.0f, false);
 
     SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
@@ -439,6 +475,7 @@ void ATHGameMode::GiveTurnToPlayer(ATHPlayerState* BettingPlayer)
     if (GetPlayerTurnState(BettingPlayer) == EPlayerTurnState::Done)
     {
         // 추가적인 Raise 없이 한바퀴 다 돈것이므로 턴 종료
+        SetCurrentTurnPlayer(nullptr);
         bIsBettingRoundEnded = true;
     }
     else
@@ -456,6 +493,11 @@ void ATHGameMode::ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const
     if (!IsValid(BettingPlayer))
         return;
 
+    UE_LOG(LogTemp, Log, TEXT("[%s] Action:%s Player:%s"),
+        ANSI_TO_TCHAR(__FUNCTION__),
+        *UTHGameDebugManager::GetEnumAsString(GetPlayerAction(BettingPlayer)),
+        *GetPlayerNickName(BettingPlayer));
+
     switch (GetPlayerAction(BettingPlayer))
     {
     case EPlayerAction::Quarter: [[fallthrough]];
@@ -465,8 +507,7 @@ void ATHGameMode::ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const
     {
         // 베팅라운드 초기화(모든 플레이어의 액션 제거 및 턴 Wait 상태로 만든다) 후
         // 현재 플레이어만 레이즈액션 적용, GameState 내 Raise 액션 true 세팅
-        InitBettingRound(true);
-        SetAppeardRaiseAction(true);
+        InitBettingRound(true, BettingPlayer);
         CalcPotMoneyForRaiseAction(BettingPlayer, CallMoney, RaiseMoney);
         break;
     }
@@ -475,8 +516,7 @@ void ATHGameMode::ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const
         // 레이즈머니가 존재하면 올인으로 레이즈 된 것이므로 레이즈 로직 진행
         if (RaiseMoney > 0)
         {
-            InitBettingRound(true);
-            SetAppeardRaiseAction(true);
+            InitBettingRound(true, BettingPlayer);
             CalcPotMoneyForRaiseAction(BettingPlayer, CallMoney, RaiseMoney);
         }
         // 레이즈머니가 없다면 이전 플레이어들의 베팅금액에 대해 콜 형식으로 보유금액 모두를 올인한 것이므로 콜 로직 진행
@@ -508,8 +548,13 @@ void ATHGameMode::ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const
     // 현재 베팅 플레이어 턴 종료
     SetPlayerTurnState(BettingPlayer, EPlayerTurnState::Done);
 
-    // 다음 베팅 플레이어 정보 적재
-    GiveTurnToPlayer(GetNextInGamePlayer(BettingPlayer));
+    // 액션중인 플레이어가 현재 턴의 베팅 플레이어가 맞는지 
+    // (현재 턴이 아닌 플레이어가 강제 종료 등으로 인해 폴드처리 되는 경우 턴 순서가 꼬이는 것을 방지)
+    if (BettingPlayer == GetCurrentTurnPlayer())
+    {
+        // 다음 베팅 플레이어 정보 적재
+        GiveTurnToPlayer(GetNextInGamePlayer(BettingPlayer));
+    }
 
     // 현재 베팅 플레이어의 액션이 Fold라면 SurvivedPlayer 리스트에서 제거
     if (GetPlayerAction(BettingPlayer) == EPlayerAction::Fold)
@@ -518,10 +563,12 @@ void ATHGameMode::ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const
         RemoveInGameSurvivedPlayer(BettingPlayer);
     }
 
-    UE_LOG(LogTemp, Log, TEXT("[%s] Action:%s Player:%s"), 
-        ANSI_TO_TCHAR(__FUNCTION__),
-        *UTHGameDebugManager::GetEnumAsString(GetPlayerAction(BettingPlayer)),
-        *GetPlayerNickName(BettingPlayer));
+    // 모두 Fold하여 플레이어가 한명 남은 상태라면
+    if (GetInGameSurvivedPlayers().Num() == 1)
+    {
+        // 승리 플레이어로 설정 후 게임 Finish
+        FinishGameForFoldAll();
+    }
 }
 
 void ATHGameMode::CalcPotMoneyForCheckAction(ATHPlayerState* BettingPlayer)
@@ -546,36 +593,46 @@ void ATHGameMode::CalcPotMoneyForFoldAction(ATHPlayerState* BettingPlayer)
 {
 }
 
-void ATHGameMode::InitBettingRound(bool bNotifyRaiseAction)
+void ATHGameMode::InitBettingRound(const bool bAppearedRaiseAction, ATHPlayerState* RaisePlayer)
 {
-    InitSurvivedPlayersForBettingRound(bNotifyRaiseAction);
+    SetAppeardRaiseAction(bAppearedRaiseAction);
+    InitSurvivedPlayersForBettingRound(RaisePlayer);
 
-    if (!bNotifyRaiseAction)
+    if (!IsAppeardRaiseAction())
     {
         SetHighRoundBettingMoney(0);
     }
 
-    bIsBettingRoundEnded = false;
-    SetAppeardRaiseAction(false);
+    bIsBettingRoundEnded = false;    
     SetMinRaiseMoney(GetBlindBettingMoney());
 }
 
-void ATHGameMode::InitSurvivedPlayersForBettingRound(bool bNotifyRaiseAction)
+void ATHGameMode::InitSurvivedPlayersForBettingRound(ATHPlayerState* RaisePlayer)
 {
     TArray<ATHPlayerState*> InGameSurvivedPlayers = GetInGameSurvivedPlayers();
     for (ATHPlayerState* SurvivedPlayer : InGameSurvivedPlayers)
     {
-        // 올인한 플레이어는 게임 종료까지 추가적인 액션 및 턴에 대한 업데이트를 하지 않는다.
-        if (GetPlayerAction(SurvivedPlayer) != EPlayerAction::Allin)
-        {
-            SetPlayerTurnState(SurvivedPlayer, EPlayerTurnState::Wait);
-            SetPlayerAction(SurvivedPlayer, EPlayerAction::None);
-        }
-
-        if (!bNotifyRaiseAction)
+        if (!IsAppeardRaiseAction())
         {
             SetPlayerRoundBettingMoney(SurvivedPlayer, 0);
         }
+
+        // 레이즈 플레이어와 올인한 플레이어는 액션 및 턴에 대한 초기화를 하지 않는다.
+        if (SurvivedPlayer == RaisePlayer || GetPlayerAction(SurvivedPlayer) == EPlayerAction::Allin)
+            continue;
+
+        SetPlayerTurnState(SurvivedPlayer, EPlayerTurnState::Wait);
+        SetPlayerAction(SurvivedPlayer, EPlayerAction::None);
+    }
+}
+
+void ATHGameMode::CheckLoginPlayerCountForStartUp()
+{
+    // 플레이어 수가 MinPlayerCount 이상일 경우 Game Start
+    if (GetLoginPlayerCount() >= MinPlayerCount)
+    {
+        SetGamePlayState(EGamePlayState::StartUp);
+        GetWorldTimerManager().ClearTimer(CycleTimerHandle);
     }
 }
 
@@ -935,31 +992,22 @@ void ATHGameMode::CalculatePotMoneyChop(TArray<ATHPlayerState*>& PotPlayers, int
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
 
-bool ATHGameMode::IsReadyForAllPlayers()
+void ATHGameMode::CheckExitPlayer()
 {
-    bool bReadyForAllPlayers = false;
-
-    // 게임 시작 최소 인원(MinPlayerCount) 체크
-    if (GetLoginPlayerCount() >= MinPlayerCount)
+    for (ATHPlayerState* TargetPlayer : THGameState->GetInGamePlayersAll())
     {
-        bReadyForAllPlayers = true;
-
-        // 플레이어가 모두 레디 하였는지 체크
-        for (APlayerState* InGamePlayer : THGameState->PlayerArray)
+        // 플레이어가 나가기 예약 상태이거나 보유금액이 블라인드 베팅금액보다 낮을경우 퇴장시킨다.
+        if (GetPlayerReservedToExit(TargetPlayer) || GetPlayerMoney(TargetPlayer) < GetBlindBettingMoney())
         {
-            if (ATHPlayerState* THPlayerState = Cast<ATHPlayerState>(InGamePlayer))
-            {
-                // 레디 안한 플레이어가 있다면 false 리턴
-                if (!IsPlayerReady(THPlayerState))
-                {
-                    bReadyForAllPlayers = false;
-                    break;
-                }
-            }
+            TargetPlayer->GetPlayerController()->ExitGame();
         }
     }
 
-    return bReadyForAllPlayers;
+    // 이후 Restart 진행
+    FTimerDelegate FinishUpDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::RestartTexasHoldem);
+    GetWorldTimerManager().SetTimer(CycleTimerHandle, FinishUpDelegate, 1.0f, false);
+
+    SetGamePlayState(EGamePlayState::Wait);
 }
 
 void ATHGameMode::AddPlayerInHoldemTable(ATHPlayerController* LoginPlayerController)
@@ -975,21 +1023,27 @@ void ATHGameMode::AddPlayerInHoldemTable(ATHPlayerController* LoginPlayerControl
             TargetPlayerState->Init();
 
             SetPlayerTableSeattingPos(TargetPlayerState, TableSeattingPos);
+            SetPlayerMoney(TargetPlayerState, 10000);
+
             PlayersForTableSeattingPos[TableSeattingPos] = TargetPlayerState;
             TargetPlayerState->SetPlayerController(LoginPlayerController);
-
+            
             UE_LOG(LogTemp, Log, TEXT("[%s] Login Player(%s) "), ANSI_TO_TCHAR(__FUNCTION__), *TargetPlayerState->GetName());
 
             // Debug
-            if (GetPlayerNickName(TargetPlayerState) == FString(TEXT("Anonymous")))
+            if (0)
             {
-                SetPlayerNickName(TargetPlayerState, FString::FromInt(TableSeattingPos));
+                if (GetPlayerNickName(TargetPlayerState) == FString(TEXT("Anonymous")))
+                {
+                    SetPlayerNickName(TargetPlayerState, FString::FromInt(TableSeattingPos));
+                }
+
+                //SetPlayerMoney(TargetPlayerState, 3000 * (TableSeattingPos + 1));
+                //SetPlayerBettingMoney(THPlayerState, (THGameState->GetPlayerCount() + 1) * 1000);
+                //SetPlayerAction(THPlayerState, static_cast<EPlayerAction>(THGameState->GetPlayerCount() % 5) );
+                //THPlayerState->SetPlayerRole(static_cast<EPlayerRole>(THGameState->GetPlayerCount() % 4));
+                //
             }
-            SetPlayerMoney(TargetPlayerState, 3000 * (TableSeattingPos + 1));
-            //SetPlayerBettingMoney(THPlayerState, (THGameState->GetPlayerCount() + 1) * 1000);
-            //SetPlayerAction(THPlayerState, static_cast<EPlayerAction>(THGameState->GetPlayerCount() % 5) );
-            //THPlayerState->SetPlayerRole(static_cast<EPlayerRole>(THGameState->GetPlayerCount() % 4));
-            //
             break;
         }
     }
@@ -1003,20 +1057,15 @@ void ATHGameMode::RemovePlayerInHoldemTable(ATHPlayerController* LogoutPlayerCon
     // Player Logout시 GameState 내 해당 플레이어 스테이트 정보 제거
     if (ATHPlayerState* LogoutPlayerState = LogoutPlayerController->GetPlayerState())
     {
-        LogoutPlayerController->Init();
-        LogoutPlayerState->Init();
-
         TArray<ATHPlayerState*> PlayersForTableSeattingPos = GetPlayersForTableSeattingPos();
         TArray<ATHPlayerState*> InGamePlayersAll = GetInGamePlayersAll();
         TArray<ATHPlayerState*> InGameSurvivedPlayers = GetInGameSurvivedPlayers();
         
         PlayersForTableSeattingPos[GetPlayerTableSeattingPos(LogoutPlayerState)] = nullptr;
         InGamePlayersAll.RemoveSingle(LogoutPlayerState);
-        InGameSurvivedPlayers.RemoveSingle(LogoutPlayerState);
 
         SetPlayersForTableSeattingPos(PlayersForTableSeattingPos);
         SetInGamePlayersAll(InGamePlayersAll);
-        SetInGameSurvivedPlayers(InGameSurvivedPlayers);
     }
 }
 
@@ -1058,6 +1107,11 @@ void ATHGameMode::SetGamePlayState(EGamePlayState InGamePlayState)
 void ATHGameMode::SetBlindBettingMoney(const int InBlindBettingMoney)
 {
     THGameState->SetBlindBettingMoney(InBlindBettingMoney);
+}
+
+const bool ATHGameMode::GetPlayerReservedToExit(ATHPlayerState* TargetPlayer)
+{
+    return TargetPlayer->IsReservedToExit();
 }
 
 const int32 ATHGameMode::GetPlayerMoney(ATHPlayerState* TargetPlayer)
@@ -1155,6 +1209,11 @@ const EGamePlayState ATHGameMode::GetGamePlayState()
     return THGameState->GetGamePlayState();
 }
 
+const bool ATHGameMode::IsAppeardRaiseAction()
+{
+    return THGameState->IsAppeardRaiseAction();
+}
+
 ATHPlayerState* ATHGameMode::GetNextInGamePlayer(ATHPlayerState* TargetPlayer)
 {
     return THGameState->GetNextInGamePlayer(TargetPlayer);
@@ -1243,7 +1302,7 @@ void ATHGameMode::SetPlayerTableSeattingPos(ATHPlayerState* TargetPlayer, const 
 
 bool ATHGameMode::IsPlayerReady(ATHPlayerState* TargetPlayer)
 {
-    return TargetPlayer->IsReady();
+    return TargetPlayer->IsReservedToExit();
 }
 
 void ATHGameMode::SetHighRoundBettingMoney(const int32& InHighRoundBettingMoney)

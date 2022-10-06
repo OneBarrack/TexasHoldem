@@ -165,6 +165,11 @@ void ATHGameState::IncreaseGamePlayCount()
     ++GamePlayCount;
 }
 
+void ATHGameState::InitGamePlayCount()
+{
+    GamePlayCount = 0;
+}
+
 void ATHGameState::SetGamePlayState(const EGamePlayState& InGamePlayState)
 {
     GamePlayState = InGamePlayState;

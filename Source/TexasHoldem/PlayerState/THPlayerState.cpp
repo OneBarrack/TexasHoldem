@@ -11,7 +11,7 @@ ATHPlayerState::ATHPlayerState()
 
 void ATHPlayerState::Init()
 {
-    bReady            = true;
+    bReservedToExit   = false;
     PlayerTurnState   = EPlayerTurnState::None;
     PlayerRole        = EPlayerRole::None;
     BettingMoney      = 0;
@@ -27,7 +27,8 @@ void ATHPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-    DOREPLIFETIME(ATHPlayerState, bReady);
+    DOREPLIFETIME(ATHPlayerState, PlayerImageIndex);
+    DOREPLIFETIME(ATHPlayerState, bReservedToExit);
     DOREPLIFETIME(ATHPlayerState, TableSeattingPos);
     DOREPLIFETIME(ATHPlayerState, PlayerTurnState);
     DOREPLIFETIME(ATHPlayerState, PlayerNickName);
@@ -49,6 +50,19 @@ void ATHPlayerState::BeginPlay()
     GetGameState()->OnNotifyRestartGame.AddDynamic(this, &ATHPlayerState::Init);
 }
 
+void ATHPlayerState::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+
+    if (ATHGameState* THGameState = GetGameState())
+    {
+        if (Money < THGameState->GetBlindBettingMoney())
+        {
+            THPlayerController->ExitGame();
+        }
+    }
+}
+
 ATHGameState* ATHPlayerState::GetGameState() const
 {
     return GetWorld() ? Cast<ATHGameState>(GetWorld()->GetGameState()) : nullptr;
@@ -64,9 +78,14 @@ void ATHPlayerState::SetPlayerController(ATHPlayerController* InTHPlayerControll
     THPlayerController = InTHPlayerController;
 }
 
-const bool ATHPlayerState::IsReady() const
+const int32 ATHPlayerState::GetPlayerImageIndex() const
 {
-    return bReady;
+    return PlayerImageIndex;
+}
+
+const bool ATHPlayerState::IsReservedToExit() const
+{
+    return bReservedToExit;
 }
 
 const int32 ATHPlayerState::GetTableSeattingPos() const
@@ -134,11 +153,16 @@ const FPlayerHandRankInfo ATHPlayerState::GetPlayerHandRankInfo() const
     return HandRankInfo;
 }
 
-void ATHPlayerState::SetReadyState(const bool& bInReady)
+void ATHPlayerState::SetPlayerImageIndex(const int32 InPlayerImageIndex)
 {
-    bReady = bInReady;
+    PlayerImageIndex = InPlayerImageIndex;
+}
 
-    UE_LOG(LogTemp, Log, TEXT("[%s] ReadyState:%d Player::%s"), ANSI_TO_TCHAR(__FUNCTION__), bReady, *GetPlayerNickName());
+void ATHPlayerState::SetReservedToExitState(const bool bInReservedToExit)
+{
+    bReservedToExit = bInReservedToExit;
+
+    UE_LOG(LogTemp, Log, TEXT("[%s] ReadyState:%d Player::%s"), ANSI_TO_TCHAR(__FUNCTION__), bReservedToExit, *GetPlayerNickName());
 }
 
 void ATHPlayerState::SetTableSeattingPos(const int32& InTableSeattingPos)
@@ -257,18 +281,6 @@ void ATHPlayerState::SetHandCards(const TArray<FPlayingCard>& InHandCards)
 
     UE_LOG(LogTemp, Log, TEXT("[%s] HandCards(%s, %s), (%s, %s) Player::%s"),
         ANSI_TO_TCHAR(__FUNCTION__),
-        *UTHGameDebugManager::GetEnumAsString(HandCards[0].Suit),
-        *UTHGameDebugManager::GetEnumAsString(HandCards[0].Value),
-        *UTHGameDebugManager::GetEnumAsString(HandCards[1].Suit),
-        *UTHGameDebugManager::GetEnumAsString(HandCards[1].Value),
-        *GetPlayerNickName());
-}
-
-void ATHPlayerState::OnRep_HandCards()
-{    
-    UE_LOG(LogTemp, Log, TEXT("[%s] IsServer(%d) HandCards(%s, %s), (%s, %s) Player::%s"),
-        ANSI_TO_TCHAR(__FUNCTION__),
-        HasAuthority(),
         *UTHGameDebugManager::GetEnumAsString(HandCards[0].Suit),
         *UTHGameDebugManager::GetEnumAsString(HandCards[0].Value),
         *UTHGameDebugManager::GetEnumAsString(HandCards[1].Suit),

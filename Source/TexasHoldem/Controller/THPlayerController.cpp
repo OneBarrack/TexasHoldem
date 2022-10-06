@@ -8,6 +8,8 @@
 #include "GameFramework/PlayerState.h"
 #include "Manager/THGameDebugManager.h"
 #include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "SaveGame/THSaveGame.h"
 
 const FName ATHPlayerController::InputActionMouseLeft = FName(TEXT("MouseLeft"));
 const FName ATHPlayerController::InputActionSpaceBar  = FName(TEXT("SpaceBar"));
@@ -31,18 +33,16 @@ void ATHPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GamePlayMgr = NewObject<UTHHoldemPlayManager>(this);
+    GamePlayMgr = NewObject<UTHHoldemPlayManager>(this);
 
-	if (ATHPlayerState* THPlayerState = GetPlayerState())
-	{
-		THPlayerState->SetPlayerController(this);
-	}
+    if (ATHPlayerState* THPlayerState = GetPlayerState())
+    {
+        THPlayerState->SetPlayerController(this);
+    }
 
-	SetInputMode(FInputModeGameAndUI());
+    SetInputMode(FInputModeGameAndUI());
 
-	NetworkFailureDelegateHandle = GEngine->OnNetworkFailure().AddUObject(this, &ATHPlayerController::HandleNetworkFailure);
-
-	GetGameState()->OnNotifyRestartGame.AddDynamic(this, &ATHPlayerController::Init);
+    GetGameState()->OnNotifyRestartGame.AddDynamic(this, &ATHPlayerController::Init);
 }
 
 void ATHPlayerController::PostInitializeComponents()
@@ -87,8 +87,7 @@ void ATHPlayerController::SetupInputComponent()
 
 void ATHPlayerController::Destroyed()
 {
-	Super::Destroyed();
-	GEngine->OnNetworkFailure().Remove(NetworkFailureDelegateHandle);
+    Super::Destroyed();
 }
 
 void ATHPlayerController::Tick(float DeltaSeconds)
@@ -101,11 +100,6 @@ void ATHPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	
 	DOREPLIFETIME(ATHPlayerController, PlayerActionActivateInfo);
-}
-
-void ATHPlayerController::HandleNetworkFailure(UWorld* World, UNetDriver* NetDriver, ENetworkFailure::Type FailureType, const FString& ErrorString)
-{
-	UE_LOG(LogTemp, Log, TEXT("[%s] %s"), ANSI_TO_TCHAR(__FUNCTION__), *ErrorString);
 }
 
 ATHGameMode* ATHPlayerController::GetGameMode() const
@@ -128,14 +122,24 @@ ATHPlayer* ATHPlayerController::GetPlayerPawn() const
 	return Cast<ATHPlayer>(GetPawn());
 }
 
+void ATHPlayerController::ExitGame()
+{
+	Client_SendNotifyExitGame();
+}
+
+void ATHPlayerController::SetPlayerSaveData(const FPlayerSaveData& InPlayerSaveData)
+{
+	Server_SetPlayerSaveData(InPlayerSaveData);
+}
+
 const FPlayerActionActivateInfo ATHPlayerController::GetPlayerActionActivateInfo()
 {
 	return PlayerActionActivateInfo;
 }
 
-void ATHPlayerController::ToggleReadyState()
+void ATHPlayerController::ToggleReservedToExitState()
 {
-    Server_ToggleReadyState();
+	Server_ToggleReservedToExitState();
 }
 
 void ATHPlayerController::ActionQuarter()
@@ -311,7 +315,7 @@ void ATHPlayerController::CheckForActionActivate()
 
 void ATHPlayerController::ActionKeyReady()
 {
-    ToggleReadyState();
+	ToggleReservedToExitState();
     UE_LOG(LogTemp, Log, TEXT("Ready"));
 }
 
@@ -332,14 +336,14 @@ void ATHPlayerController::ChangeHUDWidget(TSubclassOf<UUserWidget> NewHUDWidgetC
     }
 }
 
-void ATHPlayerController::Server_ToggleReadyState_Implementation()
+void ATHPlayerController::Server_ToggleReservedToExitState_Implementation()
 {
     if (!HasAuthority())
         return;
 
     if (ATHPlayerState* THPlayerState = GetPlayerState())
     {
-        THPlayerState->SetReadyState(THPlayerState->IsReady() ^ true);
+        THPlayerState->SetReservedToExitState(THPlayerState->IsReservedToExit() ^ true);
     }
 }
 
@@ -356,42 +360,46 @@ void ATHPlayerController::Server_SendNotifyPlayerAction_Implementation(const EPl
         THGameMode->ReceiveNotifyPlayerAction(THPlayerState, CallMoney, RaiseMoney);
     }
 }
+
+void ATHPlayerController::Server_SetPlayerSaveData_Implementation(const FPlayerSaveData& InPlayerSaveData)
+{
+	if (!HasAuthority())
+		return;
+
+	if (ATHPlayerState* THPlayerState = GetPlayerState())
+	{
+		GetPlayerState()->SetPlayerImageIndex(InPlayerSaveData.PlayerImageIndex);
+		GetPlayerState()->SetPlayerNickName(InPlayerSaveData.PlayerNickName);
+	}
+    UE_LOG(LogTemp, Log, TEXT("[%s] ImageIndex:%d NickName:%s"), ANSI_TO_TCHAR(__FUNCTION__), 
+		InPlayerSaveData.PlayerImageIndex, *InPlayerSaveData.PlayerNickName);
+}
+
+void ATHPlayerController::Server_SetGamePause_Implementation(const bool bPaused)
+{
+    if (!HasAuthority())
+        return;
+
+	UGameplayStatics::SetGamePaused(GetWorld(), bPaused);
+}
+
+void ATHPlayerController::Client_SendNotifyExitGame_Implementation()
+{
+	BP_ExitGame();
+}
+
 void ATHPlayerController::ActionSpaceBar()
 {
-	FPlayingCard Card = GamePlayMgr->GetCardFromCardDeck();
-	UE_LOG(LogTemp, Log, TEXT("[%s] Get Card! Suit:%s Value:%s, Current card deck count : %d"),
-		*UTHGameDebugManager::GetEnumAsString(Card.Suit), *UTHGameDebugManager::GetEnumAsString(Card.Value), GamePlayMgr->GetCurrentCardDeckCount());
+	static bool bPaused = false;
+	bPaused ^= true;
+	Server_SetGamePause(bPaused);	
 }
 
 void ATHPlayerController::ActionKeyBoard1()
 {
-	TArray<int32> ggg;
-	ggg.Add(1);
-	ggg.Add(2);
-	ggg.Add(3);
-	ggg.Add(4);
-	ggg.Add(5);
-
-	for (int32 Idx = 0; Idx < ggg.Num(); ++Idx)
-	{
-		if (ggg[Idx] == 2)
-        {
-			ggg.RemoveAt(Idx--);
-			continue;
-		}
-		UE_LOG(LogTemp, Log, TEXT("Count:%d Val:%d"), ggg.Num(), ggg[Idx]);
-	}
-
-    //GamePlayMgr->Init();
-	//GamePlayMgr->SetBettingRound();
-	/*UE_LOG(LogTemp, Log, TEXT("Current Betting Round : %s"), *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->GetBettingRound()));
-	
-	UE_LOG(LogTemp, Log, TEXT("Current Community Card :"));
-	TArray<FPlayingCard> CommunityCard = GamePlayMgr->GetCommunityCards();
-	for (auto& Card : CommunityCard)
-	{
-		UE_LOG(LogTemp, Log, TEXT("Suit:%s, Value:%s"), *UTHGameDebugManager::GetEnumAsString(Card.Suit), *UTHGameDebugManager::GetEnumAsString(Card.Value));
-	}*/
+    FPlayingCard Card = GamePlayMgr->GetCardFromCardDeck();
+    UE_LOG(LogTemp, Log, TEXT("[%s] Get Card! Suit:%s Value:%s, Current card deck count : %d"),
+        *UTHGameDebugManager::GetEnumAsString(Card.Suit), *UTHGameDebugManager::GetEnumAsString(Card.Value), GamePlayMgr->GetCurrentCardDeckCount());
 }
 
 void ATHPlayerController::ActionKeyBoard2()
@@ -480,7 +488,7 @@ void ATHPlayerController::ActionKeyBoard2()
 void ATHPlayerController::ActionKeyBoard3()
 {
 	//THPlayerState->Server_ToggleReady();
-	UE_LOG(LogTemp, Log, TEXT("Player Ready :%d "), GetPlayerState()->IsReady());
+	UE_LOG(LogTemp, Log, TEXT("Player Ready :%d "), GetPlayerState()->IsReservedToExit());
 
     auto THGameState = Cast<ATHGameState>(GetWorld()->GetGameState());
     TArray<FPlayingCard> CommunityCards = THGameState->GetCommunityCards();

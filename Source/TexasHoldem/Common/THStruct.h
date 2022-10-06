@@ -101,24 +101,32 @@ public:
     bool operator>(const FPlayerHandRankInfo& InHandRankInfo) const
     {
         // Compare HandRank
-        if (this->HandRank > InHandRankInfo.HandRank)
         {
-            return true;
-        }
-        if (this->HandRank < InHandRankInfo.HandRank)
-        {
-            return false;
+            EHandRank HandRankA = this->HandRank;
+            EHandRank HandRankB = InHandRankInfo.HandRank;
+            
+            if (HandRankA > HandRankB)
+            {
+                return true;
+            }
+            if (HandRankA < HandRankB)
+            {
+                return false;
+            }
         }
 
         // Compare High Values of HandRank
         int32 HighValuesCount = this->HighValuesOfHandRank.Num();
         for (int32 HighValueIndex = 0; HighValueIndex < HighValuesCount; ++HighValueIndex)
         {
-            if (this->HighValuesOfHandRank[HighValueIndex] > InHandRankInfo.HighValuesOfHandRank[HighValueIndex])
+            EPlayingCardValue HighValueA = this->HighValuesOfHandRank[HighValueIndex];
+            EPlayingCardValue HighValueB = InHandRankInfo.HighValuesOfHandRank[HighValueIndex];
+
+            if (HighValueA > HighValueB)
             {
                 return true;
             }
-            if (this->HighValuesOfHandRank[HighValueIndex] < InHandRankInfo.HighValuesOfHandRank[HighValueIndex])
+            if (HighValueA < HighValueB)
             {
                 return false;
             }
@@ -128,11 +136,25 @@ public:
         int32 KickersCount = this->Kickers.Num();
         for (int32 KickerIndex = 0; KickerIndex < KickersCount; ++KickerIndex)
         {
-            if (this->Kickers[KickerIndex].Value > InHandRankInfo.Kickers[KickerIndex].Value)
+            EPlayingCardValue KickerValueA = this->Kickers[KickerIndex].Value;
+            EPlayingCardValue KickerValueB = InHandRankInfo.Kickers[KickerIndex].Value;
+
+            // Ace Kicker는 가장 높은 수로 비교될 수 있게 HighAce로 변경하여 체크
+            if (KickerValueA == EPlayingCardValue::Ace)
+            {
+                KickerValueA = EPlayingCardValue::HighAce;
+            }
+            if (KickerValueB == EPlayingCardValue::Ace)
+            {
+                KickerValueB = EPlayingCardValue::HighAce;
+            }
+
+            // 대소비교
+            if (KickerValueA > KickerValueB)
             {
                 return true;
             }
-            if (this->Kickers[KickerIndex].Value < InHandRankInfo.Kickers[KickerIndex].Value)
+            if (KickerValueA < KickerValueB)
             {
                 return false;
             }
@@ -144,24 +166,32 @@ public:
     bool operator<(const FPlayerHandRankInfo& InHandRankInfo) const
     {
         // Compare HandRank
-        if (this->HandRank < InHandRankInfo.HandRank)
         {
-            return true;
-        }
-        if (this->HandRank > InHandRankInfo.HandRank)
-        {
-            return false;
+            EHandRank HandRankA = this->HandRank;
+            EHandRank HandRankB = InHandRankInfo.HandRank;
+
+            if (HandRankA < HandRankB)
+            {
+                return true;
+            }
+            if (HandRankA > HandRankB)
+            {
+                return false;
+            }
         }
 
         // Compare High Values of HandRank
         int32 HighValuesCount = this->HighValuesOfHandRank.Num();
         for (int32 HighValueIndex = 0; HighValueIndex < HighValuesCount; ++HighValueIndex)
         {
-            if (this->HighValuesOfHandRank[HighValueIndex] < InHandRankInfo.HighValuesOfHandRank[HighValueIndex])
+            EPlayingCardValue HighValueA = this->HighValuesOfHandRank[HighValueIndex];
+            EPlayingCardValue HighValueB = InHandRankInfo.HighValuesOfHandRank[HighValueIndex];
+
+            if (HighValueA < HighValueB)
             {
                 return true;
             }
-            if (this->HighValuesOfHandRank[HighValueIndex] > InHandRankInfo.HighValuesOfHandRank[HighValueIndex])
+            if (HighValueA > HighValueB)
             {
                 return false;
             }
@@ -171,11 +201,25 @@ public:
         int32 KickersCount = this->Kickers.Num();
         for (int32 KickerIndex = 0; KickerIndex < KickersCount; ++KickerIndex)
         {
-            if (this->Kickers[KickerIndex].Value < InHandRankInfo.Kickers[KickerIndex].Value)
+            EPlayingCardValue KickerValueA = this->Kickers[KickerIndex].Value;
+            EPlayingCardValue KickerValueB = InHandRankInfo.Kickers[KickerIndex].Value;
+
+            // Ace Kicker는 가장 높은 수로 비교될 수 있게 HighAce로 변경하여 체크
+            if (KickerValueA == EPlayingCardValue::Ace)
+            {
+                KickerValueA = EPlayingCardValue::HighAce;
+            }
+            if (KickerValueB == EPlayingCardValue::Ace)
+            {
+                KickerValueB = EPlayingCardValue::HighAce;
+            }
+
+            // 대소비교
+            if (KickerValueA < KickerValueB)
             {
                 return true;
             }
-            if (this->Kickers[KickerIndex].Value > InHandRankInfo.Kickers[KickerIndex].Value)
+            if (KickerValueA > KickerValueB)
             {
                 return false;
             }
@@ -187,16 +231,24 @@ public:
     bool operator==(const FPlayerHandRankInfo& InHandRankInfo) const
     {
         // Compare HandRank
-        if (this->HandRank != InHandRankInfo.HandRank)
         {
-            return false;
+            EHandRank HandRankA = this->HandRank;
+            EHandRank HandRankB = InHandRankInfo.HandRank;
+
+            if (HandRankA != HandRankB)
+            {
+                return false;
+            }
         }
 
         // Compare High Values of HandRank
         int32 HighValuesCount = this->HighValuesOfHandRank.Num();
         for (int32 HighValueIndex = 0; HighValueIndex < HighValuesCount; ++HighValueIndex)
         {
-            if (this->HighValuesOfHandRank[HighValueIndex] != InHandRankInfo.HighValuesOfHandRank[HighValueIndex])
+            EPlayingCardValue HighValueA = this->HighValuesOfHandRank[HighValueIndex];
+            EPlayingCardValue HighValueB = InHandRankInfo.HighValuesOfHandRank[HighValueIndex];
+
+            if (HighValueA != HighValueB)
             {
                 return false;
             }
@@ -206,7 +258,10 @@ public:
         int32 KickersCount = this->Kickers.Num();
         for (int32 KickerIndex = 0; KickerIndex < KickersCount; ++KickerIndex)
         {
-            if (this->Kickers[KickerIndex].Value != InHandRankInfo.Kickers[KickerIndex].Value)
+            EPlayingCardValue KickerValueA = this->Kickers[KickerIndex].Value;
+            EPlayingCardValue KickerValueB = InHandRankInfo.Kickers[KickerIndex].Value;
+
+            if (KickerValueA != KickerValueB)
             {
                 return false;
             }
@@ -220,3 +275,16 @@ FORCEINLINE uint32 GetTypeHash(const FPlayerHandRankInfo& PlayerHandRankInfo)
 {
     return FCrc::MemCrc32(&PlayerHandRankInfo, sizeof(FPlayerHandRankInfo));
 }
+
+USTRUCT(BlueprintType)
+struct FPlayerSaveData
+{
+    GENERATED_BODY()
+
+public:
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+        int32 PlayerImageIndex = 0;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+        FString PlayerNickName = FString("Anonymous");
+};
