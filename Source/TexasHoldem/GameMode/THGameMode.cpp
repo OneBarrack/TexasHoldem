@@ -617,12 +617,21 @@ void ATHGameMode::InitSurvivedPlayersForBettingRound(ATHPlayerState* RaisePlayer
             SetPlayerRoundBettingMoney(SurvivedPlayer, 0);
         }
 
-        // 레이즈 플레이어와 올인한 플레이어는 액션 및 턴에 대한 초기화를 하지 않는다.
-        if (SurvivedPlayer == RaisePlayer || GetPlayerAction(SurvivedPlayer) == EPlayerAction::Allin)
-            continue;
-
-        SetPlayerTurnState(SurvivedPlayer, EPlayerTurnState::Wait);
-        SetPlayerAction(SurvivedPlayer, EPlayerAction::None);
+        // 레이즈 플레이어는 액션 및 턴에 대한 초기화를 하지 않는다.(올인 플레이어 예외)
+        if (SurvivedPlayer == RaisePlayer)
+        {
+            // 레이즈라도 보유금액을 모두 올인한 플레이어는 턴에 대한 초기화를 진행하여
+            // 다음 플레이어에게 턴을 넘길 수 있도록 한다.
+            if (GetPlayerMoney(SurvivedPlayer) == 0)
+            {
+                SetPlayerTurnState(SurvivedPlayer, EPlayerTurnState::Wait);
+            }
+        }
+        else
+        {
+            SetPlayerTurnState(SurvivedPlayer, EPlayerTurnState::Wait);
+            SetPlayerAction(SurvivedPlayer, EPlayerAction::None);
+        }
     }
 }
 
@@ -1031,14 +1040,26 @@ void ATHGameMode::AddPlayerInHoldemTable(ATHPlayerController* LoginPlayerControl
             UE_LOG(LogTemp, Log, TEXT("[%s] Login Player(%s) "), ANSI_TO_TCHAR(__FUNCTION__), *TargetPlayerState->GetName());
 
             // Debug
-            if (0)
+            if (1)
             {
                 if (GetPlayerNickName(TargetPlayerState) == FString(TEXT("Anonymous")))
                 {
                     SetPlayerNickName(TargetPlayerState, FString::FromInt(TableSeattingPos));
                 }
 
-                //SetPlayerMoney(TargetPlayerState, 3000 * (TableSeattingPos + 1));
+                if (TableSeattingPos == 0)
+                {
+                    SetPlayerMoney(TargetPlayerState, 3000 + 100 * (TableSeattingPos + 5));
+                }
+                else if (TableSeattingPos == 1)
+                {
+                    SetPlayerMoney(TargetPlayerState, 3000 + 100 * (TableSeattingPos + 1));
+                }
+                else
+                {
+                    SetPlayerMoney(TargetPlayerState, 3000 + 100 * (TableSeattingPos + 4));
+                }
+                //SetPlayerMoney(TargetPlayerState, 3000 + 100 * (TableSeattingPos + 1));
                 //SetPlayerBettingMoney(THPlayerState, (THGameState->GetPlayerCount() + 1) * 1000);
                 //SetPlayerAction(THPlayerState, static_cast<EPlayerAction>(THGameState->GetPlayerCount() % 5) );
                 //THPlayerState->SetPlayerRole(static_cast<EPlayerRole>(THGameState->GetPlayerCount() % 4));
