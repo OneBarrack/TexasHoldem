@@ -122,6 +122,17 @@ public:
             EPlayingCardValue HighValueA = this->HighValuesOfHandRank[HighValueIndex];
             EPlayingCardValue HighValueB = InHandRankInfo.HighValuesOfHandRank[HighValueIndex];
 
+            // Ace가 가장 높은 수로 비교될 수 있게 HighAce로 변경하여 체크
+            if (HighValueA == EPlayingCardValue::Ace)
+            {
+                HighValueA = EPlayingCardValue::HighAce;
+            }
+            if (HighValueB == EPlayingCardValue::Ace)
+            {
+                HighValueB = EPlayingCardValue::HighAce;
+            }
+
+            // 대소비교
             if (HighValueA > HighValueB)
             {
                 return true;
@@ -139,7 +150,7 @@ public:
             EPlayingCardValue KickerValueA = this->Kickers[KickerIndex].Value;
             EPlayingCardValue KickerValueB = InHandRankInfo.Kickers[KickerIndex].Value;
 
-            // Ace Kicker는 가장 높은 수로 비교될 수 있게 HighAce로 변경하여 체크
+            // Ace가 가장 높은 수로 비교될 수 있게 HighAce로 변경하여 체크
             if (KickerValueA == EPlayingCardValue::Ace)
             {
                 KickerValueA = EPlayingCardValue::HighAce;
@@ -187,6 +198,17 @@ public:
             EPlayingCardValue HighValueA = this->HighValuesOfHandRank[HighValueIndex];
             EPlayingCardValue HighValueB = InHandRankInfo.HighValuesOfHandRank[HighValueIndex];
 
+            // Ace가 가장 높은 수로 비교될 수 있게 HighAce로 변경하여 체크
+            if (HighValueA == EPlayingCardValue::Ace)
+            {
+                HighValueA = EPlayingCardValue::HighAce;
+            }
+            if (HighValueB == EPlayingCardValue::Ace)
+            {
+                HighValueB = EPlayingCardValue::HighAce;
+            }
+
+            // 대소비교
             if (HighValueA < HighValueB)
             {
                 return true;
