@@ -66,6 +66,17 @@ bool UTHWidgetInGameUserState::Initialize()
     SubWidgetPlayerReadyStates.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_PlayerReadyState_7"))));
     SubWidgetPlayerReadyStates.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_PlayerReadyState_8"))));
 
+    // PlayerReady
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_Main"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_1"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_2"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_3"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_4"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_5"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_6"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_7"))));
+    SubWidgetRemainBettingTimers.Add(Cast<UTHWidgetInGameUserStateSub>(GetWidgetFromName(TEXT("BP_Widget_InGame_UserState_RemainTimer_8"))));
+
     // Player Log in/out 시 마다 SubWidget의 PlayerState 값을 변경해주기 위한 델리게이트 설정
     if (ATHPlayerController* LocalPlayerController = Cast<ATHPlayerController>(GetWorld()->GetFirstPlayerController()))
     {
@@ -124,6 +135,7 @@ void UTHWidgetInGameUserState::SetTHPlayerStateForSubWidgets(const TArray<ATHPla
             SubWidgetUserBettingMoneys[SubWidgetIndex]->SetTHPlayerState(nullptr);
             SubWidgetPlayerRoles[SubWidgetIndex]->SetTHPlayerState(nullptr);
             SubWidgetPlayerReadyStates[SubWidgetIndex]->SetTHPlayerState(nullptr);
+            SubWidgetRemainBettingTimers[SubWidgetIndex]->SetTHPlayerState(nullptr);
         }
 
         // 전체 플레이어 스테이트 확인
@@ -151,6 +163,7 @@ void UTHWidgetInGameUserState::SetTHPlayerStateForSubWidgets(const TArray<ATHPla
                 SubWidgetUserBettingMoneys[ResultTableSeattingPos]->SetTHPlayerState(THPlayerState);
                 SubWidgetPlayerRoles[ResultTableSeattingPos]->SetTHPlayerState(THPlayerState);
                 SubWidgetPlayerReadyStates[ResultTableSeattingPos]->SetTHPlayerState(THPlayerState);
+                SubWidgetRemainBettingTimers[ResultTableSeattingPos]->SetTHPlayerState(THPlayerState);
             }
         }
 

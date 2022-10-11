@@ -310,7 +310,6 @@ void ATHGameMode::RunPlayCycleFlop()
     // 4. 베팅 진행    
     FTimerDelegate CycleFlopDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::SetGamePlayState, EGamePlayState::FlopBetting);
     GetWorldTimerManager().SetTimer(CycleTimerHandle, CycleFlopDelegate, 1.0f, false);
-    //SetGamePlayState(EGamePlayState::FlopBetting);
 
     SetGamePlayState(EGamePlayState::Wait);
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
@@ -485,6 +484,10 @@ void ATHGameMode::GiveTurnToPlayer(ATHPlayerState* BettingPlayer)
         GetPlayerController(BettingPlayer)->CheckForActionActivate();
         SetCurrentTurnPlayer(BettingPlayer);
         SetCallMoneyForCurrentPlayer(GetPlayerRequiredMoneyForCall(BettingPlayer));
+
+        // 베팅 제한시간 타이머 실행
+        FTimerDelegate RemainBettingTimerDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::ProceedPlayersTurnDone, BettingPlayer, true);
+        GetWorldTimerManager().SetTimer(THGameState->RemainBettingTimerHandle, RemainBettingTimerDelegate, RemainBettingTimerDelay, false);
     }
 }
 
@@ -545,8 +548,32 @@ void ATHGameMode::ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const
         break;
     }
 
+    // 턴 종료 로직 진행
+    ProceedPlayersTurnDone(BettingPlayer);
+}
+
+void ATHGameMode::ProceedPlayersTurnDone(ATHPlayerState* BettingPlayer, bool bTimeOut)
+{
     // 현재 베팅 플레이어 턴 종료
     SetPlayerTurnState(BettingPlayer, EPlayerTurnState::Done);
+
+    // 베팅시간 초과로 턴이 종료 된 것이라면
+    if (bTimeOut)
+    {
+        if (ATHPlayerController* BettingPlayerController = BettingPlayer->GetPlayerController())
+        {
+            // 현재 레이즈 플레이어가 없는(체크가 가능한) 상태라면 체크 버튼을 누른 것으로 처리한다.
+            if (!IsAppeardRaiseAction())
+            {
+                BettingPlayerController->ActionCheck();
+            }
+            // 현재 체크가 불가능한 상태라면 폴드 한 것으로 처리한다.
+            else
+            {
+                BettingPlayerController->ActionFold();
+            }
+        }
+    }
 
     // 액션중인 플레이어가 현재 턴의 베팅 플레이어가 맞는지 
     // (현재 턴이 아닌 플레이어가 강제 종료 등으로 인해 폴드처리 되는 경우 턴 순서가 꼬이는 것을 방지)

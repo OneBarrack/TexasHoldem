@@ -9,6 +9,8 @@ ATHGameState::ATHGameState()
 {
     // MaxPlayerCount 수 만큼 인게임 플레이어 자리 생성
     PlayersForTableSeattingPos.Init(nullptr, MaxPlayerCount);
+
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 void ATHGameState::Init()
@@ -26,6 +28,12 @@ void ATHGameState::Init()
     CommunityCards.Empty();
     InGamePlayersAll.Empty();
     InGameSurvivedPlayers.Empty();
+
+    if (RemainBettingTimerHandle.IsValid())
+    {
+        GetWorldTimerManager().ClearTimer(RemainBettingTimerHandle);
+    }
+
 
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
@@ -51,11 +59,22 @@ void ATHGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
     DOREPLIFETIME(ATHGameState, CallMoneyForCurrentPlayer);
     DOREPLIFETIME(ATHGameState, HighRoundBettingMoney);
     DOREPLIFETIME(ATHGameState, MinRaiseMoney);
+    DOREPLIFETIME(ATHGameState, RemainBettingTimeSeconds);
     DOREPLIFETIME(ATHGameState, bAppeardRaiseAction);
     DOREPLIFETIME(ATHGameState, CommunityCards);
     DOREPLIFETIME(ATHGameState, PlayersForTableSeattingPos);
     DOREPLIFETIME(ATHGameState, InGamePlayersAll);
     DOREPLIFETIME(ATHGameState, InGameSurvivedPlayers);
+}
+
+void ATHGameState::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+
+    if (RemainBettingTimerHandle.IsValid() && GetWorldTimerManager().IsTimerActive(RemainBettingTimerHandle))
+    {
+        RemainBettingTimeSeconds = GetWorldTimerManager().GetTimerRemaining(RemainBettingTimerHandle);
+    }
 }
 
 const int32 ATHGameState::GetGamePlayCount() const
@@ -158,6 +177,11 @@ ATHPlayerState* ATHGameState::GetNextInGamePlayer(ATHPlayerState* InCurrentPlaye
     int32 NextPlayerIndex = (CurrentPlayerIndex + 1) % GetLogInGamePlayerCount();
     
     return InGameSurvivedPlayers[NextPlayerIndex];
+}
+
+const float ATHGameState::GetRemainBettingTimeSeconds() const
+{
+    return RemainBettingTimeSeconds;
 }
 
 void ATHGameState::IncreaseGamePlayCount()

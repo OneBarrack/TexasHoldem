@@ -39,6 +39,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<UTHWidgetInGameUserStateSub*> SubWidgetPlayerReadyStates;
+    
+	UPROPERTY(BlueprintReadOnly)
+    TArray<UTHWidgetInGameUserStateSub*> SubWidgetRemainBettingTimers;
 
 private:
 	bool bNeedUpdatePlayerStateForSubWidget = false;

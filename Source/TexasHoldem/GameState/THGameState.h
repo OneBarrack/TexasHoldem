@@ -31,6 +31,7 @@ public:
 protected:
     virtual void PostInitializeComponents() override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+    virtual void Tick(float DeltaSeconds) override;
 
 public:
     UFUNCTION(BlueprintPure)
@@ -89,6 +90,9 @@ public:
 
     UFUNCTION(BlueprintPure)
     ATHPlayerState* GetNextInGamePlayer(ATHPlayerState* InCurrentPlayer) const;
+
+    UFUNCTION(BlueprintPure)
+    const float GetRemainBettingTimeSeconds() const;
 
     UFUNCTION(BlueprintCallable)
     void IncreaseGamePlayCount();
@@ -213,6 +217,10 @@ private:
     UPROPERTY(Replicated)
     int32 MinRaiseMoney = 0;
 
+    // 플레이어의 남은 베팅 제한시간
+    UPROPERTY(Replicated)
+    float RemainBettingTimeSeconds = RemainBettingTimerDelay;
+
     // 현재 라운드에 Raise 액션이 나왔는지
     UPROPERTY(Replicated)
     bool bAppeardRaiseAction = false;
@@ -257,4 +265,8 @@ public:
     // PlayersForTableSeattingPos 변동알림 델리게이트
     UPROPERTY(BlueprintAssignable)
     FOnChangedPlayersForTableSeattingPosSignature OnChangedPlayersForTableSeattingPos;
+
+public:
+    // 플레이어의 베팅 제한시간을 카운팅하기 위한 타이머 핸들
+    FTimerHandle RemainBettingTimerHandle;
 };

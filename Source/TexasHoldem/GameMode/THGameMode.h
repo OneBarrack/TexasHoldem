@@ -45,6 +45,10 @@ public:
 	UFUNCTION()
 	void ReceiveNotifyPlayerAction(ATHPlayerState* BettingPlayer, const int32 CallMoney, const int32 RaiseMoney);
 
+	// 플레이어 턴 종료 로직
+	UFUNCTION()
+	void ProceedPlayersTurnDone(ATHPlayerState* BettingPlayer, bool bTimeOut = false);
+
 	// 로그아웃 예정인 플레이어 체크(나가기예약 or 보유금액 오링)
     UFUNCTION()
     void CheckExitPlayer();
