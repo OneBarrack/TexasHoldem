@@ -16,16 +16,6 @@ ATHPlayer::ATHPlayer()
 void ATHPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	// HandCard의 Suit 타입과 숫자 추출
-	//const TCHAR* PlayingCardTypeEnumClassName = TEXT("EPlayingCardSuit");
-	//const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, PlayingCardTypeEnumClassName, true);
-
-	//const FString FirstHandCardTypeName = EnumPtr->GetNameStringByValue((int32)HandCards[0].Suit);
-	//UE_LOG(LogTemp, Log, TEXT("Card1 Suit:%s, Number:%d"), *FirstHandCardTypeName, HandCards[0].Number)
-
-	//const FString SecondHandCardTypeName = EnumPtr->GetNameStringByValue((int32)HandCards[1].Suit);
- //   UE_LOG(LogTemp, Log, TEXT("Card1 Suit:%s, Number:%d"), *SecondHandCardTypeName, HandCards[1].Number)
 }
 
 void ATHPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -443,46 +443,6 @@ void ATHPlayerController::ActionKeyBoard2()
         }
 		UE_LOG(LogTemp, Log, TEXT("KickerList:%s"), *TempStr);
 	}
-
-	// All
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
-    //	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::None)));
-
-	// RoyalFlush
-	//UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
-	//	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::RoyalFlush)));
-
-    // StraightFlush
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"), 
-	//	*UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::StraightFlush)));
-
-	// FourOfAKind
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::FourOfAKind)));
-
-    // FullHouse
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::FullHouse)));
-
-    // Flush
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::Flush)));
-
-    // Straight
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::Straight)));
-
-	// ThreeOfAKind (Triple)
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(FinalCards, EHandRanking::ThreeOfAKind)));
-
-    // TwoPair
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::TwoPair)));
-
-    // OnePair
-    //UE_LOG(LogTemp, Log, TEXT("HandRanking:%s"),
-    //    *UTHGameDebugManager::GetEnumAsString(GamePlayMgr->DebugGetHandRanking(TempCards, EHandRanking::OnePair)));
 }
 
 void ATHPlayerController::ActionKeyBoard3()

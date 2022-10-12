@@ -124,15 +124,8 @@ FPlayerHandRankInfo UTHHoldemPlayManager::GetHandRankInfo(const TArray<FPlayingC
     TArray<FPlayingCard> FinalHandCards;
     FinalHandCards.Append(CommunityCards);
     FinalHandCards.Append(InHandCards);
-    
-    //// 7장의 최종카드가 만들어지지 않았다면 공백카드로 채워 7장을 만들어 아래 로직 수행
-    //if (FinalHandCards.Num() < 7)
-    //{
-    //    TArray<FPlayingCard> BlankCards;
-    //    BlankCards.Init(FPlayingCard(), 7 - FinalHandCards.Num());
-    //    FinalHandCards.Append(BlankCards);
-    //}
 
+    // 최종 7장의 카드로부터 높은 족보 순으로 체크 하고, 통과되는 족보를 최종 족보로 채택.
     if (IsRoyalFlush(FinalHandCards, PlayerHandRankInfo))
     {
         PlayerHandRankInfo.HandRank = EHandRank::RoyalFlush;
