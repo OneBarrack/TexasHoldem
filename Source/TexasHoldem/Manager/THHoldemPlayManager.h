@@ -38,7 +38,7 @@ public:
 
 public:
 	// 덱의 남은 카드 수 반환
-	const int GetCurrentCardDeckCount() const;
+	const int32 GetCurrentCardDeckCount() const;
 
 	// 최종카드 족보 반환
 	FPlayerHandRankInfo GetHandRankInfo(const TArray<FPlayingCard> InHandCards);

@@ -20,7 +20,7 @@ void UTHHoldemPlayManager::Init()
     
     // 카드 더미 초기화
     CardDeck.Empty(NumOfAllCards);
-    for (int i = 0; i < NumOfAllCards; ++i)
+    for (int32 i = 0; i < NumOfAllCards; ++i)
     {
         CardDeck.Add(i);
     }
@@ -52,8 +52,8 @@ const FPlayingCard UTHHoldemPlayManager::GetCardFromCardDeck()
     }
 
     // CardDeck의 Index 추출 후 해당 Index 데이터 삭제
-    int CardDeckArrayIndex = FMath::RandRange(0, CardDeck.Num() - 1);
-    int CardDeckValue = CardDeck[CardDeckArrayIndex];
+    int32 CardDeckArrayIndex = FMath::RandRange(0, CardDeck.Num() - 1);
+    int32 CardDeckValue = CardDeck[CardDeckArrayIndex];
     CardDeck.RemoveAt(CardDeckArrayIndex);
 
     UE_LOG(LogTemp, Log, TEXT("CardDeckIndex:%d, CardDeckValue:%d"), CardDeckArrayIndex, CardDeckValue);
@@ -85,7 +85,7 @@ TArray<FPlayingCard> UTHHoldemPlayManager::GetCommunityCards() const
     return CommunityCards;
 }
 
-const int UTHHoldemPlayManager::GetCurrentCardDeckCount() const
+const int32 UTHHoldemPlayManager::GetCurrentCardDeckCount() const
 {
     return CardDeck.Num();
 }
@@ -93,7 +93,7 @@ const int UTHHoldemPlayManager::GetCurrentCardDeckCount() const
 void UTHHoldemPlayManager::AddCardToCommunityCards()
 {
     // Add 5 cards for community card set
-    for (int i = 0; i < 5; ++i)
+    for (int32 i = 0; i < 5; ++i)
     {
         CommunityCards.Add(GetCardFromCardDeck());
     }
