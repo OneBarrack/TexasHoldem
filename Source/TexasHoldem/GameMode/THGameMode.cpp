@@ -70,31 +70,7 @@ void ATHGameMode::Logout(AController* Exiting)
     {
         // 홀덤 테이블 리스트에서 플레이어 정보 삭제
         RemovePlayerInHoldemTable(LogoutPlayerController);
-
-        if (ATHPlayerState* LogoutPlayerState = LogoutPlayerController->GetPlayerState())
-        {
-            UE_LOG(LogTemp, Log, TEXT("[%s] LogoutPlayer NickName:%s"), ANSI_TO_TCHAR(__FUNCTION__), *GetPlayerNickName(LogoutPlayerState));
-
-            // 인게임 도중 나간 것이라면 해당 플레이어는 Fold 액션을 취한 것으로 간주한다.
-            switch (GetBettingRound())
-            {
-            case EBettingRound::PreFlop: [[fallthrough]];
-            case EBettingRound::Flop:    [[fallthrough]];
-            case EBettingRound::Turn:    [[fallthrough]];
-            case EBettingRound::River:
-            {
-                TArray<ATHPlayerState*> InGameSurvivedPlayers = GetInGameSurvivedPlayers();
-                if (InGameSurvivedPlayers.Contains(LogoutPlayerState))
-                {
-                    LogoutPlayerController->ActionFold();
-                }
-            }
-            default:
-                break;
-            }
-        }
-    }
-    
+    }    
 
     UE_LOG(LogTemp, Log, TEXT("[%s] End"), ANSI_TO_TCHAR(__FUNCTION__));
 }
@@ -953,6 +929,27 @@ void ATHGameMode::CalculatePotMoneySingle(TArray<ATHPlayerState*>& PotPlayers, i
         SetPlayerBettingMoney(RemainBettingPlayer, RemainPlayerBettingMoney);
     }
 
+    // 강제종료 플레이어가 있었다면 해당 플레이어들의 베팅금액들도 팟 계산에 추가한다
+    for (int32& ForceLogoutPlayerBetMoney : GetForceLogoutPlayersBetMoneyList())
+    {
+        if (ForceLogoutPlayerBetMoney == 0)
+        {
+            continue;
+        }
+
+        // 팟 플레이어의 베팅금액에 따른 보상금액 획득
+        if (PotPlayerBettingMoney < ForceLogoutPlayerBetMoney)
+        {
+            ProfitMoney += PotPlayerBettingMoney;
+            ForceLogoutPlayerBetMoney -= PotPlayerBettingMoney;
+        }
+        else
+        {
+            ProfitMoney += ForceLogoutPlayerBetMoney;
+            ForceLogoutPlayerBetMoney = 0;
+        }
+    }
+
     // 현재 보상금액만큼 최종 팟 머니 감소
     RemainTotalPot -= ProfitMoney;
 
@@ -1012,6 +1009,27 @@ void ATHGameMode::CalculatePotMoneyChop(TArray<ATHPlayerState*>& PotPlayers, int
 
             // BettingPlayer의 베팅머니는 Pot 플레이어에게 베팅금액을 배분한 나머지를 적재
             SetPlayerBettingMoney(RemainBettingPlayer, RemainPlayerBettingMoney);
+        }
+
+        // 강제종료 플레이어가 있었다면 해당 플레이어들의 베팅금액들도 팟 계산에 추가한다
+        for (int32& ForceLogoutPlayerBetMoney : GetForceLogoutPlayersBetMoneyList())
+        {
+            if (ForceLogoutPlayerBetMoney == 0)
+            {
+                continue;
+            }
+
+            // 팟 플레이어의 베팅금액에 따른 보상금액 획득
+            if (PotPlayerBettingMoney < ForceLogoutPlayerBetMoney)
+            {
+                ProfitMoney += PotPlayerBettingMoney;
+                ForceLogoutPlayerBetMoney -= PotPlayerBettingMoney;
+            }
+            else
+            {
+                ProfitMoney += ForceLogoutPlayerBetMoney;
+                ForceLogoutPlayerBetMoney = 0;
+            }
         }
 
         // 현재 보상금액만큼 최종 팟 머니 감소
@@ -1114,6 +1132,28 @@ void ATHGameMode::RemovePlayerInHoldemTable(ATHPlayerController* LogoutPlayerCon
 
         SetPlayersForTableSeattingPos(PlayersForTableSeattingPos);
         SetInGamePlayersAll(InGamePlayersAll);
+
+        // 현재 베팅 라운드가 진행 중인지 체크
+        switch (GetBettingRound())
+        {
+        case EBettingRound::PreFlop: [[fallthrough]];
+        case EBettingRound::Flop: [[fallthrough]];
+        case EBettingRound::Turn: [[fallthrough]];
+        case EBettingRound::River:
+            // 플레이어가 인게임 베팅 도중 나간 것이라면
+            if (InGameSurvivedPlayers.Contains(LogoutPlayerState))
+            {
+                // 해당 플레이어는 Fold 액션을 취한 것으로 간주한다.
+                LogoutPlayerController->ActionFold();
+
+                // 해당 플레이어의 베팅 머니는 그대로 팟에 적용될 수 있도록 강제종료 플레이어의 베팅 머니 리스트에 적재시킨다.
+                AddForceLogoutPlayersBetMoneyList(LogoutPlayerState->GetBettingMoney());
+            }
+        default:
+            break;
+        }
+
+        UE_LOG(LogTemp, Log, TEXT("[%s] LogoutPlayer NickName:%s"), ANSI_TO_TCHAR(__FUNCTION__), *GetPlayerNickName(LogoutPlayerState));
     }
 }
 
@@ -1152,7 +1192,7 @@ void ATHGameMode::SetGamePlayState(EGamePlayState InGamePlayState)
     THGameState->SetGamePlayState(InGamePlayState);
 }
 
-void ATHGameMode::SetBlindBettingMoney(const int InBlindBettingMoney)
+void ATHGameMode::SetBlindBettingMoney(const int32 InBlindBettingMoney)
 {
     THGameState->SetBlindBettingMoney(InBlindBettingMoney);
 }
@@ -1240,6 +1280,11 @@ TArray<ATHPlayerState*> ATHGameMode::GetInGamePlayersAll()
 TArray<ATHPlayerState*> ATHGameMode::GetInGameSurvivedPlayers()
 {
     return THGameState->GetInGameSurvivedPlayers();
+}
+
+TArray<int32> ATHGameMode::GetForceLogoutPlayersBetMoneyList()
+{
+    return THGameState->GetForceLogoutPlayersBetMoneyList();
 }
 
 ATHPlayerState* ATHGameMode::GetCurrentTurnPlayer()
@@ -1391,6 +1436,11 @@ void ATHGameMode::SetCallMoneyForCurrentPlayer(const int32& InCallMoneyForCurren
 void ATHGameMode::RemoveInGameSurvivedPlayer(ATHPlayerState* InTargetPlayer)
 {
     THGameState->RemoveInGameSurvivedPlayer(InTargetPlayer);
+}
+
+void ATHGameMode::AddForceLogoutPlayersBetMoneyList(const int32& InForceLogoutPlayersBetMoney)
+{
+    THGameState->AddForceLogoutPlayersBetMoney(InForceLogoutPlayersBetMoney);
 }
 
 void ATHGameMode::SetInGamePlayersAll(const TArray<ATHPlayerState*>& InInGamePlayers)

@@ -111,10 +111,11 @@ private:
 	TArray<ATHPlayerState*> GetPlayersForTableSeattingPos();
 	TArray<ATHPlayerState*> GetInGamePlayersAll();
 	TArray<ATHPlayerState*> GetInGameSurvivedPlayers();
+	TArray<int32> GetForceLogoutPlayersBetMoneyList();
 	TArray<FPlayingCard> GetCommunityCards();
 
 	void SetGamePlayState(EGamePlayState InGamePlayState);
-	void SetBlindBettingMoney(const int InBlindBettingMoney);
+	void SetBlindBettingMoney(const int32 InBlindBettingMoney);
 	void IncreaseGamePlayCount();
 	void SetBettingRound(const EBettingRound& InBettingRound);
 	void SetCommunityCards(const TArray<FPlayingCard>& InCommunityCards);
@@ -129,6 +130,7 @@ private:
 	void SetInGameSurvivedPlayers(const TArray<ATHPlayerState*>& InInGamePlayers);
 	void SetPlayersForTableSeattingPos(const TArray<ATHPlayerState*>& InPlayersForTableSeattingPos);
 	void RemoveInGameSurvivedPlayer(ATHPlayerState* InTargetPlayer);
+	void AddForceLogoutPlayersBetMoneyList(const int32& InForceLogoutPlayersBetMoney);
 
 	// PlayerState
 	const bool GetPlayerReservedToExit(ATHPlayerState* TargetPlayer);

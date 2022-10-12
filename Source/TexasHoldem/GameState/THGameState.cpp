@@ -28,6 +28,7 @@ void ATHGameState::Init()
     CommunityCards.Empty();
     InGamePlayersAll.Empty();
     InGameSurvivedPlayers.Empty();
+    ForceLogoutPlayersBetMoneyList.Empty();
 
     if (RemainBettingTimerHandle.IsValid())
     {
@@ -65,6 +66,7 @@ void ATHGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
     DOREPLIFETIME(ATHGameState, PlayersForTableSeattingPos);
     DOREPLIFETIME(ATHGameState, InGamePlayersAll);
     DOREPLIFETIME(ATHGameState, InGameSurvivedPlayers);
+    DOREPLIFETIME(ATHGameState, ForceLogoutPlayersBetMoneyList);
 }
 
 void ATHGameState::Tick(float DeltaSeconds)
@@ -169,6 +171,11 @@ TArray<ATHPlayerState*> ATHGameState::GetInGamePlayersAll() const
 TArray<ATHPlayerState*> ATHGameState::GetInGameSurvivedPlayers() const
 {
     return InGameSurvivedPlayers;
+}
+
+TArray<int32> ATHGameState::GetForceLogoutPlayersBetMoneyList() const
+{
+    return ForceLogoutPlayersBetMoneyList;
 }
 
 ATHPlayerState* ATHGameState::GetNextInGamePlayer(ATHPlayerState* InCurrentPlayer) const
@@ -282,6 +289,11 @@ void ATHGameState::SetInGameSurvivedPlayers(const TArray<ATHPlayerState*>& InInG
 void ATHGameState::RemoveInGameSurvivedPlayer(ATHPlayerState* InPlayerState)
 {
     InGameSurvivedPlayers.RemoveSingle(InPlayerState);
+}
+
+void ATHGameState::AddForceLogoutPlayersBetMoney(const int32& InForceLogoutPlayersBetMoney)
+{
+    ForceLogoutPlayersBetMoneyList.Add(InForceLogoutPlayersBetMoney);
 }
 
 void ATHGameState::NotifyRestartGame()

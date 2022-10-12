@@ -89,6 +89,9 @@ public:
     TArray<ATHPlayerState*> GetInGameSurvivedPlayers() const;
 
     UFUNCTION(BlueprintPure)
+    TArray<int32> GetForceLogoutPlayersBetMoneyList() const;    
+
+    UFUNCTION(BlueprintPure)
     ATHPlayerState* GetNextInGamePlayer(ATHPlayerState* InCurrentPlayer) const;
 
     UFUNCTION(BlueprintPure)
@@ -150,6 +153,9 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void RemoveInGameSurvivedPlayer(ATHPlayerState* InPlayerState);
+
+    UFUNCTION(BlueprintCallable)
+    void AddForceLogoutPlayersBetMoney(const int32& InForceLogoutPlayersBetMoney);
 
 public:
     UFUNCTION()
@@ -240,6 +246,10 @@ private:
     // 게임 내 살아남은 플레이어
     UPROPERTY(Replicated)
     TArray<ATHPlayerState*> InGameSurvivedPlayers;
+
+    // 인게임 플레이 중 강제 종료한 플레이어들의 베팅머니
+    UPROPERTY(Replicated)
+    TArray<int32> ForceLogoutPlayersBetMoneyList;
 
 public:
     // Restart Game 알림 델리게이트
