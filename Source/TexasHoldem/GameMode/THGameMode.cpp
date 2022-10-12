@@ -1085,7 +1085,7 @@ void ATHGameMode::AddPlayerInHoldemTable(ATHPlayerController* LoginPlayerControl
             UE_LOG(LogTemp, Log, TEXT("[%s] Login Player(%s) "), ANSI_TO_TCHAR(__FUNCTION__), *TargetPlayerState->GetName());
 
             // Debug
-            if (1)
+            if (0)
             {
                 if (GetPlayerNickName(TargetPlayerState) == FString(TEXT("Anonymous")))
                 {
