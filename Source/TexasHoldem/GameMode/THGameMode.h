@@ -113,6 +113,7 @@ private:
 	TArray<ATHPlayerState*> GetInGameSurvivedPlayers();
 	TArray<int32> GetForceLogoutPlayersBetMoneyList();
 	TArray<FPlayingCard> GetCommunityCards();
+	FTimerHandle& GetRemainBettingTimerHandle();
 
 	void SetGamePlayState(EGamePlayState InGamePlayState);
 	void SetBlindBettingMoney(const int32 InBlindBettingMoney);

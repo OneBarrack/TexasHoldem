@@ -446,12 +446,21 @@ void ATHGameMode::GiveTurnToPlayer(ATHPlayerState* BettingPlayer)
         BettingPlayer = GetNextInGamePlayer(BettingPlayer);
     }
 
+    // 베팅 제한시간 타이머
+    FTimerHandle& RemainBettingTimerHandle = GetRemainBettingTimerHandle();
+
     // BettingPlayer의 Turn State가 Done이라면
     if (GetPlayerTurnState(BettingPlayer) == EPlayerTurnState::Done)
     {
         // 추가적인 Raise 없이 한바퀴 다 돈것이므로 턴 종료
         SetCurrentTurnPlayer(nullptr);
         bIsBettingRoundEnded = true;
+
+        // 베팅 제한시간 타이머가 동작중이라면 타이머를 제거 해준다.
+        if (GetWorldTimerManager().IsTimerActive(RemainBettingTimerHandle))
+        {
+            GetWorldTimerManager().ClearTimer(RemainBettingTimerHandle);
+        }
     }
     else
     {
@@ -463,7 +472,7 @@ void ATHGameMode::GiveTurnToPlayer(ATHPlayerState* BettingPlayer)
 
         // 베팅 제한시간 타이머 실행
         FTimerDelegate RemainBettingTimerDelegate = FTimerDelegate::CreateUObject(this, &ATHGameMode::ProceedPlayersTurnDone, BettingPlayer, true);
-        GetWorldTimerManager().SetTimer(THGameState->RemainBettingTimerHandle, RemainBettingTimerDelegate, RemainBettingTimerDelay, false);
+        GetWorldTimerManager().SetTimer(RemainBettingTimerHandle, RemainBettingTimerDelegate, RemainBettingTimerDelay, false);
     }
 }
 
@@ -1315,6 +1324,11 @@ ATHPlayerState* ATHGameMode::GetNextInGamePlayer(ATHPlayerState* TargetPlayer)
 TArray<FPlayingCard> ATHGameMode::GetCommunityCards()
 {
     return THGameState->GetCommunityCards();
+}
+
+FTimerHandle& ATHGameMode::GetRemainBettingTimerHandle()
+{
+    return THGameState->RemainBettingTimerHandle;
 }
 
 void ATHGameMode::IncreaseGamePlayCount()
