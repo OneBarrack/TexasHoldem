@@ -3,9 +3,26 @@
 #pragma once
 
 #include "THEnum.h"
+#include "Engine/DataTable.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "THStruct.generated.h"
+
+/**
+ * UserInfo TableRow
+ */
+USTRUCT(BlueprintType)
+struct FTHUserInfoTableRow : public FTableRowBase
+{
+    GENERATED_BODY()
+
+public:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UserInfo")
+    int32 Money;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UserInfo")
+    FString RecentLoginDateTime;
+};
 
 USTRUCT(BlueprintType)
 struct FPlayingCard

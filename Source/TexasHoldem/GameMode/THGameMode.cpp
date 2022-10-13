@@ -18,6 +18,14 @@ ATHGameMode::ATHGameMode()
     PlayerControllerClass = ATHPlayerController::StaticClass();
     GameStateClass = ATHGameState::StaticClass();
     PlayerStateClass = ATHPlayerState::StaticClass();
+
+    // 해당 경로 데이터 테이블 탐색
+    ConstructorHelpers::FObjectFinder<UDataTable> UserInfoDataDataFinder(TEXT("DataTable'/Game/DataTable/UserInfo.UserInfo'"));
+
+    if (UserInfoDataDataFinder.Succeeded())
+    {
+        UserInfoDataTable = UserInfoDataDataFinder.Object;
+    }
 }
 
 void ATHGameMode::PostInitializeComponents()
@@ -79,7 +87,23 @@ void ATHGameMode::BeginPlay()
 {
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("[%s] Start"), ANSI_TO_TCHAR(__FUNCTION__));
+ 
+    /// <summary>
+    //FName PlayerNickName = FName(TEXT("jw"));
+    //if (UserInfoDataTable->GetRowNames().Contains(PlayerNickName))
+    //{
+    //    int aaaa = 5;
+    //}
+    //else
+    //{
+    //    FTHUserInfoTableRow TempRowBase;
+    //    TempRowBase.Money = 1000;
+    //    TempRowBase.RecentLoginDateTime = "2022-10-13 17:15";
+    //    UserInfoDataTable->AddRow(PlayerNickName, TempRowBase);
+    //}
     
+    /// </summary>
+
     GamePlayManager = NewObject<UTHHoldemPlayManager>(this);
     SetBlindBettingMoney(FirstBlindBettingMoney);
     RestartTexasHoldem();

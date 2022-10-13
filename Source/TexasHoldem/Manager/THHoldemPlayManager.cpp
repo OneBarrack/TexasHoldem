@@ -56,8 +56,6 @@ const FPlayingCard UTHHoldemPlayManager::GetCardFromCardDeck()
     int32 CardDeckValue = CardDeck[CardDeckArrayIndex];
     CardDeck.RemoveAt(CardDeckArrayIndex);
 
-    UE_LOG(LogTemp, Log, TEXT("CardDeckIndex:%d, CardDeckValue:%d"), CardDeckArrayIndex, CardDeckValue);
-
     // Card suit
     switch (CardDeckValue / NumOfCardsForSuit)
     {
@@ -120,7 +118,7 @@ FPlayerHandRankInfo UTHHoldemPlayManager::GetHandRankInfo(const TArray<FPlayingC
         return PlayerHandRankInfo;
     }
 
-    // 공유카드와 핸드 2장을 합친 카드 생성
+    // 공유카드와 핸드 2장을 합친 7장의 최종카드 생성
     TArray<FPlayingCard> FinalHandCards;
     FinalHandCards.Append(CommunityCards);
     FinalHandCards.Append(InHandCards);

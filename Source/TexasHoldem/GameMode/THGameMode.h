@@ -192,6 +192,11 @@ private:
     // Showdown 이후 퇴장 플레이어 체크 로직을 수행하기 까지의 시간 갭을 두기위한 타이머 핸들
     FTimerHandle CheckExitTimerHandle;
 
+private:
+    // 유저 정보 데이터 테이블
+    UPROPERTY()
+    class UDataTable* UserInfoDataTable = nullptr;
+
 public:
 	FORCEINLINE UTHHoldemPlayManager* GetGamePlayManager() { return GamePlayManager; }
 };
