@@ -21,5 +21,9 @@ public:
 public:
     virtual void BeginPlay() override;
     virtual void Destroyed() override;
-
+    
+public:
+    // Connection Error Event Test
+    UFUNCTION(BlueprintImplementableEvent)
+    void BP_NotifyEntryFailureFromHoldemTableMap();
 };

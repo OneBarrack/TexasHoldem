@@ -11,6 +11,7 @@
 #include "Algo/MaxElement.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/GameSession.h"
 
 ATHGameMode::ATHGameMode()
 {
@@ -38,6 +39,8 @@ void ATHGameMode::PreLogin(const FString& Options, const FString& Address, const
 {
     Super::PreLogin(Options, Address, UniqueId, ErrorMessage);
     UE_LOG(LogTemp, Log, TEXT("[%s] Start"), ANSI_TO_TCHAR(__FUNCTION__));
+
+    APlayerController* PlayerController = GetPlayerControllerFromNetId(GetWorld(), *UniqueId);
 
     // 플레이어가 가득 차 있다면 로그인 거부
     if (GetLoginPlayerCount() >= MaxPlayerCount)

@@ -11,7 +11,21 @@ void UTHGameInstance::Init()
 {
     Super::Init();
 
+    //UGameViewportClient* ddddd = GEngine->GameViewport;
+    //ULocalPlayer* LocalPlayer = GEngine->GetLocalPlayerFromControllerId(GEngine->GameViewport, 0);
+    //TArray<ULocalPlayer*> TestArray = GetLocalPlayers();
+
     NetworkFailureDelegateHandle = GEngine->OnNetworkFailure().AddUObject(this, &UTHGameInstance::HandleNetworkFailure);
+}
+
+bool UTHGameInstance::IsEntryFailedFromHoldemTableMap()
+{
+    return bIsEntryFailedFromHoldemTableMap;
+}
+
+void UTHGameInstance::SetEntryFailedFromHoldemTableMap(const bool bIsEntryFailed)
+{
+    bIsEntryFailedFromHoldemTableMap = bIsEntryFailed;
 }
 
 void UTHGameInstance::HandleNetworkFailure(UWorld* World, UNetDriver* NetDriver, ENetworkFailure::Type FailureType, const FString& ErrorString)
@@ -30,7 +44,7 @@ void UTHGameInstance::HandleNetworkFailure(UWorld* World, UNetDriver* NetDriver,
 
 void UTHGameInstance::Client_SendNotifyEntryFailure_Implementation()
 {
-    BP_NotifyEntryFailure();
+    BP_NotifyEntryFailureFromHoldemTableMap();
 
     FString PlayerString = GetFirstLocalPlayerController() ? GetFirstLocalPlayerController()->GetName() : FString("None");
     UE_LOG(LogTemp, Log, TEXT("[%s] Player:%s"),

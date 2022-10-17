@@ -10,6 +10,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "SaveGame/THSaveGame.h"
+#include "Player/THLocalPlayer.h"
 
 const FName ATHPlayerController::InputActionMouseLeft = FName(TEXT("MouseLeft"));
 const FName ATHPlayerController::InputActionSpaceBar  = FName(TEXT("SpaceBar"));
@@ -41,8 +42,6 @@ void ATHPlayerController::BeginPlay()
     }
 
     SetInputMode(FInputModeGameAndUI());
-
-    GetGameState()->OnNotifyRestartGame.AddDynamic(this, &ATHPlayerController::Init);
 }
 
 void ATHPlayerController::PostInitializeComponents()
