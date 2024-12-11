@@ -1,6 +1,6 @@
 # Texas Holdem
 * Make a Texas Hold'em Game Using UE4 4.27
-* Multiplayer game using a dedicated server
+* Multiplayer game using a dedicated server 
 
 프로젝트명 : Texas Holdem  
 개발 기간 : 2022.08 ~ 2022.10 (6주)  
